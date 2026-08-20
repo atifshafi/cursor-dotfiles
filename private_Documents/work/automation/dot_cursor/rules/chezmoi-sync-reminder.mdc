@@ -1,0 +1,36 @@
+---
+description: Reminds user to sync chezmoi dotfiles after modifying skills, rules, hooks, or MCP config. Trigger when editing files under ~/.cursor/skills/, ~/.cursor/hooks/, ~/.cursorrules, ~/Documents/work/automation/.cursor/rules/, or ~/.cursor/mcp.json.
+globs:
+  - "**/.cursor/skills/**"
+  - "**/.cursor/rules/**"
+  - "**/.cursor/hooks/**"
+  - "**/.cursorrules"
+alwaysApply: false
+---
+
+# Chezmoi Sync Reminder
+
+When you have finished modifying any Cursor skill, rule, hook script, or MCP config file in this session, remind the user:
+
+> **Dotfiles sync needed.** You changed a managed file. Run this to push to your backup repo:
+> ```
+> chezmoi re-add && chezmoi git -- add -A && chezmoi git -- commit -m "sync" && chezmoi git -- push
+> ```
+
+## When to remind
+
+- After creating or editing any file under `~/.cursor/skills/`
+- After creating or editing any `.mdc` file under `~/Documents/work/automation/.cursor/rules/`
+- After editing `~/.cursor/hooks.json` or scripts in `~/.cursor/hooks/`
+- After editing `~/.cursorrules`
+- After editing `~/.cursor/mcp.json` (also remind to update `secrets.yaml` if a token changed)
+
+## When NOT to remind
+
+- If the user already ran the sync command in this session
+- If the change was trivial (typo fix) and user said "don't sync"
+- During read-only investigations (no file was actually modified)
+
+## Reminder format
+
+Keep it brief -- one line + the command. Do not explain chezmoi or the backup system unless asked. The user already knows.
