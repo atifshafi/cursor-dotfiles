@@ -1,0 +1,13 @@
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.18.0
+    hooks:
+      - id: gitleaks
+  - repo: local
+    hooks:
+      - id: block-secrets-yaml
+        name: Block secrets.yaml from commit
+        entry: bash -c 'if git diff --cached --name-only | grep -q secrets.yaml; then echo "ERROR: secrets.yaml staged!" && exit 1; fi'
+        language: system
+        pass_filenames: false
+        always_run: true
