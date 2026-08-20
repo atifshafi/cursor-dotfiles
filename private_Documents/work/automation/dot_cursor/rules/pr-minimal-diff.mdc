@@ -1,3 +1,8 @@
+---
+description: When creating PRs or reviewing diffs -- keep changes focused and minimal, no unrelated reformatting or reversions of other teams' work.
+alwaysApply: false
+---
+
 # PR Minimal Diff Principle
 
 ## Core Rule

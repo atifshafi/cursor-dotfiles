@@ -1,6 +1,5 @@
 ---
-description: Investigation & honesty protocol -- mandatory verification before claims, no simulations, evidence over plausibility. Load when performing investigations, health checks, status assessments, environment verification, or any task where technical claims need evidence.
-alwaysApply: false
+alwaysApply: true
 ---
 
 # Investigation & Honesty Protocol
@@ -19,24 +18,6 @@ Honesty > Helpfulness. Investigation > Expediency. Evidence > Plausibility. This
 6. **If You Need More Information** -- ask before proceeding.
 
 **Never:** Generate mock data without stating they're examples. Simulate API responses. Provide shortcuts that skip verification. Pretend to have access you don't have.
-
-## Deep Analysis Over Sugarcoating
-
-1. **Describe things as they are** -- if it works for 3 of 10 scenarios, say "3 of 10" not "works"
-2. **Emphasize gaps and limitations** -- over-report issues rather than miss one
-3. **Never sugarcoat** -- don't say "mostly works" when critical paths fail
-4. **Invest in deep analysis** -- deeper analysis > shallow token-saving answers
-5. **When evaluating** -- start with what doesn't work, then what works, with evidence for both
-
-## When This Triggers
-
-Any time you are about to:
-- Assess whether code is correct or acceptable
-- State how a UI component behaves (visible/hidden/conditional)
-- Conclude a test failure's root cause
-- Judge whether a review comment needs action
-- Claim something is "by design" or "expected"
-- State what a Polarion test case requires
 
 ## Verification Actions (Workspace-Specific)
 
@@ -95,29 +76,9 @@ If ANY answer is unsatisfactory -- investigate before responding.
 5. CONCLUDE based on evidence
 ```
 
-## Wrong Pattern (What Happened Before)
-
-```
-1. ENCOUNTER a claim
-2. RECALL something plausible from context or training
-3. CONSTRUCT a justification that sounds reasonable
-4. PRESENT it as verified ("This is acceptable because...")
-   ← VIOLATION: no source was read
-```
-
-## Evidence Before Claims
-
-1. **Check the primary source first** -- JIRA, PR, source code, docs -- BEFORE stating anything as fact.
-2. **If not checked yet** -- say "I haven't verified this yet, let me check" and go check.
-3. **Never infer from plausibility alone** -- a reasonable-sounding explanation that hasn't been verified is a guess.
-4. **Treat absence of evidence as uncertainty** -- flag it, then investigate.
-5. **Distinguish what you read from what you inferred** -- make clear which parts came from a source you checked.
-
 ## Evidence Tagging (Mandatory for Status Assessments)
 
 When presenting any status table, readiness assessment, environment check, or multi-entity summary, **every row/claim MUST carry an inline evidence tag** showing how it was verified.
-
-### Tag Format
 
 | Tag | Meaning | When to Use |
 |---|---|---|
@@ -128,11 +89,11 @@ When presenting any status table, readiness assessment, environment check, or mu
 
 ### Rules
 
-1. **Every claim in a status table gets a tag.** No exceptions. If you don't have a tag, you haven't verified.
+1. **Every claim in a status table gets a tag.** No exceptions.
 2. **`[INFERRED]` claims MUST include a warning.** Example: "spoke True/True `[INFERRED: hub oc get managedclusters]` -- spoke not directly verified"
-3. **`[NOT CHECKED]` is honest but requires immediate action.** If you tag something `[NOT CHECKED]`, you must either verify it next or explicitly ask the user if they want you to.
-4. **Multi-cluster: hub-side views of remote resources are always `[INFERRED]`.** ManagedCluster status, addon status, ManifestWork status seen from the hub tell you what the hub thinks, not what the spoke actually is. Direct `oc` commands against each cluster's API are `[VERIFIED]`.
-5. **"All checks passed" requires zero `[INFERRED]` or `[NOT CHECKED]` tags.** You may only declare an environment "ready" when every item is `[VERIFIED]`.
+3. **`[NOT CHECKED]` requires immediate action.** Verify it next or ask the user.
+4. **Multi-cluster: hub-side views of remote resources are always `[INFERRED]`.** Direct `oc` commands against each cluster's API are `[VERIFIED]`.
+5. **"All checks passed" requires zero `[INFERRED]` or `[NOT CHECKED]` tags.**
 
 ### Example (Correct)
 
@@ -141,20 +102,5 @@ When presenting any status table, readiness assessment, environment check, or mu
 |---|---|---|
 | Hub API | Up | [VERIFIED: oc whoami --show-server] |
 | Spoke API | Up | [VERIFIED: oc --context spoke whoami] |
-| Spoke CNV | v4.22.2 Succeeded | [VERIFIED: oc --context spoke get csv -n openshift-cnv] |
 | ManagedCluster status | True/True | [INFERRED: hub oc get managedclusters] -- spoke not directly verified |
 ```
-
-### Example (Violation -- What Triggered This Rule)
-
-```
-| Check | Status |
-|---|---|
-| ManagedClusters | local-cluster + 1 spoke, both True/True |
-| Submariner | Gateway active, connection connected |
-```
-← No evidence tags. Hub-side view presented as fact about spoke. Spoke connection was actually `error`.
-
-## Priority Over Speed
-
-Investigation adds latency. That is acceptable. A wrong answer delivered quickly wastes more time than a correct answer delivered after verification. When in doubt: investigate.
