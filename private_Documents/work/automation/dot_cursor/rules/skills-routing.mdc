@@ -1,0 +1,51 @@
+---
+description: Skill trigger routing -- maps intent keywords to skills, lists file-based skill triggers, and Cursor subagent registry. Load when determining which skill to activate for a user request or when launching subagents.
+alwaysApply: false
+---
+
+# Skills & Auto-Trigger Rules
+
+## File-Based Skills (auto-enforced via dedicated .mdc rules)
+
+- `write-testcase-console` -- triggers on `**/test-cases/**/*.md` (see `testcase-polarion-html.mdc`)
+- `write-automation-script-cypress` -- triggers on `**/cypress/**/*.spec.js, **/cypress/**/*.js` (see `cypress-automation.mdc`)
+- `write-automation-script-playwright` -- triggers on `**/console-e2e/**/*.spec.ts, **/console-e2e/**/*.ts` (see `playwright-automation.mdc`)
+- `create-rule` -- triggers on `**/.cursor/rules/**/*.mdc`
+- `create-skill` -- triggers on `**/skills/**/SKILL.md`
+- `update-cursor-settings` -- triggers on `**/settings.json`
+
+## Intent-Based Skills (AI recognizes from user's request)
+
+| Skill | Trigger Keywords |
+|-------|------------------|
+| `active-sprint-tasks` | sprint, tasks, what am I working on, QE coverage, scrum leader, daily duties, prep me for scrum, team status, release milestone, sprint closure |
+| `jira-operations` | create bug, file ticket, add comment, link issues |
+| `jenkins-expert` | Jenkins, pipeline, build failed, downstream, trigger job, monitor build, CI/CD, Polarion push, test results, shared library, orchestrator |
+| `acm-operations` | build tag, image tag, snapshot, downstream tag, refresh ACM, update ACM, reinstall operator, what build, which snapshot, is fix present |
+| `acm-live-investigator` | health check, diagnose, cluster broken, environment not working, investigate environment, why is X failing, check my hub, hub health, cluster issue, SEM broken, environment issue |
+| `investigate-and-learn` | investigate, learn about, update knowledge, deep dive, what changed in, research |
+| `grill-me` | grill me, stress-test plan, challenge my design, poke holes, think this through, sharpen language |
+| `acm-bug-hunter` | hunt bugs, bug hunt, find bugs, stress test this test case, grill this test case, analyze implementation, probe for bugs |
+| `verify-bug-fix` | verify bug, verify fix, check if fixed, bug verification, close bug, test fix, confirm fix, is the bug fixed |
+| `pipeline-run-tracker` | track it, monitor progress, keep an eye on the pipeline, spawn agents to watch, track the build, track the pipeline, watch the pipeline, track progress using multiple agents |
+| `task-review-protocol` | review my tasks, status check, any updates, pending work, anything I need to do, check my PRs, check my tickets, what's pending, clinic check |
+| `virt-ui-drift-detector` | run drift check, check for UI drift, scan for selector changes, schedule drift check, virt drift, UI changes affecting tests, selector drift, upstream UI changes |
+
+**Test Case File Location:** `/Users/ashafi/Documents/work/automation/documentation/acm-components/virt/test-cases/` (organized by ACM version)
+
+**All Skills Pattern:** Every skill includes an "ASK QUESTIONS FIRST" section. Always ask for missing information before proceeding.
+
+## Cursor Subagents (10, shared across skills)
+
+| Subagent | Skills | Phase | Purpose |
+|----------|--------|-------|---------|
+| `requirements-extractor` | cypress, playwright | 1 | Polarion + JIRA + PR extraction |
+| `feature-investigator` | testcase | 1 | Deep JIRA investigation |
+| `code-change-analyzer` | testcase | 1 | PR diff analysis, component impact |
+| `ui-discovery` | cypress, playwright, testcase, drift-detector | 1 | acm-ui MCP selectors, routes, translations |
+| `pattern-analyzer` | cypress, playwright, drift-detector | 1 | Existing code patterns, reuse detection |
+| `live-validator` | testcase, drift-detector, live-investigator | 1C | Browser MCP + oc CLI live verification |
+| `code-quality-reviewer` | cypress, playwright | 3.5 | Architecture compliance, anti-patterns |
+| `testcase-reviewer` | testcase | 4.5 | Test case quality, metadata, format |
+| `test-runner` | cypress, playwright | 4 | Test execution |
+| `failure-debugger` | cypress, playwright, live-investigator | 4.5 | Failure classification, root cause |

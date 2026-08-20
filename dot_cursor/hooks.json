@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "hooks": {
+    "afterFileEdit": [
+      {
+        "command": "./hooks/format-ts-after-edit.sh",
+        "matcher": "Write"
+      },
+      {
+        "command": "./hooks/mcp-sync-on-edit.sh",
+        "matcher": "Write"
+      }
+    ],
+    "beforeShellExecution": [
+      {
+        "command": "./hooks/git-push-gate.sh",
+        "matcher": "git push",
+        "failClosed": false
+      },
+      {
+        "command": "./hooks/safe-delete-gate.sh",
+        "matcher": "rm |rm$|rmdir",
+        "failClosed": true
+      }
+    ],
+    "stop": [
+      {
+        "command": "./hooks/engram-save-on-stop.sh"
+      },
+      {
+        "command": "./hooks/sync-knowledge-db.sh"
+      },
+      {
+        "command": "./hooks/drift-scheduled-check.sh",
+        "loop_limit": 1
+      }
+    ]
+  }
+}

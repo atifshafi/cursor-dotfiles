@@ -1,0 +1,1645 @@
+{
+  "scanTimestamp": "2026-08-05T17:00:00Z",
+  "acmVersion": "2.19",
+  "cnvVersion": "4.23",
+  "acmBranch": "main",
+  "cnvBranch": "main",
+  "selectors": {
+    "fleetVirt": {
+      "actions-dropdown": {
+        "value": "actions-dropdown",
+        "sourceFile": "src/utils/components/ActionsDropdown/ActionsDropdown.tsx",
+        "attributeType": "data-test"
+      },
+      "select-option-${option.value}": {
+        "value": "select-option-${option.value}",
+        "sourceFile": "src/utils/components/FilterSelect/components/InlineFilterSelectOption.tsx",
+        "attributeType": "data-test"
+      },
+      "${action?.id}": {
+        "value": "${action?.id}",
+        "sourceFile": "src/utils/components/ActionDropdownItem/ActionDropdownItem.tsx",
+        "attributeType": "data-test"
+      },
+      "horizontal-link-${item.name}": {
+        "value": "horizontal-link-${item.name}",
+        "sourceFile": "src/utils/components/HorizontalNavbar/HorizontalNavbar.tsx",
+        "attributeType": "data-test"
+      },
+      "filter-toolbar": {
+        "value": "filter-toolbar",
+        "sourceFile": "src/utils/components/ListPageFilter/ListPageFilter.tsx",
+        "attributeType": "data-test"
+      },
+      "filter-dropdown-toggle": {
+        "value": "filter-dropdown-toggle",
+        "sourceFile": "src/utils/components/ListPageFilter/components/RowFilters.tsx",
+        "attributeType": "data-test"
+      },
+      "item-filter": {
+        "value": "item-filter",
+        "sourceFile": "src/utils/components/ListPageFilter/components/SearchFilter.tsx",
+        "attributeType": "data-test"
+      },
+      "${searchType}-filter-input": {
+        "value": "${searchType}-filter-input",
+        "sourceFile": "src/utils/components/ListPageFilter/components/TextFiltersToolbarItem.tsx",
+        "attributeType": "data-test"
+      },
+      "volume-registry-retain-cron-expression": {
+        "value": "volume-registry-retain-cron-expression",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/SchedulingSettings.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-class-select": {
+        "value": "storage-class-select",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/VolumeDestination/StorageClass/StorageClassSelect.tsx",
+        "attributeType": "data-test"
+      },
+      "use-existing-volume": {
+        "value": "use-existing-volume",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/SourceTypeSelection/SourceTypeSelection.tsx",
+        "attributeType": "data-test"
+      },
+      "use-registry": {
+        "value": "use-registry",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/SourceTypeSelection/SourceTypeSelection.tsx",
+        "attributeType": "data-test"
+      },
+      "use-http": {
+        "value": "use-http",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/SourceTypeSelection/SourceTypeSelection.tsx",
+        "attributeType": "data-test"
+      },
+      "${testId}-container-source-input": {
+        "value": "${testId}-container-source-input",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/VolumeSource/components/ContainerSource.tsx",
+        "attributeType": "data-test"
+      },
+      "${testId}-container-source-username": {
+        "value": "${testId}-container-source-username",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/VolumeSource/components/ContainerSource.tsx",
+        "attributeType": "data-test"
+      },
+      "${testId}-container-source-password": {
+        "value": "${testId}-container-source-password",
+        "sourceFile": "src/utils/components/AddBootableVolumeModal/components/VolumeSource/components/ContainerSource.tsx",
+        "attributeType": "data-test"
+      },
+      "loading-spinner": {
+        "value": "loading-spinner",
+        "sourceFile": "src/utils/components/Loading/Loading.tsx",
+        "attributeType": "data-test"
+      },
+      "empty-state": {
+        "value": "empty-state",
+        "sourceFile": "src/utils/components/BootOrderModal/BootOrderEmptyState.tsx",
+        "attributeType": "data-test"
+      },
+      "save-button": {
+        "value": "save-button",
+        "sourceFile": "src/utils/components/TabModal/components/TabModalFooter.tsx",
+        "attributeType": "data-test"
+      },
+      "cancel-button": {
+        "value": "cancel-button",
+        "sourceFile": "src/utils/components/TabModal/components/TabModalFooter.tsx",
+        "attributeType": "data-test"
+      },
+      "dialog-modal": {
+        "value": "dialog-modal",
+        "sourceFile": "src/utils/components/TabModal/TabModal.tsx",
+        "attributeType": "data-test"
+      },
+      "network-option-pod-networking": {
+        "value": "network-option-pod-networking",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfaceNetworkSelect/buildNetworkOptions.tsx",
+        "attributeType": "data-test"
+      },
+      "network-attachment-definition-select": {
+        "value": "network-attachment-definition-select",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfaceNetworkSelect/NetworkInterfaceNetworkSelect.tsx",
+        "attributeType": "data-test"
+      },
+      "link-state-select-${state}": {
+        "value": "link-state-select-${state}",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfaceLinkState/NetworkInterfaceLinkState.tsx",
+        "attributeType": "data-test"
+      },
+      "model-select": {
+        "value": "model-select",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfaceModelSelect.tsx",
+        "attributeType": "data-test"
+      },
+      "model-select-${id}": {
+        "value": "model-select-${id}",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfaceModelSelect.tsx",
+        "attributeType": "data-test"
+      },
+      "network-interface-type-select": {
+        "value": "network-interface-type-select",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfaceTypeSelect.tsx",
+        "attributeType": "data-test"
+      },
+      "network-interface-type-select-${id}": {
+        "value": "network-interface-type-select-${id}",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfaceTypeSelect.tsx",
+        "attributeType": "data-test"
+      },
+      "passt-binding-select": {
+        "value": "passt-binding-select",
+        "sourceFile": "src/utils/components/NetworkInterfaceModal/components/NetworkInterfacePasstSelect/NetworkInterfacePasst.tsx",
+        "attributeType": "data-test"
+      },
+      "${testId}-edit": {
+        "value": "${testId}-edit",
+        "sourceFile": "src/utils/components/DescriptionItem/DescriptionItem.tsx",
+        "attributeType": "data-test"
+      },
+      "${name}-name": {
+        "value": "${name}-name",
+        "sourceFile": "src/utils/components/DescriptionItem/components/DescriptionItemName.tsx",
+        "attributeType": "data-test"
+      },
+      "${getName(resource)}-labels": {
+        "value": "${getName(resource)}-labels",
+        "sourceFile": "src/utils/components/DescriptionItem/components/DescriptionItemLabels.tsx",
+        "attributeType": "data-test"
+      },
+      "onboarding-dismiss-btn": {
+        "value": "onboarding-dismiss-btn",
+        "sourceFile": "src/utils/components/OnboardingPopover/OnboardingPopover.tsx",
+        "attributeType": "data-test"
+      },
+      "onboarding-popover": {
+        "value": "onboarding-popover",
+        "sourceFile": "src/utils/components/OnboardingPopover/OnboardingPopover.tsx",
+        "attributeType": "data-test"
+      },
+      "label-key": {
+        "value": "label-key",
+        "sourceFile": "src/utils/components/Labels/LabelList.tsx",
+        "attributeType": "data-test"
+      },
+      "loading-indicator": {
+        "value": "loading-indicator",
+        "sourceFile": "src/utils/components/LoadingEmptyState/LoadingEmptyState.tsx",
+        "attributeType": "data-test"
+      },
+      "${EditorType.Form}-view-input": {
+        "value": "${EditorType.Form}-view-input",
+        "sourceFile": "src/utils/components/SyncedEditor/components/EditorToggle.tsx",
+        "attributeType": "data-test"
+      },
+      "${EditorType.YAML}-view-input": {
+        "value": "${EditorType.YAML}-view-input",
+        "sourceFile": "src/utils/components/SyncedEditor/components/EditorToggle.tsx",
+        "attributeType": "data-test"
+      },
+      "cpu-memory-value": {
+        "value": "cpu-memory-value",
+        "sourceFile": "src/utils/components/CPUMemory/CPUMemory.tsx",
+        "attributeType": "data-test"
+      },
+      "kebab-button": {
+        "value": "kebab-button",
+        "sourceFile": "src/utils/components/toggles/KebabToggle.tsx",
+        "attributeType": "data-test"
+      },
+      "manage-columns": {
+        "value": "manage-columns",
+        "sourceFile": "src/utils/components/ColumnManagementModal/ColumnManagement.tsx",
+        "attributeType": "data-test"
+      },
+      "reset-button": {
+        "value": "reset-button",
+        "sourceFile": "src/utils/components/ColumnManagementModal/ColumnManagementModal.tsx",
+        "attributeType": "data-test"
+      },
+      "name-filter-input": {
+        "value": "name-filter-input",
+        "sourceFile": "src/utils/components/KubevirtFilterToolbar/components/TextSearchFilters.tsx",
+        "attributeType": "data-test"
+      },
+      "cdrom-drivers": {
+        "value": "cdrom-drivers",
+        "sourceFile": "src/utils/components/WindowsDrivers/WindowsDrivers.tsx",
+        "attributeType": "data-test"
+      },
+      "dropdown-text-filter": {
+        "value": "dropdown-text-filter",
+        "sourceFile": "src/utils/components/ClusterProjectDropdown/Dropdown/Filter.tsx",
+        "attributeType": "data-test"
+      },
+      "ssh-command-copy": {
+        "value": "ssh-command-copy",
+        "sourceFile": "src/utils/components/SSHAccess/components/SSHCommand.tsx",
+        "attributeType": "data-test"
+      },
+      "select-row-${sanitizedRowId}": {
+        "value": "select-row-${sanitizedRowId}",
+        "sourceFile": "src/utils/hooks/useDataViewTableSort/utils.tsx",
+        "attributeType": "data-test"
+      },
+      "resource-title": {
+        "value": "resource-title",
+        "sourceFile": "src/views/datasources/details/DataSourcePageTitle.tsx",
+        "attributeType": "data-test"
+      },
+      "dataimportcron-manage-source-url": {
+        "value": "dataimportcron-manage-source-url",
+        "sourceFile": "src/views/datasources/dataimportcron/details/DataImportCronManageModal/DataImportCronManageModal.tsx",
+        "attributeType": "data-test"
+      },
+      "dataimportcron-manage-cron": {
+        "value": "dataimportcron-manage-cron",
+        "sourceFile": "src/views/datasources/dataimportcron/details/DataImportCronManageModal/DataImportCronManageModal.tsx",
+        "attributeType": "data-test"
+      },
+      "datasource-create-source-url": {
+        "value": "datasource-create-source-url",
+        "sourceFile": "src/views/datasources/list/CreateDataSourceModal/CreateDataSourceForm.tsx",
+        "attributeType": "data-test"
+      },
+      "datasource-create-cron": {
+        "value": "datasource-create-cron",
+        "sourceFile": "src/views/datasources/list/CreateDataSourceModal/CreateDataSourceForm.tsx",
+        "attributeType": "data-test"
+      },
+      "virtio-drivers-section-download-iso": {
+        "value": "virtio-drivers-section-download-iso",
+        "sourceFile": "src/views/settings/tabs/DownloadsTab/components/VirtIODriversSection/VirtIODriversSection.tsx",
+        "attributeType": "data-test"
+      },
+      "${inputName}-input": {
+        "value": "${inputName}-input",
+        "sourceFile": "src/views/settings/tabs/ClusterTab/components/GeneralSettings/LiveMigrationSection/Limits/MigrationNumberInput.tsx",
+        "attributeType": "data-test"
+      },
+      "general-information-installed-version": {
+        "value": "general-information-installed-version",
+        "sourceFile": "src/views/settings/tabs/ClusterTab/components/GeneralInformation/GeneralInformation.tsx",
+        "attributeType": "data-test"
+      },
+      "general-information-update-status": {
+        "value": "general-information-update-status",
+        "sourceFile": "src/views/settings/tabs/ClusterTab/components/GeneralInformation/GeneralInformation.tsx",
+        "attributeType": "data-test"
+      },
+      "settings-tab-${name}": {
+        "value": "settings-tab-${name}",
+        "sourceFile": "src/views/settings/SettingsTab.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-created": {
+        "value": "virtual-machine-overview-details-created",
+        "sourceFile": "src/views/topology/components/vm/VMDetailsPanel/components/VMDetailsPanelLeftColumn/components/VMCreatedTimestampDetailsItem.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-status": {
+        "value": "virtual-machine-overview-details-status",
+        "sourceFile": "src/views/topology/components/vm/VMDetailsPanel/components/VMDetailsPanelRightColumn/components/VMStatusDetailsItem.tsx",
+        "attributeType": "data-test"
+      },
+      "inventory-card": {
+        "value": "inventory-card",
+        "sourceFile": "src/views/clusteroverview/OverviewTab/inventory-card/InventoryCard.tsx",
+        "attributeType": "data-test"
+      },
+      "overview-vm-statuses-card": {
+        "value": "overview-vm-statuses-card",
+        "sourceFile": "src/views/clusteroverview/OverviewTab/vm-statuses-card/VMStatusesCard.tsx",
+        "attributeType": "data-test"
+      },
+      "getting-started": {
+        "value": "getting-started",
+        "sourceFile": "src/views/clusteroverview/OverviewTab/getting-started-card/utils/getting-started-grid/GettingStartedGrid.tsx",
+        "attributeType": "data-test"
+      },
+      "getting-started-title": {
+        "value": "getting-started-title",
+        "sourceFile": "src/views/clusteroverview/OverviewTab/getting-started-card/utils/getting-started-grid/GettingStartedGrid.tsx",
+        "attributeType": "data-test"
+      },
+      "getting-started-section-title": {
+        "value": "getting-started-section-title",
+        "sourceFile": "src/views/clusteroverview/OverviewTab/getting-started-card/utils/getting-started-content/GettingStartedSectionContents.tsx",
+        "attributeType": "data-test"
+      },
+      "vms-per-template-card": {
+        "value": "vms-per-template-card",
+        "sourceFile": "src/views/clusteroverview/OverviewTab/vms-per-resource-card/VMsPerResourceCard.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-vm-name-${vmName}": {
+        "value": "migration-vm-name-${vmName}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-namespace-${namespace}": {
+        "value": "migration-namespace-${namespace}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-status-${getName(vmim)}": {
+        "value": "migration-status-${getName(vmim)}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-progress-${getName(vmim)}": {
+        "value": "migration-progress-${getName(vmim)}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-source-${getName(vmim)}": {
+        "value": "migration-source-${getName(vmim)}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-target-${getName(vmim)}": {
+        "value": "migration-target-${getName(vmim)}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-${getName(row.vmim)}": {
+        "value": "migration-policy-${getName(row.vmim)}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-vmim-name-${getName(vmim)}": {
+        "value": "migration-vmim-name-${getName(vmim)}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-created-${getName(row.vmim)}": {
+        "value": "migration-created-${getName(row.vmim)}",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/components/MigrationsTable/MigrationsCells.tsx",
+        "attributeType": "data-test"
+      },
+      "kv-monitoring-card": {
+        "value": "kv-monitoring-card",
+        "sourceFile": "src/views/clusteroverview/MigrationsTab/MigrationsTab.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-name-${getName(row)}": {
+        "value": "migration-policy-name-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "policy-${getName(row)}": {
+        "value": "policy-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-cluster-${getName(row)}": {
+        "value": "migration-policy-cluster-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-bandwidth-${getName(row)}": {
+        "value": "migration-policy-bandwidth-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-auto-converge-${getName(row)}": {
+        "value": "migration-policy-auto-converge-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-post-copy-${getName(row)}": {
+        "value": "migration-policy-post-copy-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-completion-timeout-${getName(row)}": {
+        "value": "migration-policy-completion-timeout-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-project-labels-${getName(row)}": {
+        "value": "migration-policy-project-labels-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "migration-policy-vm-labels-${getName(row)}": {
+        "value": "migration-policy-vm-labels-${getName(row)}",
+        "sourceFile": "src/views/migrationpolicies/list/MigrationPoliciesCells.tsx",
+        "attributeType": "data-test"
+      },
+      "modal-cancel-action": {
+        "value": "modal-cancel-action",
+        "sourceFile": "src/views/migrationpolicies/list/components/MigrationPolicyCreateForm/copmonents/MigrationPolicyFormFooter/MigrationPolicyFormFooter.tsx",
+        "attributeType": "data-test"
+      },
+      "win-image-download-url-input": {
+        "value": "win-image-download-url-input",
+        "sourceFile": "src/views/checkups/self-validation/components/form/components/WindowsDownloadUrlField.tsx",
+        "attributeType": "data-test"
+      },
+      "win-image-name-clear": {
+        "value": "win-image-name-clear",
+        "sourceFile": "src/views/checkups/self-validation/components/form/components/WindowsImageNameField.tsx",
+        "attributeType": "data-test"
+      },
+      "welcome-modal": {
+        "value": "welcome-modal",
+        "sourceFile": "src/views/welcome/WelcomeModal.tsx",
+        "attributeType": "data-test"
+      },
+      "search-keys-section": {
+        "value": "search-keys-section",
+        "sourceFile": "src/views/search/components/SearchDropdown/components/SearchByKeys/SearchByKeys.tsx",
+        "attributeType": "data-test"
+      },
+      "search-key-${searchKey}": {
+        "value": "search-key-${searchKey}",
+        "sourceFile": "src/views/search/components/SearchDropdown/components/SearchByKeys/components/SearchKeyItem.tsx",
+        "attributeType": "data-test"
+      },
+      "search-value-${option.value}": {
+        "value": "search-value-${option.value}",
+        "sourceFile": "src/views/search/components/SearchDropdown/components/SearchValueList.tsx",
+        "attributeType": "data-test"
+      },
+      "search-operator-${value}": {
+        "value": "search-operator-${value}",
+        "sourceFile": "src/views/search/components/SearchDropdown/components/OperatorList.tsx",
+        "attributeType": "data-test"
+      },
+      "search-dropdown": {
+        "value": "search-dropdown",
+        "sourceFile": "src/views/search/components/SearchDropdown/components/SearchDropdownMenu.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-adv-search-toolbar": {
+        "value": "vm-adv-search-toolbar",
+        "sourceFile": "src/views/search/components/SearchBar.tsx",
+        "attributeType": "data-test"
+      },
+      "save-search-name": {
+        "value": "save-search-name",
+        "sourceFile": "src/views/search/components/SaveSearchModal.tsx",
+        "attributeType": "data-test"
+      },
+      "save-search-description": {
+        "value": "save-search-description",
+        "sourceFile": "src/views/search/components/SaveSearchModal.tsx",
+        "attributeType": "data-test"
+      },
+      "save-search": {
+        "value": "save-search",
+        "sourceFile": "src/views/search/components/SaveSearchButton.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-advanced-search-button": {
+        "value": "vm-advanced-search-button",
+        "sourceFile": "src/views/search/components/SearchTextInput.tsx",
+        "attributeType": "data-test"
+      },
+      "delete-search-item-${name}": {
+        "value": "delete-search-item-${name}",
+        "sourceFile": "src/views/search/components/SavedSearchesDropdown/components/SavedSearchItem.tsx",
+        "attributeType": "data-test"
+      },
+      "toggle-favorite-${name}": {
+        "value": "toggle-favorite-${name}",
+        "sourceFile": "src/views/search/components/SavedSearchesDropdown/components/SavedSearchItem.tsx",
+        "attributeType": "data-test"
+      },
+      "saved-search-item-${name}": {
+        "value": "saved-search-item-${name}",
+        "sourceFile": "src/views/search/components/SavedSearchesDropdown/components/SavedSearchItem.tsx",
+        "attributeType": "data-test"
+      },
+      "saved-searches": {
+        "value": "saved-searches",
+        "sourceFile": "src/views/search/components/SavedSearchesDropdown/SavedSearchesDropdown.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-network": {
+        "value": "adv-search-network",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/AdvancedSearchModal.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vm-nad": {
+        "value": "adv-search-vm-nad",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/NetworkAttachmentDefinitionsField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vm-ip": {
+        "value": "adv-search-vm-ip",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/IPField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vm-nodes": {
+        "value": "adv-search-vm-nodes",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/NodesField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-mem-value": {
+        "value": "adv-search-mem-value",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/MemoryField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vm-description": {
+        "value": "adv-search-vm-description",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/DescriptionField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-date-select": {
+        "value": "adv-search-date-select",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/DateCreatedField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vcpu-value": {
+        "value": "adv-search-vcpu-value",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/CPUField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vm-os": {
+        "value": "adv-search-vm-os",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/OperatingSystemField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vm-name": {
+        "value": "adv-search-vm-name",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/NameField.tsx",
+        "attributeType": "data-test"
+      },
+      "adv-search-vm-storage-class": {
+        "value": "adv-search-vm-storage-class",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/StorageClassField.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-migration-name-${migPlanName}": {
+        "value": "storage-migration-name-${migPlanName}",
+        "sourceFile": "src/views/storagemigrations/list/StorageMigrationCells.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-migration-namespaces-${getName(row)}": {
+        "value": "storage-migration-namespaces-${getName(row)}",
+        "sourceFile": "src/views/storagemigrations/list/StorageMigrationCells.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-migration-volumes-${getName(row)}": {
+        "value": "storage-migration-volumes-${getName(row)}",
+        "sourceFile": "src/views/storagemigrations/list/StorageMigrationCells.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-migration-target-sc-${getName(row)}": {
+        "value": "storage-migration-target-sc-${getName(row)}",
+        "sourceFile": "src/views/storagemigrations/list/StorageMigrationCells.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-migration-status-${getName(row)}": {
+        "value": "storage-migration-status-${getName(row)}",
+        "sourceFile": "src/views/storagemigrations/list/StorageMigrationCells.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-migration-started-${getName(row)}": {
+        "value": "storage-migration-started-${getName(row)}",
+        "sourceFile": "src/views/storagemigrations/list/StorageMigrationCells.tsx",
+        "attributeType": "data-test"
+      },
+      "project-name-${projectName}": {
+        "value": "project-name-${projectName}",
+        "sourceFile": "src/views/vmnetworks/details/tabs/ConnectedProjects/cells/ProjectNameCell.tsx",
+        "attributeType": "data-test"
+      },
+      "project-vmcount-${projectName}": {
+        "value": "project-vmcount-${projectName ?? 'unknown'}",
+        "sourceFile": "src/views/vmnetworks/details/tabs/ConnectedProjects/cells/ProjectVMCountCell.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-status-${getName(row)}": {
+        "value": "vm-status-${getName(row)}",
+        "sourceFile": "src/views/vmnetworks/details/tabs/ConnectedVirtualMachines/cells/VMStatusCell.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-namespace-${namespace}": {
+        "value": "vm-namespace-${namespace}",
+        "sourceFile": "src/views/vmnetworks/details/tabs/ConnectedVirtualMachines/cells/VMNamespaceCell.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-name-${name}": {
+        "value": "vm-name-${name}",
+        "sourceFile": "src/views/vmnetworks/details/tabs/ConnectedVirtualMachines/cells/VMNameCell.tsx",
+        "attributeType": "data-test"
+      },
+      "vmnetwork-mtu-${getName(obj)}": {
+        "value": "vmnetwork-mtu-${getName(obj)}",
+        "sourceFile": "src/views/vmnetworks/list/vmNetworkListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vmnetwork-name-${name}": {
+        "value": "vmnetwork-name-${name}",
+        "sourceFile": "src/views/vmnetworks/list/vmNetworkListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vmnetwork-physicalnetwork-${getName(row)}": {
+        "value": "vmnetwork-physicalnetwork-${getName(row)}",
+        "sourceFile": "src/views/vmnetworks/list/vmNetworkListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vmnetwork-vlanid-${getName(row)}": {
+        "value": "vmnetwork-vlanid-${getName(row)}",
+        "sourceFile": "src/views/vmnetworks/list/vmNetworkListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vmnetwork-other-name-${name}": {
+        "value": "vmnetwork-other-name-${name}",
+        "sourceFile": "src/views/vmnetworks/list/vmNetworkOtherTypesListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vmnetwork-other-namespace-${getName(row)}": {
+        "value": "vmnetwork-other-namespace-${getName(row)}",
+        "sourceFile": "src/views/vmnetworks/list/vmNetworkOtherTypesListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vmnetwork-other-type-${getName(row)}": {
+        "value": "vmnetwork-other-type-${getName(row)}",
+        "sourceFile": "src/views/vmnetworks/list/vmNetworkOtherTypesListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vms-treeview": {
+        "value": "vms-treeview",
+        "sourceFile": "src/views/virtualmachines/tree/VirtualMachineTreeView.tsx",
+        "attributeType": "data-test"
+      },
+      "generate-vm-name-button": {
+        "value": "generate-vm-name-button",
+        "sourceFile": "src/views/virtualmachines/wizard/components/GenerateVMNameButton.tsx",
+        "attributeType": "data-test"
+      },
+      "create-virtual-machine": {
+        "value": "create-virtual-machine",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/ReviewAndCreateStep/components/ReviewAndCreateStepFooter.tsx",
+        "attributeType": "data-test"
+      },
+      "instance-type-series-${seriesName}": {
+        "value": "instance-type-series-${seriesName}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/InstanceTypesSteps/ComputeResourcesStep/components/SelectInstanceTypeSection/components/RedHatProvidedInstanceTypesSection/components/RedHatInstanceTypeSeriesGallery/components/RedHatSeriesMenuCard/RedHatSeriesMenuCard.tsx",
+        "attributeType": "data-test"
+      },
+      "instance-type-size-${size.sizeLabel}": {
+        "value": "instance-type-size-${size.sizeLabel}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/InstanceTypesSteps/ComputeResourcesStep/components/SelectInstanceTypeSection/components/RedHatProvidedInstanceTypesSection/components/InstanceTypeSizeMenu/InstanceTypeSizeDropdown/InstanceTypeSizeDropdown.tsx",
+        "attributeType": "data-test"
+      },
+      "os-tile-${operatingSystem}": {
+        "value": "os-tile-${operatingSystem}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/InstanceTypesSteps/GuestOSStep/components/OperatingSystemTileGroup/components/OperatingSystemTile/OperatingSystemTile.tsx",
+        "attributeType": "data-test"
+      },
+      "nic-network-${row.network?.name}": {
+        "value": "nic-network-${row.network?.name}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/CustomizationStep/components/CustomizeVirtualMachine/components/CustomizeVMTabs/tabs/network/NetworkCell.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-description": {
+        "value": "${vmName}-description",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/CustomizationStep/components/CustomizeVirtualMachine/components/CustomizeVMTabs/tabs/components/DetailsEditableItems.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-folder": {
+        "value": "${vmName}-folder",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/CustomizationStep/components/CustomizeVirtualMachine/components/CustomizeVMTabs/tabs/components/DetailsEditableItems.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-hostname": {
+        "value": "${vmName}-hostname",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/CustomizationStep/components/CustomizeVirtualMachine/components/CustomizeVMTabs/tabs/components/DetailsEditableItems.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-headless": {
+        "value": "${vmName}-headless",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/details/DetailsSection.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-configuration-${name}": {
+        "value": "vm-configuration-${name}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/CustomizationStep/components/CustomizeVirtualMachine/components/CustomizeVMTabs/CustomizeVMTabs.tsx",
+        "attributeType": "data-test"
+      },
+      "creation-method-${creationMethod}": {
+        "value": "creation-method-${creationMethod}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/DeploymentDetailsStep/components/CreationMethodTileGroup/components/CreationMethodTile/CreationMethodTile.tsx",
+        "attributeType": "data-test"
+      },
+      "search-catalog": {
+        "value": "search-catalog",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/TemplateStep/components/TemplatesCatalog/components/TemplatesToolbar/components/TemplatesSearchInput.tsx",
+        "attributeType": "data-test"
+      },
+      "template-row-${templateName}": {
+        "value": "template-row-${templateName}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/TemplateStep/components/TemplatesCatalog/components/TemplatesTable/TemplatesTableRow.tsx",
+        "attributeType": "data-test"
+      },
+      "template-arch-${templateName}": {
+        "value": "template-arch-${templateName}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/TemplateStep/components/TemplatesCatalog/components/TemplatesTable/TemplatesTableRow.tsx",
+        "attributeType": "data-test"
+      },
+      "template-category-${templateName}": {
+        "value": "template-category-${templateName}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/TemplateStep/components/TemplatesCatalog/components/TemplatesTable/TemplatesTableRow.tsx",
+        "attributeType": "data-test"
+      },
+      "template-cpu-memory-${templateName}": {
+        "value": "template-cpu-memory-${templateName}",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/TemplateStep/components/TemplatesCatalog/components/TemplatesTable/TemplatesTableRow.tsx",
+        "attributeType": "data-test"
+      },
+      "edit-parameters-button": {
+        "value": "edit-parameters-button",
+        "sourceFile": "src/views/virtualmachines/wizard/steps/TemplateStep/components/TemplatesCatalogDrawer/components/ParametersSections.tsx",
+        "attributeType": "data-test"
+      },
+      "sysprep-button": {
+        "value": "sysprep-button",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/initialrun/components/InitialRunTabSysprep.tsx",
+        "attributeType": "data-test"
+      },
+      "descheduler-edit": {
+        "value": "descheduler-edit",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/scheduling/components/Descheduler.tsx",
+        "attributeType": "data-test"
+      },
+      "descheduler": {
+        "value": "descheduler",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/scheduling/components/SchedulingSectionLeftGrid.tsx",
+        "attributeType": "data-test"
+      },
+      "dedicated-resources": {
+        "value": "dedicated-resources",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/scheduling/components/SchedulingSectionRightGrid.tsx",
+        "attributeType": "data-test"
+      },
+      "eviction-strategy": {
+        "value": "eviction-strategy",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/scheduling/components/SchedulingSectionRightGrid.tsx",
+        "attributeType": "data-test"
+      },
+      "run-strategy": {
+        "value": "run-strategy",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/scheduling/components/SchedulingSectionRightGrid.tsx",
+        "attributeType": "data-test"
+      },
+      "nic-${nicName}": {
+        "value": "nic-${nicName}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/network/components/list/networkInterfaceListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "nic-bootable-${nicName}": {
+        "value": "nic-bootable-${nicName}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/network/components/list/networkInterfaceListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "nic-model-${row.network?.name}": {
+        "value": "nic-model-${row.network?.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/network/components/list/networkInterfaceListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "nic-type-${row.network?.name}": {
+        "value": "nic-type-${row.network?.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/network/components/list/networkInterfaceListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "nic-mac-${row.network?.name}": {
+        "value": "nic-mac-${row.network?.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/network/components/list/networkInterfaceListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-boot-method": {
+        "value": "${vmName}-boot-method",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/details/components/DetailsSectionBoot.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-boot-order": {
+        "value": "${vmName}-boot-order",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/details/components/DetailsSectionBoot.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-workload-profile": {
+        "value": "${vmName}-workload-profile",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/details/DetailsSection.tsx",
+        "attributeType": "data-test"
+      },
+      "${vmName}-cpu-memory": {
+        "value": "${vmName}-cpu-memory",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/details/DetailsSection.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-${name}": {
+        "value": "disk-${name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/storage/components/tables/disk/cells/DiskNameCell.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-size-${row.name}": {
+        "value": "disk-size-${row.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/storage/components/tables/disk/diskListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-drive-${row.name}": {
+        "value": "disk-drive-${row.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/storage/components/tables/disk/diskListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-interface-${row.name}": {
+        "value": "disk-interface-${row.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/storage/components/tables/disk/diskListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-storage-class-${row.name}": {
+        "value": "disk-storage-class-${row.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/storage/components/tables/disk/diskListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "ssh-access": {
+        "value": "ssh-access",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/ssh/components/SSHTabSSHAccess.tsx",
+        "attributeType": "data-test"
+      },
+      "advanced-view-toggle": {
+        "value": "advanced-view-toggle",
+        "sourceFile": "src/views/virtualmachines/details/tabs/configuration/metadata/components/LabelsAnnotationsHeader.tsx",
+        "attributeType": "data-test"
+      },
+      "snapshot-${name}": {
+        "value": "snapshot-${name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/snapshots/components/list/snapshotListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "snapshot-created-${getName(row)}": {
+        "value": "snapshot-created-${getName(row)}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/snapshots/components/list/snapshotListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "snapshot-status-${getName(row)}": {
+        "value": "snapshot-status-${getName(row)}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/snapshots/components/list/snapshotListDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-diagnostics-guest-system-log": {
+        "value": "vm-diagnostics-guest-system-log",
+        "sourceFile": "src/views/virtualmachines/details/tabs/diagnostic/VirtualMachineDiagnosticTab.tsx",
+        "attributeType": "data-test"
+      },
+      "diagnostics-card-${severity}": {
+        "value": "diagnostics-card-${severity ?? 'all'}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/diagnostic/components/DiagnosticsOverviewCards/DiagnosticsOverviewCards.tsx",
+        "attributeType": "data-test"
+      },
+      "network-interface-${row?.network?.name}": {
+        "value": "network-interface-${row?.network?.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabNetworkInterfaces/overviewNetworkInterfacesDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "network-interface-ip-${row?.network?.name}": {
+        "value": "network-interface-ip-${row?.network?.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabNetworkInterfaces/overviewNetworkInterfacesDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "overview-network-interfaces-card": {
+        "value": "overview-network-interfaces-card",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabNetworkInterfaces/VirtualMachinesOverviewTabNetworkInterfaces.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-${row?.name}": {
+        "value": "disk-${row?.name}",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDisks/overviewDisksDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-snapshots": {
+        "value": "virtual-machine-overview-snapshots",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabSnapshots/VirtualMachinesOverviewTabSnapshots.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-name": {
+        "value": "virtual-machine-overview-details-name",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDetails/VirtualMachinesOverviewTabDetails.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-folder": {
+        "value": "virtual-machine-overview-details-folder",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDetails/VirtualMachinesOverviewTabDetails.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-os": {
+        "value": "virtual-machine-overview-details-os",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDetails/VirtualMachinesOverviewTabDetails.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-cpu-memory": {
+        "value": "virtual-machine-overview-details-cpu-memory",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDetails/VirtualMachinesOverviewTabDetails.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-host": {
+        "value": "virtual-machine-overview-details-host",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDetails/VirtualMachinesOverviewTabDetails.tsx",
+        "attributeType": "data-test"
+      },
+      "virtual-machine-overview-details-instance-type": {
+        "value": "virtual-machine-overview-details-instance-type",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDetails/components/InstanceTypeDescription.tsx",
+        "attributeType": "data-test"
+      },
+      "overview-hardware-devices-card": {
+        "value": "overview-hardware-devices-card",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabHardwareDevices/VirtualMachinesOverviewTabHardwareDevices.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-name-${vmName}": {
+        "value": "vm-name-${vmName}",
+        "sourceFile": "src/views/virtualmachines/list/cells/VMNameCell.tsx",
+        "attributeType": "data-test"
+      },
+      "select-vm-${name}": {
+        "value": "select-vm-${name}",
+        "sourceFile": "src/views/virtualmachines/list/cells/VMSelectionCell.tsx",
+        "attributeType": "data-test"
+      },
+      "virtio-drivers-alert": {
+        "value": "virtio-drivers-alert",
+        "sourceFile": "src/views/virtualmachines/list/components/VirtIODriversAlert/VirtIODriversAlert.tsx",
+        "attributeType": "data-test"
+      },
+      "virtio-drivers-dont-show-again": {
+        "value": "virtio-drivers-dont-show-again",
+        "sourceFile": "src/views/virtualmachines/list/components/VirtIODriversAlert/VirtIODriversAlert.tsx",
+        "attributeType": "data-test"
+      },
+      "item-create": {
+        "value": "item-create",
+        "sourceFile": "src/views/virtualmachines/list/components/VirtualMachinesCreateButton/VirtualMachinesCreateButton.tsx",
+        "attributeType": "data-test"
+      },
+      "dashboard": {
+        "value": "dashboard",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/OverviewTab.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-list-summary": {
+        "value": "vm-list-summary",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/OverviewTab.tsx",
+        "attributeType": "data-test"
+      },
+      "openshift-virtualization-widget": {
+        "value": "openshift-virtualization-widget",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/OpenShiftVirtualizationWidget/OpenShiftVirtualizationWidget.tsx",
+        "attributeType": "data-test"
+      },
+      "cluster-utilization-widget": {
+        "value": "cluster-utilization-widget",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/ClusterUtilizationWidget/ClusterUtilizationWidget.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-list-statuses-card": {
+        "value": "vm-list-statuses-card",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/VirtualMachinesHealthWidget/components/VMStatuses.tsx",
+        "attributeType": "data-test"
+      },
+      "guest-agent-issues-widget": {
+        "value": "guest-agent-issues-widget",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/VirtualMachinesHealthWidget/components/GuestAgentIssues.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-alerts-widget": {
+        "value": "vm-alerts-widget",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/VirtualMachinesHealthWidget/components/VMAlertsCard.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-migration-plans-widget": {
+        "value": "storage-migration-plans-widget",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/StorageMigrationPlansWidget/StorageMigrationPlansWidget.tsx",
+        "attributeType": "data-test"
+      },
+      "resource-allocation-chart-${metric}": {
+        "value": "resource-allocation-chart-${metric}",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/ResourceAllocationWidget/components/ResourceAllocationChart/ResourceAllocationChart.tsx",
+        "attributeType": "data-test"
+      },
+      "resource-allocation-widget": {
+        "value": "resource-allocation-widget",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/ResourceAllocationWidget/ResourceAllocationWidget.tsx",
+        "attributeType": "data-test"
+      },
+      "all-clusters-resources-card": {
+        "value": "all-clusters-resources-card",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/ClusterStatusWidget/components/ClusterResourcesCard/AllClustersResourcesCard.tsx",
+        "attributeType": "data-test"
+      },
+      "single-cluster-resources-card": {
+        "value": "single-cluster-resources-card",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/ClusterStatusWidget/components/ClusterResourcesCard/SingleClusterResourcesCard.tsx",
+        "attributeType": "data-test"
+      },
+      "migrations-widget": {
+        "value": "migrations-widget",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/MigrationsWidget/MigrationsWidget.tsx",
+        "attributeType": "data-test"
+      },
+      "node-cpu-${row.name}": {
+        "value": "node-cpu-${row.name}",
+        "sourceFile": "src/views/virtualmachines/actions/components/VirtualMachineComputeMigration/components/NodesTable/nodesTableDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "node-memory-${row.name}": {
+        "value": "node-memory-${row.name}",
+        "sourceFile": "src/views/virtualmachines/actions/components/VirtualMachineComputeMigration/components/NodesTable/nodesTableDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "node-name-${row.name}": {
+        "value": "node-name-${row.name}",
+        "sourceFile": "src/views/virtualmachines/actions/components/VirtualMachineComputeMigration/components/NodesTable/nodesTableDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "node-status-${row.name}": {
+        "value": "node-status-${row.name}",
+        "sourceFile": "src/views/virtualmachines/actions/components/VirtualMachineComputeMigration/components/NodesTable/nodesTableDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "${action?.id}-button": {
+        "value": "${action?.id}-button",
+        "sourceFile": "src/views/virtualmachines/actions/components/VMActionsIconBar/components/ActionIconButton.tsx",
+        "attributeType": "data-test"
+      },
+      "overview-tab": {
+        "value": "overview-tab",
+        "sourceFile": "src/views/virtualmachines/navigator/VirtualMachineNavigator.tsx",
+        "attributeType": "data-test"
+      },
+      "vm-list-tab": {
+        "value": "vm-list-tab",
+        "sourceFile": "src/views/virtualmachines/navigator/VirtualMachineNavigator.tsx",
+        "attributeType": "data-test"
+      },
+      "template-category": {
+        "value": "template-category",
+        "sourceFile": "src/views/templates/details/tabs/details/components/TemplateCategory.tsx",
+        "attributeType": "data-test"
+      },
+      "restore-button": {
+        "value": "restore-button",
+        "sourceFile": "src/views/templates/details/tabs/details/components/CPUMemoryModal/CPUMemoryModal.tsx",
+        "attributeType": "data-test"
+      },
+      "common-template-alert": {
+        "value": "common-template-alert",
+        "sourceFile": "src/views/templates/details/CommonTemplateAlert.tsx",
+        "attributeType": "data-test"
+      },
+      "storage-add-button": {
+        "value": "storage-add-button",
+        "sourceFile": "src/utils/components/DiskModal/components/DiskSourceSelect/DiskSourceSelect.tsx",
+        "attributeType": "data-test"
+      },
+      "apply-storage-provider": {
+        "value": "apply-storage-provider",
+        "sourceFile": "src/views/cdi-upload-provider/upload-pvc-form/UploadPVCFormStorageClass.tsx",
+        "attributeType": "data-test"
+      },
+      "catalog-template-filter-all-items": {
+        "value": "catalog-template-filter-all-items",
+        "sourceFile": "src/utils/components/TemplatesFilter/components/TemplatesScopeFilter.tsx",
+        "attributeType": "data-test"
+      },
+      "vmi-name-${name}": {
+        "value": "vmi-name-${name}",
+        "sourceFile": "src/views/virtualmachinesinstance/list/cells/VMINameCell.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-source-${disk.name}": {
+        "value": "disk-source-${disk.name}",
+        "sourceFile": "src/views/virtualmachinesinstance/details/tabs/disks/table/disks/disksTableDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-name-${row.name}": {
+        "value": "disk-name-${row.name}",
+        "sourceFile": "src/views/virtualmachinesinstance/details/tabs/disks/table/disks/disksTableDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "disk-storageclass-${row.name}": {
+        "value": "disk-storageclass-${row.name}",
+        "sourceFile": "src/views/virtualmachinesinstance/details/tabs/disks/table/disks/disksTableDefinition.tsx",
+        "attributeType": "data-test"
+      },
+      "status-count-${label}": {
+        "value": "status-count-${label.toLowerCase().replace(/\\s+/g, '-')}",
+        "sourceFile": "src/views/virtualmachines/list/components/OverviewTab/widgets/shared/StatusCountItem.tsx",
+        "attributeType": "data-test"
+      },
+      "checkup-failure-${name}": {
+        "value": "checkup-failure-${getName(row)}",
+        "sourceFile": "src/views/checkups/storage/list/checkupsStorageCells.tsx",
+        "attributeType": "data-test"
+      },
+      "${key}-selected": {
+        "value": "${key}-selected",
+        "sourceFile": "src/views/migrationpolicies/components/MigrationPolicyConfigurations/MigrationPolicyConfigurations.tsx",
+        "attributeType": "data-test"
+      },
+      "template-category-${name}": {
+        "value": "template-category-${name}",
+        "sourceFile": "src/views/templates/list/virtualMachineTemplatesDefinition.tsx",
+        "attributeType": "data-test"
+      }
+    },
+    "rbac": {
+      "identities": {
+        "value": "identities",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "review": {
+        "value": "review",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "role": {
+        "value": "role",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "scope": {
+        "value": "scope",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "scope-cluster-granularity": {
+        "value": "scope-cluster-granularity",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "scope-cluster-set-granularity": {
+        "value": "scope-cluster-set-granularity",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "scope-selection": {
+        "value": "scope-selection",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "service-account-role-assignments": {
+        "value": "service-account-role-assignments",
+        "sourceFile": "frontend/src/routes/UserManagement/Identities/ServiceAccounts/ServiceAccountRoleAssignments.tsx",
+        "attributeType": "id"
+      },
+      "namespace-selector": {
+        "value": "namespace-selector",
+        "sourceFile": "frontend/src/routes/UserManagement/RoleAssignment/NamespaceSelector.tsx",
+        "attributeType": "id"
+      },
+      "clusters-dual-list-selector-tree": {
+        "value": "clusters-dual-list-selector-tree",
+        "sourceFile": "frontend/src/routes/UserManagement/RoleAssignment/ClustersDualListSelector.tsx",
+        "attributeType": "id"
+      },
+      "scope-type": {
+        "value": "scope-type",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/ScopeSelectionStepContent.tsx",
+        "attributeType": "id"
+      },
+      "clusters-access-level": {
+        "value": "clusters-access-level",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/ClusterGranularityWizardStep.tsx",
+        "attributeType": "id"
+      },
+      "clusters-set-access-level": {
+        "value": "clusters-set-access-level",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/ClusterSetGranularityWizardStep.tsx",
+        "attributeType": "id"
+      }
+    },
+    "infrastructure": {
+      "vm-modal-confirm": {
+        "value": "vm-modal-confirm",
+        "sourceFile": "frontend/src/routes/Infrastructure/VirtualMachines/modals/VMActionModal.tsx",
+        "attributeType": "id"
+      },
+      "deadline": {
+        "value": "deadline",
+        "sourceFile": "frontend/src/routes/Infrastructure/VirtualMachines/modals/snapshotModalBody.tsx",
+        "attributeType": "id"
+      },
+      "deadline-unit": {
+        "value": "deadline-unit",
+        "sourceFile": "frontend/src/routes/Infrastructure/VirtualMachines/modals/snapshotModalBody.tsx",
+        "attributeType": "id"
+      },
+      "description": {
+        "value": "description",
+        "sourceFile": "frontend/src/routes/Infrastructure/VirtualMachines/modals/snapshotModalBody.tsx",
+        "attributeType": "id"
+      },
+      "vmName": {
+        "value": "vmName",
+        "sourceFile": "frontend/src/routes/Infrastructure/VirtualMachines/modals/snapshotModalBody.tsx",
+        "attributeType": "id"
+      },
+      "namespace-nav-link": {
+        "value": "namespace-nav-link",
+        "sourceFile": "frontend/src/routes/Search/Details/DetailsOverviewPage.tsx",
+        "attributeType": "data-test"
+      },
+      "node-selector-btn": {
+        "value": "node-selector-btn",
+        "sourceFile": "frontend/src/routes/Search/Details/DetailsOverviewPage.tsx",
+        "attributeType": "data-test"
+      },
+      "pod-selector-btn": {
+        "value": "pod-selector-btn",
+        "sourceFile": "frontend/src/routes/Search/Details/DetailsOverviewPage.tsx",
+        "attributeType": "data-test"
+      },
+      "timestamp": {
+        "value": "timestamp",
+        "sourceFile": "frontend/src/routes/Search/Details/DetailsOverviewPage.tsx",
+        "attributeType": "data-test"
+      },
+      "event-totals": {
+        "value": "event-totals",
+        "sourceFile": "frontend/packages/multicluster-sdk/src/components/FleetResourceEventStream.tsx",
+        "attributeType": "data-test"
+      }
+    }
+  },
+  "translations": {
+    "B-series burstable virtual machine sizes": "B-series burstable virtual machine sizes",
+    "Centrally manage VMs with Fleet Virtualization": "Centrally manage VMs with Fleet Virtualization",
+    "Configure external infrastructure for OpenShift Virtualization": "Configure external infrastructure for OpenShift Virtualization",
+    "Delete VirtualMachine": "Delete VirtualMachine",
+    "Delete VirtualMachineSnapshot": "Delete VirtualMachineSnapshot",
+    "Edit VirtualMachine": "Edit VirtualMachine",
+    "Edit VirtualMachineSnapshot": "Edit VirtualMachineSnapshot",
+    "Pause VirtualMachine": "Pause VirtualMachine",
+    "Restart VirtualMachine": "Restart VirtualMachine",
+    "Restore VirtualMachine from snapshot": "Restore VirtualMachine from snapshot",
+    "Show virtual machine resources": "Show virtual machine resources",
+    "Start VirtualMachine": "Start VirtualMachine",
+    "Stop VirtualMachine": "Stop VirtualMachine",
+    "Taking snapshot of running VirtualMachine.": "Taking snapshot of running VirtualMachine.",
+    "Fleet management": "Fleet management",
+    "Show workloads running on your fleet": "Show workloads running on your fleet",
+    "Create and manage a fleet of clusters with ease using this all clusters view.": "Create and manage a fleet of clusters with ease using this all clusters view.",
+    "A role assignment for {{role}} role added.": "A role assignment for {{role}} role added.",
+    "A role assignment for {{role}} role updated.": "A role assignment for {{role}} role updated.",
+    "A role assignment specifies a distinct action users or groups can perform when associated with a particular role.": "A role assignment specifies a distinct action users or groups can perform when associated with a particular role.",
+    "Are you sure that you want to delete the role assignments? This action cannot be undone.": "Are you sure that you want to delete the role assignments? This action cannot be undone.",
+    "Cluster role assignment": "Cluster role assignment",
+    "Cluster set role assignment": "Cluster set role assignment",
+    "Create role assignment": "Create role assignment",
+    "Create role assignment for {{preselected}}": "Create role assignment for {{preselected}}",
+    "Delete role assignment": "Delete role assignment",
+    "Delete role assignment?": "Delete role assignment?",
+    "Delete role assignments": "Delete role assignments",
+    "Delete role assignments?": "Delete role assignments?",
+    "Edit role assignment": "Edit role assignment",
+    "No role assignment created yet": "No role assignment created yet",
+    "No role assignments have been created for this entity yet. Create a role assignment to grant specific permissions.": "No role assignments have been created for this entity yet. Create a role assignment to grant specific permissions.",
+    "Project role assignment": "Project role assignment",
+    "Role assignment added": "Role assignment added",
+    "Role Assignment being applied": "Role Assignment being applied",
+    "Role assignment creation failed": "Role assignment creation failed",
+    "Role assignment update failed": "Role assignment update failed",
+    "Role assignment updated": "Role assignment updated",
+    "Role assignments": "Role assignments",
+    "Search for role assignments...": "Search for role assignments...",
+    "Service Account Role Assignments": "Service Account Role Assignments",
+    "Service Account role assignments page for ID: {{id}}": "Service Account role assignments page for ID: {{id}}",
+    "tab.userManagement": "User management",
+    "table.userManagement": "User management",
+    "User management": "User management",
+    "Learn more about user management, including an example YAML file.": "Learn more about user management, including an example YAML file.",
+    "Identity": "Identity",
+    "Identity provider": "Identity provider",
+    "Identity Provider": "Identity Provider",
+    "Identity selection tabs": "Identity selection tabs",
+    "In order to view Groups, add Identity provider": "In order to view Groups, add Identity provider",
+    "In order to view Users, add Identity provider": "In order to view Users, add Identity provider",
+    "Once Identity provider is added, Groups will appear in the list after they log in.": "Once Identity provider is added, Groups will appear in the list after they log in.",
+    "Once Identity provider is added, Users will appear in the list after they log in.": "Once Identity provider is added, Users will appear in the list after they log in.",
+    "Save search": "Save search",
+    "access.clusterSet.role.admin": "Cluster set admin",
+    "access.clusterSet.role.view": "Cluster set view",
+    "Add cluster set": "Add cluster set",
+    "Add cluster sets": "Add cluster sets",
+    "Cluster set": "Cluster set",
+    "Cluster set bind": "Cluster set bind",
+    "Cluster sets": "Cluster sets",
+    "clusterSets": "Cluster sets",
+    "createClusterSet.form.name.label": "Cluster set name",
+    "createClusterSet.form.name.placeholder": "Enter cluster set name",
+    "createClusterSet.title": "Create cluster set",
+    "creation.ocp.clusterSet": "Cluster set",
+    "Define cluster set granularity": "Define cluster set granularity",
+    "Define the level of access for the selected cluster set.": "Define the level of access for the selected cluster set.",
+    "Define the level of access for the selected cluster sets.": "Define the level of access for the selected cluster sets."
+  },
+  "translationValueCounts": {
+    "User management": {
+      "count": 3,
+      "keys": [
+        "tab.userManagement",
+        "table.userManagement",
+        "User management"
+      ]
+    },
+    "Cluster set": {
+      "count": 2,
+      "keys": [
+        "Cluster set",
+        "creation.ocp.clusterSet"
+      ]
+    },
+    "Cluster sets": {
+      "count": 2,
+      "keys": [
+        "Cluster sets",
+        "clusterSets"
+      ]
+    }
+  },
+  "routes": {
+    "/multicloud/infrastructure/clusters/details/:namespace/:name": {
+      "component": "clusterDetails",
+      "exact": false
+    },
+    "/multicloud/infrastructure/clusters/details/:namespace/:name/overview": {
+      "component": "clusterOverview",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/details/:namespace/:name/settings": {
+      "component": "clusterSettings",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/details/:namespace/:name/role-assignments": {
+      "component": "clusterRoleAssignments",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/sets": {
+      "component": "clusterSets",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/sets/create": {
+      "component": "createClusterSet",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/sets/details/:id": {
+      "component": "clusterSetDetails",
+      "exact": false
+    },
+    "/multicloud/infrastructure/clusters/sets/details/:id/overview": {
+      "component": "clusterSetOverview",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/sets/details/:id/access": {
+      "component": "clusterSetAccess",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/sets/details/:id/clusters": {
+      "component": "clusterSetClusters",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/sets/details/:id/manage-resources": {
+      "component": "clusterSetManage",
+      "exact": true
+    },
+    "/multicloud/infrastructure/clusters/sets/details/:id/role-assignments": {
+      "component": "clusterSetRoleAssignments",
+      "exact": true
+    },
+    "/multicloud/user-management/identities": {
+      "component": "identities",
+      "exact": false
+    },
+    "/multicloud/user-management/identities/users": {
+      "component": "identitiesUsers",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/users/:id": {
+      "component": "identitiesUsersDetails",
+      "exact": false
+    },
+    "/multicloud/user-management/identities/users/:id/yaml": {
+      "component": "identitiesUsersYaml",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/users/:id/role-assignments": {
+      "component": "identitiesUsersRoleAssignments",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/users/:id/role-assignments/create": {
+      "component": "identitiesUsersRoleAssignmentsCreate",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/users/:id/groups": {
+      "component": "identitiesUsersGroups",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/groups": {
+      "component": "identitiesGroups",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/groups/:id": {
+      "component": "identitiesGroupsDetails",
+      "exact": false
+    },
+    "/multicloud/user-management/identities/groups/:id/yaml": {
+      "component": "identitiesGroupsYaml",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/groups/:id/role-assignments": {
+      "component": "identitiesGroupsRoleAssignments",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/groups/:id/users": {
+      "component": "identitiesGroupsUsers",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/service-accounts": {
+      "component": "identitiesServiceAccounts",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/service-accounts/:id": {
+      "component": "identitiesServiceAccountsDetails",
+      "exact": false
+    },
+    "/multicloud/user-management/identities/service-accounts/:id/yaml": {
+      "component": "identitiesServiceAccountsYaml",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/service-accounts/:id/role-assignments": {
+      "component": "identitiesServiceAccountsRoleAssignments",
+      "exact": true
+    },
+    "/multicloud/user-management/identities/service-accounts/:id/groups": {
+      "component": "identitiesServiceAccountsGroups",
+      "exact": true
+    },
+    "/multicloud/user-management/roles": {
+      "component": "roles",
+      "exact": true
+    },
+    "/multicloud/user-management/roles/:id": {
+      "component": "roleDetails",
+      "exact": false
+    },
+    "/multicloud/user-management/roles/:id/permissions": {
+      "component": "rolePermissions",
+      "exact": true
+    },
+    "/multicloud/user-management/roles/:id/role-assignments": {
+      "component": "roleRoleAssignments",
+      "exact": true
+    },
+    "/multicloud/user-management/roles/:id/yaml": {
+      "component": "roleYaml",
+      "exact": true
+    },
+    "/multicloud/search/resources/snapshots": {
+      "component": "vmSnapshots",
+      "exact": true
+    }
+  },
+  "testIds": {
+    "fleetVirt": [
+      "actions-dropdown",
+      "filter-toolbar",
+      "filter-dropdown-toggle",
+      "item-filter",
+      "volume-registry-retain-cron-expression",
+      "storage-class-select",
+      "use-existing-volume",
+      "use-registry",
+      "use-http",
+      "loading-spinner",
+      "empty-state",
+      "save-button",
+      "cancel-button",
+      "dialog-modal",
+      "network-option-pod-networking",
+      "network-attachment-definition-select",
+      "model-select",
+      "network-interface-type-select",
+      "passt-binding-select",
+      "onboarding-dismiss-btn",
+      "onboarding-popover",
+      "label-key",
+      "loading-indicator",
+      "cpu-memory-value",
+      "kebab-button",
+      "manage-columns",
+      "reset-button",
+      "name-filter-input",
+      "cdrom-drivers",
+      "dropdown-text-filter",
+      "ssh-command-copy",
+      "resource-title",
+      "dataimportcron-manage-source-url",
+      "dataimportcron-manage-cron",
+      "datasource-create-source-url",
+      "datasource-create-cron",
+      "virtio-drivers-section-download-iso",
+      "general-information-installed-version",
+      "general-information-update-status",
+      "virtual-machine-overview-details-created",
+      "virtual-machine-overview-details-status",
+      "inventory-card",
+      "overview-vm-statuses-card",
+      "getting-started",
+      "getting-started-title",
+      "getting-started-section-title",
+      "vms-per-template-card",
+      "kv-monitoring-card",
+      "modal-cancel-action",
+      "win-image-download-url-input",
+      "win-image-name-clear",
+      "welcome-modal",
+      "search-keys-section",
+      "search-dropdown",
+      "vm-adv-search-toolbar",
+      "save-search-name",
+      "save-search-description",
+      "save-search",
+      "vm-advanced-search-button",
+      "saved-searches",
+      "adv-search-network",
+      "adv-search-vm-nad",
+      "adv-search-vm-ip",
+      "adv-search-vm-nodes",
+      "adv-search-mem-value",
+      "adv-search-vm-description",
+      "adv-search-date-select",
+      "adv-search-vcpu-value",
+      "adv-search-vm-os",
+      "adv-search-vm-name",
+      "adv-search-vm-storage-class",
+      "vms-treeview",
+      "generate-vm-name-button",
+      "create-virtual-machine",
+      "search-catalog",
+      "edit-parameters-button",
+      "sysprep-button",
+      "descheduler-edit",
+      "descheduler",
+      "dedicated-resources",
+      "eviction-strategy",
+      "run-strategy",
+      "ssh-access",
+      "advanced-view-toggle",
+      "vm-diagnostics-guest-system-log",
+      "overview-network-interfaces-card",
+      "virtual-machine-overview-snapshots",
+      "virtual-machine-overview-details-name",
+      "virtual-machine-overview-details-folder",
+      "virtual-machine-overview-details-os",
+      "virtual-machine-overview-details-cpu-memory",
+      "virtual-machine-overview-details-host",
+      "virtual-machine-overview-details-instance-type",
+      "overview-hardware-devices-card",
+      "virtio-drivers-alert",
+      "virtio-drivers-dont-show-again",
+      "item-create",
+      "dashboard",
+      "vm-list-summary",
+      "openshift-virtualization-widget",
+      "cluster-utilization-widget",
+      "vm-list-statuses-card",
+      "guest-agent-issues-widget",
+      "vm-alerts-widget",
+      "storage-migration-plans-widget",
+      "resource-allocation-widget",
+      "all-clusters-resources-card",
+      "single-cluster-resources-card",
+      "migrations-widget",
+      "overview-tab",
+      "vm-list-tab",
+      "template-category",
+      "restore-button",
+      "common-template-alert",
+      "storage-add-button",
+      "apply-storage-provider",
+      "catalog-template-filter-all-items"
+    ],
+    "rbac": [
+      "identities",
+      "review",
+      "role",
+      "scope",
+      "scope-cluster-granularity",
+      "scope-cluster-set-granularity",
+      "scope-selection",
+      "service-account-role-assignments",
+      "namespace-selector",
+      "clusters-dual-list-selector-tree",
+      "scope-type",
+      "clusters-access-level",
+      "clusters-set-access-level"
+    ]
+  },
+  "pfVersion": "pf-v5/pf-v6 (mixed: theme.tsx references both pf-v5-theme-dark and pf-v6-theme-dark; kubevirt-plugin uses pf-v6-c and pf-v6-u classes)"
+}

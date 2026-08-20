@@ -1,0 +1,254 @@
+{
+  "$schema": "Virt UI Drift Detector Baseline Snapshot",
+  "$version": "3.0",
+  "$description": "Captured upstream state. Keys use constant-path names. Selector entries include sourceFile and attributeType for co-occurrence detection and attribute normalization.",
+
+  "baselineDate": "2026-07-29",
+  "acmVersion": "2.19",
+  "cnvVersion": "4.23",
+  "acmBranch": "main",
+  "cnvBranch": "main",
+  "pfVersion": "pf-v6 (kubevirt-plugin now exclusively pf-v6; ACM Console dual pf-v5/pf-v6 theme support but renders pf-v6 only)",
+  "pfVersionDetails": "kubevirt-plugin migrated fully to pf-v6 in CNV 4.23 (was pf-v5 in 4.22). ACM Console theme.tsx references both but live DOM renders pf-v6-c consistently.",
+  "selectors": {
+    "fleetVirt": {
+      "FLEET_VIRT_PAGE.perspectiveSwitcher": {
+        "value": "[data-test-id=\"perspective-switcher-toggle\"]",
+        "sourceFile": "OCP console framework (not in stolostron/console or kubevirt-plugin)",
+        "attributeType": "data-test-id"
+      },
+      "FLEET_VIRT_SEARCH.searchInput": {
+        "value": "[data-test=\"vm-search-input\"] input",
+        "sourceFile": "src/views/search/components/SearchTextInput.tsx",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_SEARCH.searchResults": {
+        "value": "[data-test=\"search-results\"]",
+        "sourceFile": "NOT FOUND in upstream (orphaned test code)",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.openButton": {
+        "value": "[data-test=\"vm-advanced-search-button\"]",
+        "sourceFile": "src/views/search/components/SearchTextInput.tsx",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.nameInput": {
+        "value": "[data-test=\"adv-search-vm-name\"]",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/NameField.tsx",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.cluster.wrapper": {
+        "value": "[data-test=\"adv-search-vm-cluster\"]",
+        "sourceFile": "NOT FOUND in upstream (orphaned test code)",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.project.wrapper": {
+        "value": "[data-test=\"adv-search-vm-project\"]",
+        "sourceFile": "NOT FOUND in upstream (orphaned test code)",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.menuContent": {
+        "value": ".pf-v6-c-menu__content",
+        "sourceFile": "PatternFly CSS class (not a data-test attribute)",
+        "attributeType": "css-class"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.nameInput": {
+        "value": "[data-test-id=\"save-search-name\"]",
+        "sourceFile": "src/views/search/components/SaveSearchModal.tsx",
+        "attributeType": "data-test",
+        "note": "MISMATCH: upstream uses data-test, test code uses data-test-id"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput": {
+        "value": "[data-test-id=\"save-search-description\"]",
+        "sourceFile": "src/views/search/components/SaveSearchModal.tsx",
+        "attributeType": "data-test",
+        "note": "MISMATCH: upstream uses data-test, test code uses data-test-id"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.submitButton": {
+        "value": "[data-test=\"save-button\"]",
+        "sourceFile": "src/utils/components/TabModal/components/TabModalFooter.tsx",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.cancelButton": {
+        "value": "[data-test=\"cancel-button\"]",
+        "sourceFile": "src/utils/components/TabModal/components/TabModalFooter.tsx",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.dropdown.list": {
+        "value": "[data-test=\"saved-searches\"]",
+        "sourceFile": "src/views/search/components/SavedSearchesDropdown/SavedSearchesDropdown.tsx",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_VM_ACTIONS.dropdown": {
+        "value": "[data-test=\"actions-dropdown\"]",
+        "sourceFile": "src/utils/components/ActionsDropdown/ActionsDropdown.tsx",
+        "attributeType": "data-test"
+      },
+      "FLEET_VIRT_VM_ACTIONS.statusLabel": {
+        "value": "[data-test=\"virtual-machine-overview-details-status\"]",
+        "sourceFile": "src/views/virtualmachines/details/tabs/overview/components/VirtualMachinesOverviewTabDetails/VirtualMachinesOverviewTabDetails.tsx",
+        "attributeType": "data-test"
+      },
+      "NEW.vmAdvSearchToolbar": {
+        "value": "[data-test=\"vm-adv-search-toolbar\"]",
+        "sourceFile": "src/views/search/components/SearchBar.tsx",
+        "attributeType": "data-test"
+      },
+      "NEW.overviewTab": {
+        "value": "[data-test=\"overview-tab\"]",
+        "sourceFile": "src/views/virtualmachines/navigator/VirtualMachineNavigator.tsx",
+        "attributeType": "data-test"
+      },
+      "NEW.vmListTab": {
+        "value": "[data-test=\"vm-list-tab\"]",
+        "sourceFile": "src/views/virtualmachines/navigator/VirtualMachineNavigator.tsx",
+        "attributeType": "data-test"
+      },
+      "NEW.vmsTreeview": {
+        "value": "[data-test=\"vms-treeview\"]",
+        "sourceFile": "src/views/virtualmachines/tree/VirtualMachineTreeView.tsx",
+        "attributeType": "data-test"
+      },
+      "NEW.advSearchNetwork": {
+        "value": "[data-test=\"adv-search-network\"]",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/AdvancedSearchModal.tsx",
+        "attributeType": "data-test"
+      },
+      "NEW.advSearchVmOs": {
+        "value": "[data-test=\"adv-search-vm-os\"]",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/OperatingSystemField.tsx",
+        "attributeType": "data-test"
+      },
+      "NEW.advSearchVmStorageClass": {
+        "value": "[data-test=\"adv-search-vm-storage-class\"]",
+        "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/StorageClassField.tsx",
+        "attributeType": "data-test"
+      }
+    },
+    "rbac": {
+      "RBAC_RA_TABLE.toolbar.createButtonId": {
+        "value": "create-role-assignment",
+        "sourceFile": "stolostron/console RBAC components",
+        "attributeType": "data-testid"
+      },
+      "RBAC_RA_TABLE.toolbar.bulkDeleteButtonId": {
+        "value": "deleteRoleAssignments",
+        "sourceFile": "stolostron/console RBAC components",
+        "attributeType": "data-testid"
+      },
+      "RBAC_RA_TABLE.rowActions.editId": {
+        "value": "edit-role-assignment",
+        "sourceFile": "stolostron/console RBAC components",
+        "attributeType": "data-testid"
+      },
+      "RBAC_RA_TABLE.rowActions.deleteId": {
+        "value": "delete-role-assignment",
+        "sourceFile": "stolostron/console RBAC components",
+        "attributeType": "data-testid"
+      },
+      "WIZARD_STEP_IDS.identities": {
+        "value": "identities",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "WIZARD_STEP_IDS.scope": {
+        "value": "scope",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "WIZARD_STEP_IDS.role": {
+        "value": "role",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "WIZARD_STEP_IDS.review": {
+        "value": "review",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/RoleAssignmentWizardModal.tsx",
+        "attributeType": "id"
+      },
+      "WIZARD_SELECT_IDS.scopeType": {
+        "value": "scope-type",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/ScopeSelectionStepContent.tsx",
+        "attributeType": "id"
+      },
+      "WIZARD_SELECT_IDS.clustersAccessLevel": {
+        "value": "clusters-access-level",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/ClusterGranularityWizardStep.tsx",
+        "attributeType": "id"
+      },
+      "WIZARD_SELECT_IDS.clusterSetAccessLevel": {
+        "value": "clusters-set-access-level",
+        "sourceFile": "frontend/src/wizards/RoleAssignment/ClusterSetGranularityWizardStep.tsx",
+        "attributeType": "id"
+      },
+      "NEW.serviceAccountRoleAssignments": {
+        "value": "service-account-role-assignments",
+        "sourceFile": "frontend/src/routes/UserManagement/Identities/ServiceAccounts/ServiceAccountRoleAssignments.tsx",
+        "attributeType": "id"
+      }
+    }
+  },
+  "translations": {
+    "fleetManagement": "Fleet management",
+    "createRoleAssignment": "Create role assignment",
+    "deleteRoleAssignment": "Delete role assignment",
+    "editRoleAssignment": "Edit role assignment",
+    "roleAssignments": "Role assignments",
+    "roleAssignmentAdded": "Role assignment added",
+    "roleAssignmentFailed": "Role assignment creation failed",
+    "roleAssignmentUpdated": "Role assignment updated",
+    "noRoleAssignment": "No role assignment created yet",
+    "clusterRoleAssignment": "Cluster role assignment",
+    "clusterSetRoleAssignment": "Cluster set role assignment",
+    "projectRoleAssignment": "Project role assignment",
+    "searchRoleAssignments": "Search for role assignments...",
+    "saveSearch": "Save search",
+    "userManagement": "User management",
+    "clusterSet": "Cluster set",
+    "clusterSets": "Cluster sets",
+    "globalAccess": "Global access",
+    "selectClusterSets": "Select cluster sets",
+    "selectClusters": "Select clusters",
+    "identityProvider": "Identity Provider",
+    "noVMsFound": "No VirtualMachines found",
+    "deleteVM": "Delete VirtualMachine",
+    "startVM": "Start VirtualMachine",
+    "stopVM": "Stop VirtualMachine",
+    "restartVM": "Restart VirtualMachine",
+    "pauseVM": "Pause VirtualMachine",
+    "serviceAccountRoleAssignments": "Service Account Role Assignments"
+  },
+  "routes": {
+    "FLEET_VIRT_ROUTES.vmList": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+    "RBAC_ROUTES.identities": "/multicloud/user-management/identities",
+    "RBAC_ROUTES.roles": "/multicloud/user-management/roles",
+    "RBAC_ROUTES.users": "/multicloud/user-management/identities/users"
+  },
+  "testCodeHealth": {
+    "totalLocators": 134,
+    "orphanConstants": 21,
+    "orphanBreakdown": {
+      "fullObject": 6,
+      "propertyLevel": 15
+    },
+    "dominantStrategy": "getByRole+name",
+    "avgFragility": 21.4,
+    "highRiskCount": 7,
+    "totalSpecs": 21,
+    "totalPolarionIds": 30
+  },
+  "tabStructure": {
+    "fleetVirt": {
+      "defaultTab": "Overview",
+      "tabs": ["Overview", "Virtual machines"]
+    },
+    "userManagement": {
+      "defaultTab": "Users",
+      "tabs": ["Users", "Groups"]
+    },
+    "userDetail": {
+      "defaultTab": "Details",
+      "tabs": ["Details", "YAML", "Role assignments", "Groups"]
+    }
+  }
+}

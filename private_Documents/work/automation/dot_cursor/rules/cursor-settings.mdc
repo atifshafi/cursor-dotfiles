@@ -1,0 +1,20 @@
+---
+description: Enforce update-cursor-settings skill when modifying Cursor/VSCode settings
+globs: "**/Cursor/User/settings.json, **/.vscode/settings.json"
+alwaysApply: false
+---
+
+# Cursor Settings - Mandatory Skill
+
+When modifying Cursor or VSCode settings files:
+
+1. **ALWAYS read and follow** the skill at `~/.cursor/skills-cursor/update-cursor-settings/SKILL.md` BEFORE:
+   - Changing editor settings (font, theme, tab size, etc.)
+   - Modifying workspace settings
+   - Updating any `settings.json` values
+
+2. **Read existing settings first** -- never overwrite the entire file.
+
+3. **Preserve existing settings** -- only add/modify what was requested.
+
+4. **Validate JSON** before writing to avoid breaking the editor.

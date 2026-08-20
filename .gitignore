@@ -1,0 +1,7 @@
+# Never commit secrets
+.chezmoidata/secrets.yaml
+.chezmoi-sync.log
+
+# Python bytecode
+**/__pycache__/
+*.pyc

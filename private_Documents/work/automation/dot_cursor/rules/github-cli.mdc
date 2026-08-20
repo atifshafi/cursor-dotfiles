@@ -1,0 +1,72 @@
+---
+description: GitHub operations - use GitHub MCP server for rich interactions (PRs, issues, code search, Actions, releases) and gh CLI as fallback. Use when working with GitHub URLs, pull requests, issues, repository analysis, or CI/CD workflows.
+alwaysApply: false
+---
+
+# GitHub Operations
+
+## Tool Priority
+
+1. **GitHub MCP server** (`github`) — preferred for all GitHub operations. 50+ tools covering repos, PRs, issues, Actions, code search, releases, and more. Runs locally via Podman container.
+2. **`gh` CLI** — fallback when MCP is unavailable or for simple one-off commands.
+
+## IMPORTANT: GitHub MCP vs ACM-UI MCP
+
+These two MCPs serve **different purposes** and must not be confused:
+
+| Need | Use | Why |
+|------|-----|-----|
+| ACM Console selectors, routes, translations, wizard steps, test IDs, PatternFly components, Fleet Virt UI structure | **`acm-source` MCP** | Purpose-built for ACM Console source code investigation. Has specialized tools (`get_acm_selectors`, `get_wizard_steps`, `search_translations`, `get_routes`, `find_test_ids`, `get_component_source`, `get_fleet_virt_selectors`, `get_patternfly_selectors`) that understand ACM's frontend structure. |
+| PRs, issues, Actions, releases, branches, cross-repo code search, CI/CD monitoring, general repo browsing | **`github` MCP** | General-purpose GitHub platform operations. Works with any repo, not ACM-specific. |
+
+**Rule of thumb:** If you need to understand **how the ACM Console UI works** (selectors, components, rendering logic, data flow), use `acm-source`. If you need to interact with **GitHub as a platform** (PRs, issues, CI, branches, releases), use `github`.
+
+## GitHub MCP Server
+
+**MCP Server Name**: `github`
+**Source**: [github/github-mcp-server](https://github.com/github/github-mcp-server) (official, maintained by GitHub)
+**Runtime**: Podman container (`ghcr.io/github/github-mcp-server`)
+**Auth**: GitHub PAT (classic) with `repo`, `read:org`, `workflow` scopes
+
+### Key Tool Categories
+
+| Category | Tools | Use Cases |
+|----------|-------|-----------|
+| **Repos** | `get_file_contents`, `search_code`, `list_commits`, `get_commit` | Browse code, search across repos, analyze commit history |
+| **PRs** | `get_pull_request`, `list_pull_requests`, `create_pull_request`, `get_pull_request_diff`, `get_pull_request_reviews`, `merge_pull_request` | PR analysis, creation, review, merge |
+| **Issues** | `get_issue`, `list_issues`, `create_issue`, `update_issue`, `search_issues` | Issue triage, creation, management |
+| **Actions** | `list_workflow_runs`, `get_workflow_run`, `get_workflow_run_logs` | CI/CD monitoring, build failure analysis |
+| **Branches** | `create_branch`, `list_branches`, `get_branch` | Branch management |
+| **Releases** | `list_releases`, `create_release`, `get_release` | Release management |
+| **Code Search** | `search_code`, `search_repositories`, `search_users` | Cross-repo code search, find implementations |
+
+### When to Use MCP vs gh CLI
+
+| Scenario | Use |
+|----------|-----|
+| PR analysis (diff, reviews, checks, files) | MCP `get_pull_request`, `get_pull_request_diff` |
+| Cross-repo code search | MCP `search_code` |
+| Create/update issues or PRs | MCP (structured input/output) |
+| CI/CD build failure investigation | MCP `list_workflow_runs`, `get_workflow_run_logs` |
+| Simple file listing | Either — `gh api` or MCP `get_file_contents` |
+| Bulk operations or scripting | `gh` CLI (shell pipelines) |
+
+## gh CLI (Fallback)
+
+### Common Commands
+
+```bash
+gh pr view 986 --repo stolostron/clc-ui-e2e --json title,body,files,additions,deletions
+gh pr diff 986 --repo stolostron/clc-ui-e2e
+gh pr view 986 --repo stolostron/clc-ui-e2e --comments
+gh pr checks 986 --repo stolostron/clc-ui-e2e
+gh api repos/stolostron/clc-ui-e2e/contents/cypress/tests/rbac --jq '.[].name'
+```
+
+## Troubleshooting
+
+If the GitHub MCP shows an error in Cursor Settings:
+1. Verify Podman is running: `podman machine info` (should show `machinestate: Running`)
+2. Verify the image exists: `podman images | grep github-mcp-server`
+3. Test manually: `echo '{}' | podman run -i --rm -e GITHUB_PERSONAL_ACCESS_TOKEN=<token> ghcr.io/github/github-mcp-server 2>&1 | head -5`
+4. If Podman machine is stopped: `podman machine start`

@@ -1,0 +1,115 @@
+{
+  "summary": {
+    "totalLocators": 86,
+    "avgFragility": 23.0,
+    "highRiskCount": 7,
+    "fileCount": 9
+  },
+  "strategyDistribution": {
+    "getByRole+name": 42,
+    "unknown": 15,
+    "getByRole-noName": 13,
+    "getByText": 7,
+    "tag-selector": 4,
+    "css-class": 3,
+    "constant-ref": 2
+  },
+  "highRiskLocators": [
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "line": 37,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "const h1 = this.page.locator('h1');"
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "line": 60,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "const siblingButton = searchInput.locator('xpath=following::button[1]');"
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "line": 74,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "return this.page.locator('h1');"
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "line": 50,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "const toggle = combobox.locator('xpath=following::button[@aria-label=\"Multi select Typeahead menu toggle\"][1]');"
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "line": 38,
+      "score": 70,
+      "strategy": "css-class",
+      "code": "}).locator('..');"
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "line": 31,
+      "score": 70,
+      "strategy": "css-class",
+      "code": "}).locator('..');"
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "line": 58,
+      "score": 70,
+      "strategy": "css-class",
+      "code": "return this.page.locator('.monaco-editor').first();"
+    }
+  ],
+  "perFile": {
+    "src/pages/fg-rbac/UserDetailsPage.ts": {
+      "count": 4,
+      "avgScore": 42.5,
+      "worstScore": 70
+    },
+    "src/pages/fg-rbac/RoleDetailsPage.ts": {
+      "count": 9,
+      "avgScore": 35.6,
+      "worstScore": 70
+    },
+    "src/pages/fleet-virt/FleetVirtPage.ts": {
+      "count": 14,
+      "avgScore": 31.8,
+      "worstScore": 75
+    },
+    "src/pages/fg-rbac/RolesListPage.ts": {
+      "count": 4,
+      "avgScore": 30.0,
+      "worstScore": 50
+    },
+    "src/components/fleet-virt/AdvancedSearchModal.ts": {
+      "count": 7,
+      "avgScore": 25.0,
+      "worstScore": 75
+    },
+    "src/components/fleet-virt/SavedSearches.ts": {
+      "count": 11,
+      "avgScore": 22.7,
+      "worstScore": 50
+    },
+    "src/components/fg-rbac/RoleAssignmentsTable.ts": {
+      "count": 2,
+      "avgScore": 17.5,
+      "worstScore": 35
+    },
+    "src/pages/fg-rbac/RoleAssignmentWizardPage.ts": {
+      "count": 25,
+      "avgScore": 17.0,
+      "worstScore": 50
+    },
+    "src/pages/fleet-virt/VmDetailsPage.ts": {
+      "count": 10,
+      "avgScore": 3.5,
+      "worstScore": 35
+    }
+  }
+}

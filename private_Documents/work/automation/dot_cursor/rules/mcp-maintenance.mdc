@@ -1,0 +1,73 @@
+---
+description: MCP server maintenance rules - canonical location, editable installs, sync workflow. Use when modifying MCP server code, adding new MCP servers, or debugging MCP loading issues.
+alwaysApply: false
+---
+
+# MCP Server Maintenance
+
+## Canonical Location
+
+All MCP server source code lives in `ai/tools/mcp/`. This is the ONLY location where code should be modified.
+
+## Two layers of “source of truth”
+
+| Layer | What it is | Your workflow |
+|-------|------------|----------------|
+| **Cursor runtime** | `~/.cursor/mcp.json` — commands, `cwd`, `args`, env, timeouts | Truth for **what the IDE runs** on your machine. When you change wiring (new env var, different `uvx` pin), update this file; align repo-generated `.mcp.json` / `mcp/setup.sh` outputs when you want portable clones to match. |
+| **Maintained MCP code** | `ai/tools/mcp/<server>/` — **all** servers you edit on disk (first-party **and** forks) | Truth for **code you edit**. Cursor **`cwd`** / script paths point here. There is **no** rsync from this tree into **`ai_systems/mcp/`** — the AI monorepo’s **`mcp/`** layout (setup scripts, optional in-repo trees, **`.external/`** clones) is separate; keep it aligned only via normal git commits and **`mcp/setup.sh`** fork URLs/branches. |
+
+Forks (Jira, Jenkins, **`search-mcp-server`**, **`acm-kubectl-server`** (legacy, kubectl only), knowledge-graph, …) are cloned into **`mcp/.external/`** (gitignored) by **`mcp/setup.sh`**, not copied from **`tools/mcp/`** into the monorepo.
+
+## After you change MCP code under `tools/mcp/` (agent rule)
+
+1. Clear **`__pycache__`** where relevant: `find ai/tools/mcp -type d -name __pycache__ -exec rm -rf {} +`
+2. Restart the MCP server in Cursor Settings > MCP
+3. Run **`bash ai/tools/mcp/verify-mcp-setup.sh`** if you need a sanity check on **Cursor paths** and **`.pth`** files
+
+**Do not** offer **`sync-to-git.sh`** to copy trees into **`ai_systems/mcp/`** — that path is **disabled** (empty **`SERVERS`**). If the user changed **fork** code under **`tools/mcp/`**, remind them to **push to their fork** on GitHub and to refresh **`mcp/.external/`** via **`mcp/setup.sh`** / **`/onboard`** on other machines.
+
+Directory layout: see **`ai/tools/mcp/README.md`**. Sibling: **`ai/tools/experiments/`**.
+
+## Rules
+
+1. **Do not treat `ai/ai_systems/mcp/` as the place to edit MCP server implementations** in place of **`ai/tools/mcp/`**. Canonical code you run from Cursor lives under **`ai/tools/mcp/`**; the monorepo **`mcp/`** tree holds **`setup.sh`**, **`verify.py`**, **`jenkins-acm-tools.py`**, app wiring, and any history still tracked there — not an automated rsync target from **`tools/mcp/`**.
+
+2. **After modifying MCP server code under `ai/tools/mcp/`**: clear **`__pycache__`** where relevant; restart the MCP server in Cursor Settings > MCP; optionally run **`bash ai/tools/mcp/verify-mcp-setup.sh`**. **Do not** run **`sync-to-git.sh`** to push copies into the monorepo (that script is a no-op by policy).
+
+3. **Before modifying MCP code**, verify the editable install points to canonical:
+   - Run: `bash ai/tools/mcp/verify-mcp-setup.sh`
+   - Or check: `cat /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/_<package>_mcp_server.pth`
+
+4. **Editable pip installs** (`.pth` files) must always point to `ai/tools/mcp/`:
+   - `_acm_source_mcp_server.pth` -> `ai/tools/mcp/acm-source-mcp-server/`
+   - `_jira_mcp_server.pth` -> `ai/tools/mcp/jira-mcp-server/`
+   - If stale, fix with: `cd ai/tools/mcp/<server>/ && pip3 install -e .`
+
+5. **`~/.cursor/mcp.json`** paths must point to `ai/tools/mcp/`:
+   - acm-source cwd: `/Users/ashafi/Documents/work/ai/tools/mcp/acm-source-mcp-server`
+   - jira cwd: `/Users/ashafi/Documents/work/ai/tools/mcp/jira-mcp-server`
+   - jira command: `/Users/ashafi/Documents/work/ai/tools/mcp/jira-mcp-server/.venv/bin/python` (not system Python — avoids broken global `fastmcp`)
+
+## Adding a New MCP Server
+
+1. Create the server under `ai/tools/mcp/<name>/`
+2. Add to `~/.cursor/mcp.json`
+3. Update `ai/tools/mcp/README.md` with tool count, purpose, key tools
+4. For forks consumed inside the monorepo clone, add **`clone_external`** (or equivalent) in **`ai_systems/mcp/setup.sh`** with the correct repo and branch. **Do not** re-enable **`sync-to-git.sh`** unless you deliberately populate **`SERVERS`** again.
+5. Add a `.cursor/rules/<name>.mdc` rule if needed
+
+## Debugging MCP Loading Issues
+
+If Cursor shows wrong tool count or old behavior after code changes:
+
+1. Run `bash ai/tools/mcp/verify-mcp-setup.sh` -- checks all paths
+2. Check for stale `__pycache__`: `find ai/tools/mcp -name __pycache__ -type d`
+3. Check `.pth` files: `ls /Library/Frameworks/Python.framework/Versions/3.12/lib/python3.12/site-packages/*mcp*.pth`
+4. Verify Python resolves the right module: `python3 -c "import <package>; print(<package>.__file__)"`
+5. Restart MCP server in Cursor Settings, then check tool list
+
+## Reference
+
+- Central README: `ai/tools/mcp/README.md`
+- Cursor config: `~/.cursor/mcp.json`
+- Monorepo MCP layout: `ai/ai_systems/mcp/` (setup, `.external/` clones — no rsync from `tools/mcp/`)

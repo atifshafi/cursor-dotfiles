@@ -1,0 +1,104 @@
+---
+description: JIRA MCP server integration - tools, query syntax, limitations, usage notes. Use when working with JIRA tickets (ACM-*, CNV-*), creating bugs, searching issues, or any JIRA operations.
+alwaysApply: false
+---
+
+# JIRA Integration - Always Use MCP Server
+
+**MCP Server Name**: `jira`
+
+**Skill Reference**: For write operations, use `~/.cursor/skills/jira-operations/SKILL.md`
+
+## CRITICAL: Permission Required for Write Operations
+
+Write operations (create, update, comment, link, transition): ALWAYS propose the change, ask "Should I proceed?", and wait for explicit "yes". Read operations need no permission.
+
+## Jira Cloud Migration (March 2026)
+
+JIRA moved to `redhat.atlassian.net`. Auth uses API token + email.
+All custom field IDs updated in upstream. Pull latest: `cd ~/Documents/work/ai/tools/mcp/jira-mcp-server && git pull && make bootstrap && make verify-startup`. Cursor: `command` = `.../jira-mcp-server/.venv/bin/python`, `cwd` = that repo (see `ai/tools/mcp/README.md`).
+
+## Available Tools (31)
+
+**Read (no permission needed):**
+`get_issue`, `search_issues`, `search_issues_by_team`, `search_users`, `get_projects`, `get_project_versions`, `get_project_components`, `get_link_types`, `debug_issue_fields`, `list_teams`, `list_component_aliases`, `get_issue_watchers`, `list_issue_attachments`, `download_issue_attachment`
+
+**Red Hat custom fields returned by `get_issue`:**
+
+| Field | Description |
+|-------|-------------|
+| `sprint` | Last sprint name (e.g., "ACM Console 2.17 - 1") |
+| `qa_contact` | QA contact display name |
+| `severity` | Severity value (Important, Critical, Moderate, Low) |
+| `affects_versions` | Array of affected version names |
+| `acceptance_criteria` | Acceptance criteria text |
+| `contributors` | Array of contributor display names |
+| `issue_links` | Array of `{type, direction, key, summary}` objects |
+| `attachments` | Array of attachment filenames |
+| `attachment_details` | Array of `{id, filename, content_url, size}` objects |
+
+**Issue screenshots (reporter attachments):**
+- `download_issue_attachment(issue_key, filename=...)` saves the file locally (basic auth; requires `JIRA_EMAIL` in MCP env).
+- Open `save_path` with the Read tool to vision-analyze PNGs (e.g. ACM-26935 reporter screenshot).
+
+**Write (REQUIRE PERMISSION):**
+`create_issue`, `update_issue`, `clear_field`, `add_comment`, `add_issue_attachments`, `link_issue`, `transition_issue`, `log_time`, `add_team`/`remove_team`, `add_component_alias`/`remove_component_alias`, `assign_team_to_issue`, `add_watcher_to_issue`/`remove_watcher_from_issue`
+
+**Comments with inline screenshots (QE verification):**
+- `add_comment` accepts optional `attachment_paths` and `inline_attachment_paths`. Put only the build-tag line in `comment` text -- do not duplicate `!filename|thumbnail!` wiki lines; MCP appends them once from `inline_attachment_paths`.
+- Files are uploaded first; inline images use Jira wiki `!filename|thumbnail!` (v2 API) so the screenshot appears **inside** the comment, not only under Attachments.
+- `add_issue_attachments` uploads files to the issue only (no comment).
+
+**Clearing fields:**
+- `clear_field(issue_key, field_name)` dynamically determines the correct empty value by inspecting the field's edit metadata. Use for unsetting `fixVersions`, `duedate`, `labels`, `assignee`, `customfield_10855` (target_version), etc.
+
+## Issue Links
+
+`get_issue` returns an `issue_links` array with `{type, direction, key, summary}` for each link. Use this to find linked QE tasks directly. Fallback JQL if links are empty:
+```
+search_issues(jql='summary ~ "[QE] --- ACM-28795"')
+```
+
+## JIRA MCP Tool Usage Notes
+
+**activity_type (for QE work):** Pass the label string `"Quality / Stability / Reliability"` (or numeric ID `"10608"`). The MCP resolves labels to IDs automatically.
+
+Available labels: `None`, `Associate Wellness & Development`, `BU Features`, `Future Sustainability`, `Incidents & Support`, `Quality / Stability / Reliability`, `Security & Compliance`, `Product / Portfolio Work`.
+
+**add_comment tool:** Parameter is `comment`, NOT `body`
+
+**CRITICAL: No Time Estimates**
+
+```
+The create_issue tool now defaults original_estimate and story_points to None.
+NEVER pass original_estimate unless the user explicitly asks for time tracking.
+We use story_points for effort estimation, NOT hours.
+```
+
+**Bug Creation Rules:**
+- Components: Single component only where bug manifests
+- Story Points: OMIT for bugs
+- Time Estimate: OMIT for bugs (do NOT pass original_estimate)
+- Activity Type: `"Quality / Stability / Reliability"`
+
+**Task/Story/Sub-task Creation Rules:**
+- Labels: `["QE"]` for QE work
+- Activity Type: `"Quality / Stability / Reliability"`
+- Story Points: Required for user-created tasks/stories; OMIT for bugs and QE Bot-style tasks
+- Time Estimate: NEVER set (do NOT pass original_estimate)
+
+**Other Features:**
+- `due_date` is optional
+- `target_version` - Sets planned release version (distinct from `fix_versions`)
+- `search_users` - Find JIRA users by name/email/username
+- `fix_version` validation on transitions beyond 'New', 'Backlog', 'In Progress'
+
+**ACM Build Tag (Downstream Format):**
+When the user asks for the "build tag", "image tag", "what build", or "downstream tag" for a cluster, they want the ACM downstream snapshot tag in format: `<version>-DOWNSTREAM-<YYYY-MM-DD-HH-MM-SS>` (e.g., `2.16.0-DOWNSTREAM-2026-02-17-23-50-31`). Get it by inspecting the MCH operator image `build-date` label via `crictl inspecti` on the node. Full procedure in `~/.cursor/skills/jira-operations/SKILL.md` under "ACM Build Tag / Environment Version".
+
+**Automation Task Workflow:**
+1. Assign to self: `update_issue` with `assignee: "rhn-support-ashafi"`
+2. Check links: Verify automation task linked to parent story
+3. If missing link: Offer to create "depends on" link
+4. Add sprint comment if task not in current sprint
+5. Skip redundant comments if already in sprint

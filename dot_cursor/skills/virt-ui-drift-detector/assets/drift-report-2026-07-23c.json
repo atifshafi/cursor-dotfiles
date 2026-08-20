@@ -1,0 +1,630 @@
+{
+  "analysisTimestamp": "2026-07-23T21:19:00Z",
+  "baselineDate": "2026-07-23b",
+  "sourceVersions": {
+    "acm": "2.18 (main)",
+    "cnv": "4.22 (main)",
+    "pfVersion": "pf-v6-c",
+    "previousCnv": "4.18 (release-4.18)"
+  },
+
+  "summary": {
+    "breaking": 1,
+    "warning": 2,
+    "info": 5,
+    "total": 8
+  },
+
+  "driftItems": [
+    {
+      "id": "drift-001",
+      "category": "selector",
+      "severity": "BREAKING",
+      "description": "Fleet Virt advanced search button data-test 'vm-advanced-search-button' not found in CNV 4.22 source. Likely renamed to 'vm-adv-search-toolbar'. Test code constant FLEET_VIRT_ADVANCED_SEARCH.openButton still references the old value.",
+      "upstream": {
+        "key": "vm-advanced-search-button",
+        "value": null,
+        "source": "Source Scanner: NOT FOUND in selectors.fleetVirt or testIds.fleetVirt (CNV 4.22 main). Closest match: vm-adv-search-toolbar in src/views/search/components/SearchBar.tsx"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "line": null,
+        "constantName": "FLEET_VIRT_ADVANCED_SEARCH.openButton",
+        "currentValue": "[data-test=\"vm-advanced-search-button\"]",
+        "locatorStrategy": "locator",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": true,
+      "corroborationSource": "baseline",
+      "baseline": {
+        "value": "[data-test=\"vm-advanced-search-button\"]"
+      },
+      "liveDom": {
+        "found": false,
+        "actualValue": "Not in live DOM dataTestIds for Fleet Virt VM List page"
+      },
+      "impactChain": {
+        "upstreamSource": "kubevirt-plugin (previously in search component, now absent or renamed)",
+        "constant": "FLEET_VIRT_ADVANCED_SEARCH.openButton",
+        "constantFile": "src/constants/fleet-virt.ts",
+        "pageObjects": ["src/pages/fleet-virt/FleetVirtPage.ts"],
+        "components": [],
+        "specFiles": ["src/tests/fleet-virt/advanced-search.spec.ts", "src/tests/fg-rbac/managed-admin-full-access.spec.ts"],
+        "polarionIds": ["RHACM4K-60770", "RHACM4K-60468"]
+      },
+      "recommendedFix": "Update FLEET_VIRT_ADVANCED_SEARCH.openButton value from '[data-test=\"vm-advanced-search-button\"]' to '[data-test=\"vm-adv-search-toolbar\"]' in src/constants/fleet-virt.ts. Verify on live cluster that vm-adv-search-toolbar is the correct replacement element."
+    },
+    {
+      "id": "drift-002",
+      "category": "selector",
+      "severity": "WARNING",
+      "description": "Fleet Virt search input data-test 'vm-search-input' not found in CNV 4.22 source. Used as fallback locator in FleetVirtPage.openAdvancedSearch(). Part of the CNV 4.18→4.22 major version jump.",
+      "upstream": {
+        "key": "vm-search-input",
+        "value": null,
+        "source": "Source Scanner: NOT FOUND in selectors.fleetVirt or testIds.fleetVirt (CNV 4.22 main)"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "line": null,
+        "constantName": "FLEET_VIRT_SEARCH.searchInput",
+        "currentValue": "[data-test=\"vm-search-input\"] input",
+        "locatorStrategy": "locator",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": true,
+      "corroborationSource": "baseline",
+      "baseline": {
+        "value": "[data-test=\"vm-search-input\"] input"
+      },
+      "liveDom": {
+        "found": null,
+        "actualValue": "Live scan was on Overview tab; VM List tab (where search input lives) not directly validated for this data-test"
+      },
+      "impactChain": {
+        "upstreamSource": "kubevirt-plugin (previously in search component, absent in CNV 4.22 main)",
+        "constant": "FLEET_VIRT_SEARCH.searchInput",
+        "constantFile": "src/constants/fleet-virt.ts",
+        "pageObjects": ["src/pages/fleet-virt/FleetVirtPage.ts"],
+        "components": [],
+        "specFiles": ["src/tests/fleet-virt/advanced-search.spec.ts", "src/tests/fg-rbac/managed-admin-full-access.spec.ts"],
+        "polarionIds": ["RHACM4K-60770", "RHACM4K-60468"]
+      },
+      "recommendedFix": "Investigate the CNV 4.22 search UI component to find the replacement data-test attribute for the search input. If the input is now inside vm-adv-search-toolbar, update the selector to target the input within that container. Manual live-cluster verification required."
+    },
+    {
+      "id": "drift-003",
+      "category": "liveDom",
+      "severity": "WARNING",
+      "description": "Roles page at /multicloud/user-management/roles returns HTTP 404 on direct URL navigation. Page is only accessible via sidebar nav click. Tests using RolesListPage.goto() will fail if they navigate directly.",
+      "upstream": {
+        "key": "/multicloud/user-management/roles",
+        "value": "Route exists in source (component: Roles)",
+        "source": "Source Scanner: route present in routes object"
+      },
+      "testCode": {
+        "file": "src/constants/fg-rbac.ts",
+        "line": null,
+        "constantName": "RBAC_ROUTES.roles",
+        "currentValue": "/multicloud/user-management/roles",
+        "locatorStrategy": "goto",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": true,
+      "corroborationSource": "liveDom",
+      "baseline": {
+        "value": "/multicloud/user-management/roles"
+      },
+      "liveDom": {
+        "found": false,
+        "actualValue": "HTTP 404 on direct navigation. Accessible only via sidebar nav click. May be OCP dynamic plugin loading issue."
+      },
+      "impactChain": {
+        "upstreamSource": "stolostron/console frontend/src/routes",
+        "constant": "RBAC_ROUTES.roles",
+        "constantFile": "src/constants/fg-rbac.ts",
+        "pageObjects": ["src/pages/fg-rbac/RolesListPage.ts"],
+        "components": [],
+        "specFiles": ["src/tests/fg-rbac/role-assignment-global-access.spec.ts", "src/tests/fg-rbac/role-assignment-cluster.spec.ts", "src/tests/fg-rbac/role-assignment-clusterset.spec.ts", "src/tests/fg-rbac/role-assignment-entry-points.spec.ts", "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts", "src/tests/fg-rbac/roles-page-validation.spec.ts", "src/tests/fg-rbac/managed-admin-full-access.spec.ts", "src/tests/fg-rbac/cross-page-integration.spec.ts"],
+        "polarionIds": ["RHACM4K-61726", "RHACM4K-61727", "RHACM4K-61728", "RHACM4K-61729", "RHACM4K-61730", "RHACM4K-61731", "RHACM4K-61732", "RHACM4K-61733", "RHACM4K-61734", "RHACM4K-61735", "RHACM4K-61779", "RHACM4K-60468", "RHACM4K-61863", "RHACM4K-61856", "RHACM4K-61862", "RHACM4K-61864", "RHACM4K-60254"]
+      },
+      "recommendedFix": "Verify whether RolesListPage.goto() uses page.goto() directly or navigates via sidebar. If direct navigation: either modify the page object to navigate via sidebar click instead, or investigate the 404 (may be environment-specific OCP dynamic plugin issue). Test on a fresh cluster to confirm."
+    },
+    {
+      "id": "drift-004",
+      "category": "patternfly",
+      "severity": "INFO",
+      "description": "PatternFly version now unified at pf-v6-c across both ACM Console and kubevirt-plugin. Previous baseline noted mixed pf-v5/pf-v6 (kubevirt=v5, ACM=v6). CNV 4.22 has migrated to pf-v6.",
+      "upstream": {
+        "key": "pfVersion",
+        "value": "pf-v6-c",
+        "source": "Source Scanner: pfVersion field"
+      },
+      "testCode": {
+        "file": "src/constants/selectors.ts",
+        "line": 13,
+        "constantName": "PF (local const)",
+        "currentValue": "pf-v6-c",
+        "locatorStrategy": "css-class",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": true,
+      "corroborationSource": "liveDom",
+      "baseline": {
+        "value": "pf-v5/pf-v6 mixed"
+      },
+      "liveDom": {
+        "found": true,
+        "actualValue": "pf-v6-c classes confirmed on all scanned pages"
+      },
+      "impactChain": {
+        "upstreamSource": "kubevirt-plugin + stolostron/console",
+        "constant": "PF_SPINNER, PF_SKELETON, PF_MODAL, etc.",
+        "constantFile": "src/constants/selectors.ts",
+        "pageObjects": ["All page objects using PF-based selectors"],
+        "components": [],
+        "specFiles": [],
+        "polarionIds": []
+      },
+      "recommendedFix": "No action needed. PF version is consistent. Resolves the pf-v5/pf-v6 mismatch warning from the previous run."
+    },
+    {
+      "id": "drift-005",
+      "category": "translation",
+      "severity": "INFO",
+      "description": "Translation case mismatch: test code constant FLEET_VIRT_PAGE.fleetManagementLabel = 'Fleet Management' (capital M) vs upstream 'Fleet management' (lowercase m). Constant is orphaned — not used in any active locator.",
+      "upstream": {
+        "key": "Fleet management",
+        "value": "Fleet management",
+        "source": "Source Scanner: translations object"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "line": null,
+        "constantName": "FLEET_VIRT_PAGE.fleetManagementLabel",
+        "currentValue": "Fleet Management",
+        "locatorStrategy": "role-text",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": true,
+      "corroborationSource": "liveDom",
+      "baseline": {
+        "value": "Fleet Management (same mismatch existed in prior run)"
+      },
+      "liveDom": {
+        "found": true,
+        "actualValue": "Fleet management (in perspectives list)"
+      },
+      "impactChain": {
+        "upstreamSource": "stolostron/console translations",
+        "constant": "FLEET_VIRT_PAGE.fleetManagementLabel",
+        "constantFile": "src/constants/fleet-virt.ts",
+        "pageObjects": [],
+        "components": [],
+        "specFiles": [],
+        "polarionIds": []
+      },
+      "recommendedFix": "Update constant value from 'Fleet Management' to 'Fleet management' if the constant is ever adopted by a page object. Low priority since it is orphaned."
+    },
+    {
+      "id": "drift-006",
+      "category": "route",
+      "severity": "INFO",
+      "description": "New fleet-virt routes added in CNV 4.22 not covered by test code: templates, bootablevolumes, checkups, vm-wizard, MigrationPolicies, InstanceTypes.",
+      "upstream": {
+        "key": "new-fleet-virt-routes",
+        "value": "/fleet-virtualization/templates, /fleet-virtualization/bootablevolumes, /fleet-virtualization/checkups, /fleet-virtualization/vm-wizard, /fleet-virtualization/<MigrationPolicyModelRef>, /fleet-virtualization/<VirtualMachineClusterInstancetypeModelRef>, /fleet-virtualization/<VirtualMachineInstancetypeModelRef>",
+        "source": "Source Scanner: routes object"
+      },
+      "testCode": {
+        "file": null,
+        "line": null,
+        "constantName": null,
+        "currentValue": null,
+        "locatorStrategy": null,
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": true,
+      "corroborationSource": "liveDom",
+      "baseline": {
+        "value": null
+      },
+      "liveDom": {
+        "found": true,
+        "actualValue": "navItems confirmed: VirtualMachines, Templates, Bootable volumes, InstanceTypes, MigrationPolicies, Checkups"
+      },
+      "impactChain": {
+        "upstreamSource": "kubevirt-plugin routes",
+        "constant": null,
+        "constantFile": null,
+        "pageObjects": [],
+        "components": [],
+        "specFiles": [],
+        "polarionIds": []
+      },
+      "recommendedFix": "Add route constants and page objects for new fleet-virt sub-pages as test coverage expands. Current tests only cover VM list; templates, bootable volumes, checkups, and migration policies are untested."
+    },
+    {
+      "id": "drift-007",
+      "category": "selector",
+      "severity": "INFO",
+      "description": "15+ new upstream data-test selectors in CNV 4.22 advanced search (vcpu, memory, IP, nodes, storage class, description, OS, date, NAD, network fields) without matching test code constants.",
+      "upstream": {
+        "key": "new-advanced-search-field-selectors",
+        "value": "adv-search-vcpu-value, adv-search-mem-value, adv-search-vm-ip, adv-search-vm-nodes, adv-search-vm-storage-class, adv-search-vm-description, adv-search-vm-os, adv-search-date-select, adv-search-vm-nad, adv-search-network, vm-adv-search-toolbar, kebab-button, loading-indicator, reset-button, resource-title",
+        "source": "Source Scanner: testIds.fleetVirt"
+      },
+      "testCode": {
+        "file": null,
+        "line": null,
+        "constantName": null,
+        "currentValue": null,
+        "locatorStrategy": null,
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": false,
+      "corroborationSource": null,
+      "baseline": {
+        "value": null
+      },
+      "liveDom": {
+        "found": null,
+        "actualValue": null
+      },
+      "impactChain": {
+        "upstreamSource": "kubevirt-plugin src/views/search/components/AdvancedSearchModal/formFields/",
+        "constant": null,
+        "constantFile": null,
+        "pageObjects": [],
+        "components": [],
+        "specFiles": [],
+        "polarionIds": []
+      },
+      "recommendedFix": "Add constants for new advanced search field selectors when expanding test coverage to include advanced search form field validation. These provide stable data-test targets for the advanced search modal."
+    },
+    {
+      "id": "drift-008",
+      "category": "liveDom",
+      "severity": "INFO",
+      "description": "Both Fleet management and Fleet virtualization perspectives use data-test-id='acm-perspective-nav' for their sidebar nav. The previously-documented 'fleet-virtualization-perspective-perspective-nav' does not exist. No test code references the missing ID.",
+      "upstream": {
+        "key": "fleet-virtualization-perspective-perspective-nav",
+        "value": null,
+        "source": "Live Validator: NOT FOUND in any page's dataTestIds"
+      },
+      "testCode": {
+        "file": null,
+        "line": null,
+        "constantName": null,
+        "currentValue": null,
+        "locatorStrategy": null,
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "confidenceReason": null,
+      "corroborated": true,
+      "corroborationSource": "liveDom",
+      "baseline": {
+        "value": null
+      },
+      "liveDom": {
+        "found": false,
+        "actualValue": "acm-perspective-nav used for all perspectives"
+      },
+      "impactChain": {
+        "upstreamSource": "stolostron/console perspective registration",
+        "constant": null,
+        "constantFile": null,
+        "pageObjects": [],
+        "components": [],
+        "specFiles": [],
+        "polarionIds": []
+      },
+      "recommendedFix": "No action needed. Test code correctly does not reference fleet-virtualization-perspective-perspective-nav. The selector-mapping reference document should be updated to reflect that acm-perspective-nav is the actual ID used."
+    }
+  ],
+
+  "selectorVerification": {
+    "verified": [
+      {
+        "value": "save-button",
+        "testCodeEvidence": {"constant": "FLEET_VIRT_SAVED_SEARCH.modal.submitButton", "file": "fleet-virt.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.fleetVirt.saveButton", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "cancel-button",
+        "testCodeEvidence": {"constant": "FLEET_VIRT_SAVED_SEARCH.modal.cancelButton", "file": "fleet-virt.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.fleetVirt.cancelButton", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "adv-search-vm-name",
+        "testCodeEvidence": {"constant": "FLEET_VIRT_ADVANCED_SEARCH.nameInput", "file": "fleet-virt.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.fleetVirt.advSearchVmName", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "perspective-switcher-toggle",
+        "testCodeEvidence": {"constant": "FLEET_VIRT_PAGE.perspectiveSwitcher", "file": "fleet-virt.ts"},
+        "upstreamEvidence": {"source": "Live Validator dataTestIds (all pages)", "found": true},
+        "liveDomEvidence": {"found": true}
+      },
+      {
+        "value": "save-search-name",
+        "testCodeEvidence": {"constant": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput", "file": "fleet-virt.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.fleetVirt.saveSearchName", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "save-search-description",
+        "testCodeEvidence": {"constant": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput", "file": "fleet-virt.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.fleetVirt.saveSearchDescription", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "scope-selection",
+        "testCodeEvidence": {"constant": "WIZARD_STEP_IDS.scopeSelection", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.wizardStepScopeSelection", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "identities",
+        "testCodeEvidence": {"constant": "WIZARD_STEP_IDS.identities", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.wizardStepIdentities", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "scope",
+        "testCodeEvidence": {"constant": "WIZARD_STEP_IDS.scope", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.wizardStepScope", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "role",
+        "testCodeEvidence": {"constant": "WIZARD_STEP_IDS.role", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.wizardStepRole", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "review",
+        "testCodeEvidence": {"constant": "WIZARD_STEP_IDS.review", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.wizardStepReview", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "scope-cluster-set-granularity",
+        "testCodeEvidence": {"constant": "WIZARD_STEP_IDS.clusterSetGranularity", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.wizardStepScopeClusterSetGranularity", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "scope-cluster-granularity",
+        "testCodeEvidence": {"constant": "WIZARD_STEP_IDS.clusterGranularity", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.wizardStepScopeClusterGranularity", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "scope-type",
+        "testCodeEvidence": {"constant": "WIZARD_SELECT_IDS.scopeType", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.scopeType", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "clusters-access-level",
+        "testCodeEvidence": {"constant": "WIZARD_SELECT_IDS.clustersAccessLevel", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.clustersAccessLevel", "found": true},
+        "liveDomEvidence": {"found": null}
+      },
+      {
+        "value": "clusters-set-access-level",
+        "testCodeEvidence": {"constant": "WIZARD_SELECT_IDS.clusterSetAccessLevel", "file": "fg-rbac.ts"},
+        "upstreamEvidence": {"source": "Source Scanner selectors.rbac.clustersSetAccessLevel", "found": true},
+        "liveDomEvidence": {"found": null}
+      }
+    ],
+    "notInTestCode": [
+      {
+        "value": "vm-adv-search-toolbar",
+        "source": "Source Scanner selectors.fleetVirt",
+        "note": "Present in CNV 4.22 source (SearchBar.tsx). Likely replacement for removed vm-advanced-search-button."
+      },
+      {
+        "value": "kebab-button",
+        "source": "Source Scanner selectors.fleetVirt",
+        "note": "Present in kubevirt-plugin (KebabToggle.tsx). No test code constant."
+      },
+      {
+        "value": "loading-indicator",
+        "source": "Source Scanner selectors.fleetVirt",
+        "note": "Present in kubevirt-plugin (Loading.tsx). No test code constant."
+      },
+      {
+        "value": "adv-search-vcpu-value",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (CPUField.tsx)"
+      },
+      {
+        "value": "adv-search-mem-value",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (MemoryField.tsx)"
+      },
+      {
+        "value": "adv-search-vm-ip",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (IPField.tsx)"
+      },
+      {
+        "value": "adv-search-vm-nodes",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (NodesField.tsx)"
+      },
+      {
+        "value": "adv-search-vm-storage-class",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (StorageClassField.tsx)"
+      },
+      {
+        "value": "adv-search-vm-description",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (DescriptionField.tsx)"
+      },
+      {
+        "value": "adv-search-vm-os",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (OperatingSystemField.tsx)"
+      },
+      {
+        "value": "adv-search-date-select",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (DateCreatedField.tsx)"
+      },
+      {
+        "value": "adv-search-vm-nad",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (NetworkAttachmentDefinitionsField.tsx)"
+      },
+      {
+        "value": "adv-search-network",
+        "source": "Source Scanner testIds.fleetVirt",
+        "note": "New advanced search field in CNV 4.22 (AdvancedSearchModal.tsx)"
+      },
+      {
+        "value": "actions-dropdown",
+        "source": "Source Scanner selectors.fleetVirt",
+        "note": "Present upstream. VmDetailsPage uses getByRole('button', { name: 'Actions' }) instead of data-test locator."
+      },
+      {
+        "value": "clusters-dual-list-selector-tree",
+        "source": "Source Scanner selectors.rbac",
+        "note": "ACM Console wizard component (ClustersDualListSelector.tsx). No test code constant."
+      },
+      {
+        "value": "overview-tab",
+        "source": "Source Scanner selectors.fleetVirt + Live DOM",
+        "note": "Tab switcher on Fleet Virt page. Confirmed in live DOM dataTestIds. Not in test code."
+      },
+      {
+        "value": "vm-list-tab",
+        "source": "Source Scanner selectors.fleetVirt + Live DOM",
+        "note": "Tab switcher on Fleet Virt page. Confirmed in live DOM dataTestIds. Not in test code."
+      }
+    ]
+  },
+
+  "orphanReport": {
+    "unusedConstants": [
+      {"scope": "full-object", "name": "WIZARD_STEP_IDS", "file": "fg-rbac.ts", "reason": "Exported but never imported outside constants/"},
+      {"scope": "full-object", "name": "WIZARD_SELECT_IDS", "file": "fg-rbac.ts", "reason": "Exported but never imported outside constants/"},
+      {"scope": "full-object", "name": "PF_ALERT", "file": "selectors.ts", "reason": "Exported but never imported outside constants/"},
+      {"scope": "full-object", "name": "PF_SELECT", "file": "selectors.ts", "reason": "Exported but never imported outside constants/"},
+      {"scope": "full-object", "name": "PF_DROPDOWN", "file": "selectors.ts", "reason": "Exported but never imported outside constants/"},
+      {"scope": "full-object", "name": "PF_TABLE", "file": "selectors.ts", "reason": "Exported but never imported outside constants/"},
+      {"scope": "property-group", "name": "RBAC_RA_TABLE.columns", "file": "fg-rbac.ts", "childCount": 8, "reason": "Top-level constant imported by 2 files but all 8 .columns properties are never accessed"},
+      {"scope": "property-group", "name": "RBAC_RA_TABLE.rowActions", "file": "fg-rbac.ts", "childCount": 5, "reason": "Top-level constant imported by 2 files but all 5 .rowActions properties are never accessed"},
+      {"scope": "property-group", "name": "RBAC_RA_TABLE.filterIds", "file": "fg-rbac.ts", "childCount": 6, "reason": "Top-level constant imported by 2 files but all 6 .filterIds properties are never accessed"},
+      {"scope": "property-group", "name": "RBAC_RA_TABLE.defaults", "file": "fg-rbac.ts", "childCount": 1, "reason": "Top-level constant imported by 2 files but .defaults.allNamespaces never accessed"},
+      {"scope": "property-group", "name": "FLEET_VIRT_ADVANCED_SEARCH.cluster", "file": "fleet-virt.ts", "childCount": 5, "reason": "Top-level constant imported but all .cluster properties are never accessed from page objects"},
+      {"scope": "property-group", "name": "FLEET_VIRT_ADVANCED_SEARCH.project", "file": "fleet-virt.ts", "childCount": 5, "reason": "Top-level constant imported but all .project properties are never accessed from page objects"},
+      {"scope": "property-group", "name": "FLEET_VIRT_ADVANCED_SEARCH.footer", "file": "fleet-virt.ts", "childCount": 2, "reason": "Top-level constant imported but all .footer properties never accessed"},
+      {"scope": "property-group", "name": "RBAC_USER_DETAIL.emptyStates", "file": "fg-rbac.ts", "childCount": 2, "reason": "Top-level constant imported but .emptyStates sub-object never accessed"},
+      {"scope": "property-group", "name": "RBAC_WIZARD.identities", "file": "fg-rbac.ts", "childCount": 2, "reason": "Top-level constant imported but .identities sub-object never accessed"},
+      {"scope": "property-group", "name": "RBAC_WIZARD.preAuthorizedUser", "file": "fg-rbac.ts", "childCount": 4, "reason": "Top-level constant imported but .preAuthorizedUser sub-object never accessed"},
+      {"scope": "property-group", "name": "RBAC_WIZARD.editMode", "file": "fg-rbac.ts", "childCount": 1, "reason": "Top-level constant imported but .editMode sub-object never accessed"},
+      {"scope": "property", "name": "RBAC_RA_TABLE.toolbar.createButtonId", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific property never accessed (only .toolbar.createButtonLabel is used)"},
+      {"scope": "property", "name": "RBAC_RA_TABLE.toolbar.bulkDeleteButtonId", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific property never accessed"},
+      {"scope": "property", "name": "RBAC_RA_TABLE.toolbar.searchPlaceholder", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific property never accessed"},
+      {"scope": "property", "name": "RBAC_RA_TABLE.emptyState.viewDocumentation", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .emptyState.title is used"},
+      {"scope": "property", "name": "FLEET_VIRT_ADVANCED_SEARCH.detailsContainer", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed (only .openButton is used)"},
+      {"scope": "property", "name": "FLEET_VIRT_ADVANCED_SEARCH.nameInput", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "FLEET_VIRT_ADVANCED_SEARCH.menuContent", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "FLEET_VIRT_SEARCH.searchResults", "file": "fleet-virt.ts", "reason": "Top-level constant imported but only .searchInput is used"},
+      {"scope": "property", "name": "FLEET_VIRT_SEARCH.resetButton", "file": "fleet-virt.ts", "reason": "Top-level constant imported but only .searchInput is used"},
+      {"scope": "property", "name": "FLEET_VIRT_PAGE.perspectiveSwitcher", "file": "fleet-virt.ts", "reason": "Top-level constant imported but only .emptyState.noVMs is used"},
+      {"scope": "property", "name": "FLEET_VIRT_PAGE.fleetManagementLabel", "file": "fleet-virt.ts", "reason": "Top-level constant imported but only .emptyState.noVMs is used"},
+      {"scope": "property", "name": "FLEET_VIRT_SAVED_SEARCH.modal.submitButton", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "FLEET_VIRT_SAVED_SEARCH.modal.cancelButton", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "FLEET_VIRT_SAVED_SEARCH.dropdown.list", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "FLEET_VIRT_SAVED_SEARCH.dropdown.item", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed (getSavedSearchItem uses getByRole instead)"},
+      {"scope": "property", "name": "FLEET_VIRT_SAVED_SEARCH.dropdown.deleteAriaLabel", "file": "fleet-virt.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "RBAC_ROUTES.identities", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific route never used in any goto()"},
+      {"scope": "property", "name": "RBAC_ROUTES.users", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific route never used in any goto()"},
+      {"scope": "property", "name": "RBAC_ROUTES.roleRoleAssignments", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific route never used in any goto()"},
+      {"scope": "property", "name": "RBAC_ROUTES.clusterSetDetails", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific route never used in any goto()"},
+      {"scope": "property", "name": "RBAC_ROUTES.clusterDetails", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this specific route never used in any goto()"},
+      {"scope": "property", "name": "RBAC_USER_DETAIL.tabs.details", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this tab property never accessed"},
+      {"scope": "property", "name": "RBAC_USER_DETAIL.tabs.yaml", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this tab property never accessed"},
+      {"scope": "property", "name": "RBAC_USER_DETAIL.tabs.groups", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this tab property never accessed"},
+      {"scope": "property", "name": "RBAC_USER_DETAIL.navigation.backToUsers", "file": "fg-rbac.ts", "reason": "Top-level constant imported but .navigation sub-object never accessed"},
+      {"scope": "property", "name": "RBAC_USER_DETAIL.fields.fullName", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .fields.generalInformation, .fields.username, .fields.identityProvider are used"},
+      {"scope": "property", "name": "RBAC_WIZARD.description", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "RBAC_WIZARD.learnMore", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "RBAC_WIZARD.projects.searchPlaceholder", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .projects.createButtonId is used from specs"},
+      {"scope": "property", "name": "RBAC_WIZARD.projects.enterProjectName", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "RBAC_WIZARD.projects.enterDisplayName", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "RBAC_WIZARD.projects.deselectTooltip", "file": "fg-rbac.ts", "reason": "Top-level constant imported but this property never accessed"},
+      {"scope": "property", "name": "RBAC_WIZARD.notifications.updated", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .notifications.added and .notifications.duplicate are used"},
+      {"scope": "property", "name": "RBAC_WIZARD.notifications.failed", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .notifications.added and .notifications.duplicate are used"},
+      {"scope": "property", "name": "MCRA_RESOURCE.apiVersion", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .managedByLabel and .managedByValue are used"},
+      {"scope": "property", "name": "MCRA_RESOURCE.kind", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .managedByLabel and .managedByValue are used"},
+      {"scope": "property", "name": "MCRA_RESOURCE.namespace", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .managedByLabel and .managedByValue are used"},
+      {"scope": "property", "name": "MCRA_RESOURCE.subjectNameLabel", "file": "fg-rbac.ts", "reason": "Top-level constant imported but only .managedByLabel and .managedByValue are used"}
+    ],
+    "unusedPageObjects": [
+      {
+        "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+        "reason": "Not instantiated in fleet-virt-test fixture; only referenced directly via manual import in managed-admin-full-access.spec.ts"
+      }
+    ],
+    "note": "Orphan data passed through from Test Code Analyzer (grep-verified). Not re-derived by this analyzer."
+  },
+
+  "fragilitySummary": {
+    "totalLocators": 86,
+    "avgFragility": 23.0,
+    "highRiskCount": 7,
+    "highRiskThreshold": 60,
+    "strategyDistribution": {
+      "getByRole+name": 42,
+      "unknown": 15,
+      "getByRole-noName": 13,
+      "getByText": 7,
+      "tag-selector": 4,
+      "css-class": 3,
+      "constant-ref": 2
+    },
+    "top5MostFragile": [
+      {"file": "src/pages/fleet-virt/FleetVirtPage.ts", "line": 37, "score": 75, "strategy": "tag-selector", "code": "const h1 = this.page.locator('h1');"},
+      {"file": "src/pages/fleet-virt/FleetVirtPage.ts", "line": 60, "score": 75, "strategy": "tag-selector", "code": "const siblingButton = searchInput.locator('xpath=following::button[1]');"},
+      {"file": "src/pages/fleet-virt/FleetVirtPage.ts", "line": 74, "score": 75, "strategy": "tag-selector", "code": "return this.page.locator('h1');"},
+      {"file": "src/components/fleet-virt/AdvancedSearchModal.ts", "line": 50, "score": 75, "strategy": "tag-selector", "code": "const toggle = combobox.locator('xpath=following::button[@aria-label=\"Multi select Typeahead menu toggle\"][1]');"},
+      {"file": "src/pages/fg-rbac/UserDetailsPage.ts", "line": 38, "score": 70, "strategy": "css-class", "code": "}).locator('..');"}
+    ]
+  },
+
+  "historyTrend": {
+    "chronicallyUnstable": [],
+    "previousRuns": [
+      {"date": "2026-07-23", "element": "PF_VERSION_MISMATCH", "severity": "WARNING", "status": "RESOLVED in this run (PF now unified at v6)"},
+      {"date": "2026-07-23", "element": "FLEET_VIRT_PAGE.fleetManagementLabel", "severity": "INFO", "status": "PERSISTS (still mismatched but orphaned)"},
+      {"date": "2026-07-23b", "summary": "0 breaking, 3 warning, 9 info, 21 orphans, avg fragility 23.0"}
+    ],
+    "note": "No element appears 3+ times in drift history. No chronically unstable elements identified."
+  },
+
+  "markdownReport": "# Virt UI Drift Report — 2026-07-23c\n\n## Summary\n- **BREAKING: 1 item** (tests WILL fail)\n- **WARNING: 2 items** (tests MAY become fragile)\n- **INFO: 5 items** (no test impact, opportunities)\n- **Orphans: 53 constants + 1 page object** (dead code)\n- **Fragility: 7 high-risk locators** (avg score 23.0/100)\n\n### Context\n- ACM 2.18 (main) | CNV 4.22 (main) | PF v6\n- Previous baseline: CNV 4.18 — **major version jump** (4.18→4.22)\n- kubevirt-plugin differences expected; ACM Console stable\n\n## BREAKING Items\n| # | Category | Description | Test File | Before | After | Fix |\n|---|----------|-------------|-----------|--------|-------|-----|\n| 1 | Selector | `vm-advanced-search-button` removed in CNV 4.22 | FleetVirtPage.ts (via FLEET_VIRT_ADVANCED_SEARCH.openButton) | `[data-test=\"vm-advanced-search-button\"]` | NOT FOUND (likely `vm-adv-search-toolbar`) | Update constant to `[data-test=\"vm-adv-search-toolbar\"]` after live verification |\n\n**Impact:** RHACM4K-60770 (advanced search), RHACM4K-60468 (managed admin)\n\n## WARNING Items\n| # | Category | Description | Test File | Before | After | Fix |\n|---|----------|-------------|-----------|--------|-------|-----|\n| 1 | Selector | `vm-search-input` not found in CNV 4.22 source | FleetVirtPage.ts (via FLEET_VIRT_SEARCH.searchInput) | `[data-test=\"vm-search-input\"] input` | NOT FOUND | Investigate CNV 4.22 search component for replacement |\n| 2 | Live DOM | Roles page 404 on direct URL navigation | RolesListPage.ts (via RBAC_ROUTES.roles) | Navigable directly | HTTP 404 (sidebar-only) | Verify if environment-specific; consider sidebar nav approach |\n\n**Impact (drift-003):** All 17 RBAC Polarion IDs potentially affected if tests navigate directly\n\n## INFO Items\n| # | Category | Description | Upstream Source | Details |\n|---|----------|-------------|----------------|--------|\n| 1 | PatternFly | PF version unified at v6 | Both repos | Previously mixed v5/v6 — now consistent |\n| 2 | Translation | `Fleet Management` → `Fleet management` (case) | stolostron/console | Orphan constant — no test impact |\n| 3 | Route | 7 new fleet-virt routes (templates, bootable volumes, etc.) | kubevirt-plugin | Coverage expansion opportunity |\n| 4 | Selector | 15+ new advanced search field data-test IDs | kubevirt-plugin | CNV 4.22 added vcpu, mem, IP, nodes, storage, etc. |\n| 5 | Live DOM | Perspectives share `acm-perspective-nav` ID | Live cluster | No test code references the absent alternate ID |\n\n## Fragility Hotspots\n| File | Worst Score | Avg Score | Risk |\n|------|-------------|-----------|------|\n| FleetVirtPage.ts | 75 | 31.8 | 3 tag-selectors (h1, xpath) |\n| AdvancedSearchModal.ts | 75 | 25.0 | 1 xpath sibling locator |\n| UserDetailsPage.ts | 70 | 42.5 | 1 parent traversal (..) |\n| RoleDetailsPage.ts | 70 | 35.6 | 1 parent traversal + 1 .monaco-editor |\n\n## Orphan Summary\n- **6 full-object**: WIZARD_STEP_IDS, WIZARD_SELECT_IDS, PF_ALERT, PF_SELECT, PF_DROPDOWN, PF_TABLE\n- **11 property-groups**: RBAC_RA_TABLE.columns/.rowActions/.filterIds/.defaults, FLEET_VIRT_ADVANCED_SEARCH.cluster/.project/.footer, RBAC_USER_DETAIL.emptyStates, RBAC_WIZARD.identities/.preAuthorizedUser/.editMode\n- **38 properties**: scattered across fg-rbac.ts and fleet-virt.ts\n- **1 page object**: VmDetailsPage.ts (not in fixture)\n\n## Resolved From Previous Run\n- ✅ PF version mismatch (kubevirt v5 → v6) — RESOLVED\n- ⏳ Fleet Management capitalization — PERSISTS (orphan, no impact)"
+}

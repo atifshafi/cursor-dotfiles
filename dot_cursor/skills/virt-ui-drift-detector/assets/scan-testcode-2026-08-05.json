@@ -1,0 +1,2503 @@
+{
+  "scanTimestamp": "2026-08-05T17:01:00Z",
+  "source": "github:stolostron/console-e2e@main",
+  "constants": {
+    "src/constants/fleet-virt.ts": {
+      "FLEET_VIRT_ROUTES.vmList": {
+        "value": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+        "type": "route"
+      },
+      "FLEET_VIRT_PAGE.perspectiveSwitcher": {
+        "value": "[data-test-id=\"perspective-switcher-toggle\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_PAGE.fleetManagementLabel": {
+        "value": "Fleet Management",
+        "type": "text"
+      },
+      "FLEET_VIRT_PAGE.emptyState.noVMs": {
+        "value": "No VirtualMachines found",
+        "type": "text"
+      },
+      "FLEET_VIRT_SEARCH.searchInput": {
+        "value": "[data-test=\"vm-search-input\"] input",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_SEARCH.searchResults": {
+        "value": "[data-test=\"search-results\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_SEARCH.resetButton": {
+        "value": "button[aria-label=\"Reset\"]",
+        "type": "aria-label"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.openButton": {
+        "value": "[data-test=\"vm-advanced-search-button\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.detailsContainer": {
+        "value": "[data-test=\"adv-search-details\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.nameInput": {
+        "value": "[data-test=\"adv-search-vm-name\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.cluster.dataTest": {
+        "value": "adv-search-vm-cluster",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.cluster.wrapper": {
+        "value": "[data-test=\"adv-search-vm-cluster\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.cluster.placeholder": {
+        "value": "All clusters",
+        "type": "text"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.cluster.selectPlaceholder": {
+        "value": "Select cluster",
+        "type": "text"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.cluster.toggleClose": {
+        "value": "button[aria-label=\"Multi select Typeahead menu toggle\"]",
+        "type": "aria-label"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.project.dataTest": {
+        "value": "adv-search-vm-project",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.project.wrapper": {
+        "value": "[data-test=\"adv-search-vm-project\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.project.placeholder": {
+        "value": "All projects",
+        "type": "text"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.project.selectPlaceholder": {
+        "value": "Select project",
+        "type": "text"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.project.toggleClose": {
+        "value": "button[aria-label=\"Multi select Typeahead menu toggle\"]",
+        "type": "aria-label"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.menuContent": {
+        "value": ".pf-v6-c-menu__content",
+        "type": "css-class"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.footer.searchButton": {
+        "value": "Search",
+        "type": "text"
+      },
+      "FLEET_VIRT_ADVANCED_SEARCH.footer.clearAllButton": {
+        "value": "Clear all",
+        "type": "text"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.saveButton": {
+        "value": "Save search",
+        "type": "text"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.nameInput": {
+        "value": "[data-test-id=\"save-search-name\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput": {
+        "value": "[data-test-id=\"save-search-description\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.submitButton": {
+        "value": "[data-test=\"save-button\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.modal.cancelButton": {
+        "value": "[data-test=\"cancel-button\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.dropdown.toggle": {
+        "value": "Saved searches",
+        "type": "text"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.dropdown.list": {
+        "value": "[data-test=\"saved-searches\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.dropdown.item": {
+        "value": "(name) => `[data-test=\"saved-search-item-${name}\"]`",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.dropdown.deleteItem": {
+        "value": "(name) => `[data-test=\"delete-search-item-${name}\"]`",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_SAVED_SEARCH.dropdown.deleteAriaLabel": {
+        "value": "Delete saved search",
+        "type": "aria-label"
+      },
+      "FLEET_VIRT_TREE_VIEW.clusterPrefix": {
+        "value": "clusterSelector",
+        "type": "id"
+      },
+      "FLEET_VIRT_TREE_VIEW.projectPrefix": {
+        "value": "projectSelector",
+        "type": "id"
+      },
+      "FLEET_VIRT_TREE_VIEW.nodeToggle": {
+        "value": "button.pf-v6-c-tree-view__node-toggle",
+        "type": "css-class"
+      },
+      "FLEET_VIRT_TREE_VIEW.nodeText": {
+        "value": "button.pf-v6-c-tree-view__node-text",
+        "type": "css-class"
+      },
+      "FLEET_VIRT_VM_ACTIONS.dropdown": {
+        "value": "[data-test=\"actions-dropdown\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_VM_ACTIONS.startButton": {
+        "value": "[data-test-id=\"vm-action-start-button\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_VM_ACTIONS.stopButton": {
+        "value": "[data-test-id=\"vm-action-stop-button\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_VM_ACTIONS.pauseButton": {
+        "value": "[data-test-id=\"vm-action-pause-button\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_VM_ACTIONS.restartButton": {
+        "value": "[data-test-id=\"vm-action-restart-button\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_VM_ACTIONS.statusLabel": {
+        "value": "[data-test-id=\"virtual-machine-overview-details-status\"]",
+        "type": "data-testid"
+      },
+      "FLEET_VIRT_VM_ACTIONS.confirmAction": {
+        "value": "[data-test=\"confirm-action\"]",
+        "type": "data-test"
+      },
+      "FLEET_VIRT_DEFAULTS.vmNamespace": {
+        "value": "default",
+        "type": "config"
+      },
+      "FLEET_VIRT_DEFAULTS.spokeCluster": {
+        "value": "process.env.VIRT_SPOKE_CLUSTER?.split(',')[0] || 'local-cluster'",
+        "type": "config"
+      }
+    },
+    "src/constants/fg-rbac.ts": {
+      "RBAC_ROUTES.identities": {
+        "value": "/multicloud/user-management/identities",
+        "type": "route"
+      },
+      "RBAC_ROUTES.roles": {
+        "value": "/multicloud/user-management/roles",
+        "type": "route"
+      },
+      "RBAC_ROUTES.users": {
+        "value": "/multicloud/user-management/identities/users",
+        "type": "route"
+      },
+      "RBAC_ROUTES.userDetails": {
+        "value": "(id) => `/multicloud/user-management/identities/users/${id}`",
+        "type": "route"
+      },
+      "RBAC_ROUTES.userRoleAssignments": {
+        "value": "(id) => `/multicloud/user-management/identities/users/${id}/role-assignments`",
+        "type": "route"
+      },
+      "RBAC_ROUTES.roleDetails": {
+        "value": "(id) => `/multicloud/user-management/roles/${id}`",
+        "type": "route"
+      },
+      "RBAC_ROUTES.roleRoleAssignments": {
+        "value": "(id) => `/multicloud/user-management/roles/${id}/role-assignments`",
+        "type": "route"
+      },
+      "RBAC_ROUTES.clusterSetDetails": {
+        "value": "(name) => `/multicloud/infrastructure/clusters/sets/details/${name}`",
+        "type": "route"
+      },
+      "RBAC_ROUTES.clusterSetRoleAssignments": {
+        "value": "(name) => `/multicloud/infrastructure/clusters/sets/details/${name}/role-assignments`",
+        "type": "route"
+      },
+      "RBAC_ROUTES.clusterDetails": {
+        "value": "(ns, name) => `/multicloud/infrastructure/clusters/details/${ns}/${name}`",
+        "type": "route"
+      },
+      "RBAC_ROUTES.clusterRoleAssignments": {
+        "value": "(ns, name) => `/multicloud/infrastructure/clusters/details/${ns}/${name}/role-assignments`",
+        "type": "route"
+      },
+      "RBAC_USER_DETAIL.tabs.details": {
+        "value": "Details",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.tabs.yaml": {
+        "value": "YAML",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.tabs.roleAssignments": {
+        "value": "Role assignments",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.tabs.groups": {
+        "value": "Groups",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.navigation.backToUsers": {
+        "value": "Back to users",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.fields.generalInformation": {
+        "value": "General information",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.fields.fullName": {
+        "value": "Full name",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.fields.username": {
+        "value": "Username",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.fields.identityProvider": {
+        "value": "Identity Provider",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.emptyStates.groups.title": {
+        "value": "No groups found",
+        "type": "text"
+      },
+      "RBAC_USER_DETAIL.emptyStates.groups.message": {
+        "value": "This user is not a member of any groups yet.",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.role": {
+        "value": "Role",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.subjectName": {
+        "value": "Subject Name",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.type": {
+        "value": "Type",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.clusterSets": {
+        "value": "Cluster sets",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.clusters": {
+        "value": "Clusters",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.namespaces": {
+        "value": "Namespaces",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.status": {
+        "value": "Status",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.columns.created": {
+        "value": "Created",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.toolbar.createButtonId": {
+        "value": "create-role-assignment",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.toolbar.createButtonLabel": {
+        "value": "Create role assignment",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.toolbar.bulkDeleteButtonId": {
+        "value": "deleteRoleAssignments",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.toolbar.searchPlaceholder": {
+        "value": "Search for role assignments...",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.rowActions.kebabAriaLabel": {
+        "value": "Actions",
+        "type": "aria-label"
+      },
+      "RBAC_RA_TABLE.rowActions.kebabSelector": {
+        "value": "button.pf-v6-c-menu-toggle[aria-label=\"Actions\"]",
+        "type": "css-class"
+      },
+      "RBAC_RA_TABLE.rowActions.editId": {
+        "value": "edit-role-assignment",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.rowActions.editLabel": {
+        "value": "Edit role assignment",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.rowActions.deleteId": {
+        "value": "delete-role-assignment",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.rowActions.deleteLabel": {
+        "value": "Delete role assignment",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.rowActions.confirmInput": {
+        "value": "confirm",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.filterIds.role": {
+        "value": "role",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.filterIds.identity": {
+        "value": "identity",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.filterIds.clusterSets": {
+        "value": "clusterSets",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.filterIds.clusters": {
+        "value": "clusters",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.filterIds.namespace": {
+        "value": "namespace",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.filterIds.status": {
+        "value": "status",
+        "type": "id"
+      },
+      "RBAC_RA_TABLE.emptyState.title": {
+        "value": "No role assignment created yet",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.emptyState.viewDocumentation": {
+        "value": "View documentation",
+        "type": "text"
+      },
+      "RBAC_RA_TABLE.defaults.allNamespaces": {
+        "value": "All namespaces",
+        "type": "text"
+      },
+      "RBAC_WIZARD.title": {
+        "value": "Create role assignment",
+        "type": "text"
+      },
+      "RBAC_WIZARD.description": {
+        "value": "A role assignment specifies a distinct action users or groups can perform when associated with a particular role.",
+        "type": "text"
+      },
+      "RBAC_WIZARD.learnMore": {
+        "value": "Learn more about user management, including an example YAML file.",
+        "type": "text"
+      },
+      "RBAC_WIZARD.scopeInfo.global": {
+        "value": "all current and future resources in all clusters",
+        "type": "text"
+      },
+      "RBAC_WIZARD.scopeInfo.clusterSets": {
+        "value": "all current and future resources on the selected cluster set",
+        "type": "text"
+      },
+      "RBAC_WIZARD.identities.tabs.users": {
+        "value": "Users",
+        "type": "text"
+      },
+      "RBAC_WIZARD.identities.tabs.groups": {
+        "value": "Groups",
+        "type": "text"
+      },
+      "RBAC_WIZARD.projects.searchPlaceholder": {
+        "value": "Search projects",
+        "type": "text"
+      },
+      "RBAC_WIZARD.projects.createButtonId": {
+        "value": "create-project",
+        "type": "id"
+      },
+      "RBAC_WIZARD.projects.enterProjectName": {
+        "value": "Enter project name",
+        "type": "text"
+      },
+      "RBAC_WIZARD.projects.enterDisplayName": {
+        "value": "Enter display name (optional)",
+        "type": "text"
+      },
+      "RBAC_WIZARD.projects.deselectTooltip": {
+        "value": "Deselect projects to create a new common project",
+        "type": "text"
+      },
+      "RBAC_WIZARD.preAuthorizedUser.identifierPlaceholder": {
+        "value": "user@company.com or username",
+        "type": "text"
+      },
+      "RBAC_WIZARD.preAuthorizedUser.saveButton": {
+        "value": "Save pre-authorized user",
+        "type": "text"
+      },
+      "RBAC_WIZARD.preAuthorizedUser.cancelLink": {
+        "value": "Cancel and search users instead",
+        "type": "text"
+      },
+      "RBAC_WIZARD.preAuthorizedUser.createdNotification": {
+        "value": "Pre-authorized user created",
+        "type": "text"
+      },
+      "RBAC_WIZARD.viewExamples.link": {
+        "value": "View examples",
+        "type": "text"
+      },
+      "RBAC_WIZARD.viewExamples.drawerTitle": {
+        "value": "Example scopes",
+        "type": "text"
+      },
+      "RBAC_WIZARD.notifications.added": {
+        "value": "Role assignment added",
+        "type": "text"
+      },
+      "RBAC_WIZARD.notifications.updated": {
+        "value": "Role assignment updated",
+        "type": "text"
+      },
+      "RBAC_WIZARD.notifications.failed": {
+        "value": "Role assignment creation failed",
+        "type": "text"
+      },
+      "RBAC_WIZARD.notifications.duplicate": {
+        "value": "This role assignment already exists. Please modify the selection to create a unique assignment.",
+        "type": "text"
+      },
+      "RBAC_WIZARD.editMode.noChangesAlert": {
+        "value": "No changes have been made. Please modify or cancel to exit.",
+        "type": "text"
+      },
+      "RBAC_WIZARD.editMode.dangerAlertSelector": {
+        "value": ".pf-v6-c-alert.pf-m-danger",
+        "type": "css-class"
+      },
+      "WIZARD_STEP_IDS.scopeSelection": {
+        "value": "scope-selection",
+        "type": "id"
+      },
+      "WIZARD_STEP_IDS.clusterSetGranularity": {
+        "value": "scope-cluster-set-granularity",
+        "type": "id"
+      },
+      "WIZARD_STEP_IDS.clusterGranularity": {
+        "value": "scope-cluster-granularity",
+        "type": "id"
+      },
+      "WIZARD_STEP_IDS.identities": {
+        "value": "identities",
+        "type": "id"
+      },
+      "WIZARD_STEP_IDS.scope": {
+        "value": "scope",
+        "type": "id"
+      },
+      "WIZARD_STEP_IDS.role": {
+        "value": "role",
+        "type": "id"
+      },
+      "WIZARD_STEP_IDS.review": {
+        "value": "review",
+        "type": "id"
+      },
+      "WIZARD_SELECT_IDS.scopeType": {
+        "value": "scope-type",
+        "type": "id"
+      },
+      "WIZARD_SELECT_IDS.clustersAccessLevel": {
+        "value": "clusters-access-level",
+        "type": "id"
+      },
+      "WIZARD_SELECT_IDS.clusterSetAccessLevel": {
+        "value": "clusters-set-access-level",
+        "type": "id"
+      },
+      "SCOPE_TYPES.global": {
+        "value": "Global access",
+        "type": "text"
+      },
+      "SCOPE_TYPES.clusterSets": {
+        "value": "Select cluster sets",
+        "type": "text"
+      },
+      "SCOPE_TYPES.clusters": {
+        "value": "Select clusters",
+        "type": "text"
+      },
+      "GRANULARITY_OPTIONS.clusterSetRoleAssignment": {
+        "value": "Cluster set role assignment",
+        "type": "text"
+      },
+      "GRANULARITY_OPTIONS.clusterRoleAssignment": {
+        "value": "Cluster role assignment",
+        "type": "text"
+      },
+      "GRANULARITY_OPTIONS.projectRoleAssignment": {
+        "value": "Project role assignment",
+        "type": "text"
+      },
+      "RBAC_ROLES.expected": {
+        "value": "[\"acm-vm-cluster-migration:view\",\"acm-vm-extended:admin\",\"acm-vm-extended:view\",\"acm-vm-fleet:admin\",\"acm-vm-fleet:view\",\"kubevirt.io:admin\",\"kubevirt.io:edit\",\"kubevirt.io:view\"]",
+        "type": "text-array"
+      },
+      "RBAC_ROLES.permissions": {
+        "value": "[8 objects with name+keywords]",
+        "type": "object-array"
+      },
+      "MCRA_RESOURCE.apiVersion": {
+        "value": "rbac.open-cluster-management.io/v1beta1",
+        "type": "text"
+      },
+      "MCRA_RESOURCE.kind": {
+        "value": "MulticlusterRoleAssignment",
+        "type": "text"
+      },
+      "MCRA_RESOURCE.namespace": {
+        "value": "open-cluster-management-global-set",
+        "type": "text"
+      },
+      "MCRA_RESOURCE.managedByLabel": {
+        "value": "open-cluster-management.io/managed-by",
+        "type": "text"
+      },
+      "MCRA_RESOURCE.managedByValue": {
+        "value": "console",
+        "type": "text"
+      },
+      "MCRA_RESOURCE.subjectNameLabel": {
+        "value": "rbac.authorization.k8s.io/subject-name",
+        "type": "text"
+      }
+    },
+    "src/constants/selectors.ts": {
+      "PF_MASTHEAD": {
+        "value": ".pf-v6-c-masthead, .co-masthead",
+        "type": "css-class"
+      },
+      "PF_SPINNER": {
+        "value": ".pf-v6-c-spinner",
+        "type": "css-class"
+      },
+      "PF_SKELETON": {
+        "value": ".pf-v6-c-skeleton",
+        "type": "css-class"
+      },
+      "PF_MODAL": {
+        "value": ".pf-v6-c-modal-box",
+        "type": "css-class"
+      },
+      "PF_ALERT": {
+        "value": ".pf-v6-c-alert",
+        "type": "css-class"
+      },
+      "PF_SELECT": {
+        "value": ".pf-v6-c-select",
+        "type": "css-class"
+      },
+      "PF_DROPDOWN": {
+        "value": ".pf-v6-c-dropdown",
+        "type": "css-class"
+      },
+      "PF_TABLE": {
+        "value": ".pf-v6-c-table",
+        "type": "css-class"
+      },
+      "SELECTORS.common.searchInput": {
+        "value": "[aria-label=\"Search input\"]",
+        "type": "aria-label"
+      },
+      "SELECTORS.common.userDropdown": {
+        "value": "[data-test=\"user-dropdown-toggle\"], [data-test=\"user-dropdown\"]",
+        "type": "data-test"
+      },
+      "SELECTORS.common.tableRow": {
+        "value": "(ouiaId) => `tr[data-ouia-component-id=\"${ouiaId}\"]`",
+        "type": "data-ouia"
+      }
+    }
+  },
+  "pageObjectLocators": [
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "shouldLoad.h1",
+      "strategy": "locator",
+      "value": "h1",
+      "line": 37,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "gotoVmTab",
+      "strategy": "getByRole",
+      "value": "tab { name: 'Virtual machines' }",
+      "line": 46,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "openAdvancedSearch.advSearchButton",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_ADVANCED_SEARCH.openButton",
+      "line": 52,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "openAdvancedSearch.searchInput",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_SEARCH.searchInput",
+      "line": 57,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "openAdvancedSearch.heading",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Advanced search', level: 1 }",
+      "line": 63,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "getCreateVmButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Create VirtualMachine' }",
+      "line": 68,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "getNoVMsEmptyState",
+      "strategy": "getByText",
+      "value": "FLEET_VIRT_PAGE.emptyState.noVMs",
+      "line": 72,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "getPageHeading",
+      "strategy": "locator",
+      "value": "[data-test=\"page-heading\"] h1",
+      "line": 76,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "getFirstVmInfo.grid",
+      "strategy": "getByRole",
+      "value": "grid (last)",
+      "line": 85,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "getFirstVmInfo.nameCell",
+      "strategy": "getByRole",
+      "value": "gridcell (nth 1)",
+      "line": 89,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "getFirstVmInfo.nsCell",
+      "strategy": "getByRole",
+      "value": "gridcell (nth 3)",
+      "line": 93,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "clearAllFilters",
+      "strategy": "getByRole",
+      "value": "button { name: 'Clear all filters' }",
+      "line": 109,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "clickBackToVmList",
+      "strategy": "getByRole",
+      "value": "button { name: 'Back to VirtualMachines list' }",
+      "line": 117,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "getVmTableRows",
+      "strategy": "getByRole",
+      "value": "grid { name: 'VirtualMachines table' } > row",
+      "line": 122,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "name": "clickFirstVmInTable",
+      "strategy": "getByRole",
+      "value": "grid { name: 'VirtualMachines table' } > link (first)",
+      "line": 126,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getTabLink",
+      "strategy": "getByRole",
+      "value": "link { name: tabName, exact: true }",
+      "line": 24,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "dismissWelcomeModal",
+      "strategy": "getByRole",
+      "value": "dialog { name: 'Welcome modal' } > button { name: 'Close' }",
+      "line": 29,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getPageHeading",
+      "strategy": "getByRole",
+      "value": "heading { name: /^VM /, level: 1 }",
+      "line": 45,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getActionsDropdown",
+      "strategy": "getByRole",
+      "value": "button { name: 'Actions' }",
+      "line": 53,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getActionsMenu",
+      "strategy": "getByRole",
+      "value": "menu",
+      "line": 61,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getActionMenuItem",
+      "strategy": "getByRole",
+      "value": "menuitem { name: actionName }",
+      "line": 65,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getVncConsoleDropdown",
+      "strategy": "getByRole",
+      "value": "button { name: 'VNC console' }",
+      "line": 73,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getGuestLoginCredentials",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Guest login credentials' }",
+      "line": 77,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getVncDisconnectedText",
+      "strategy": "getByText",
+      "value": "Click Connect to open the VNC console.",
+      "line": 82,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getVncConnectButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Connect', exact: true }",
+      "line": 87,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getVncDisconnectButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Disconnect', exact: true }",
+      "line": 92,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getEventsHeading",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Events', level: 2 }",
+      "line": 99,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getSnapshotsHeading",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Snapshots', level: 1 }",
+      "line": 111,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getConfigurationTab",
+      "strategy": "getByRole",
+      "value": "link { name: 'Configuration' }",
+      "line": 123,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getStartButton",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_VM_ACTIONS.startButton",
+      "line": 130,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getStopButton",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_VM_ACTIONS.stopButton",
+      "line": 134,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getPauseButton",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_VM_ACTIONS.pauseButton",
+      "line": 138,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getRestartButton",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_VM_ACTIONS.restartButton",
+      "line": 142,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "getStatusLabel",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_VM_ACTIONS.statusLabel",
+      "line": 146,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "clickActionButton.confirmBtn",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_VM_ACTIONS.confirmAction",
+      "line": 157,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "clickDeleteAction.menuitem",
+      "strategy": "getByRole",
+      "value": "menuitem { name: /Delete/ }",
+      "line": 179,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "confirmDelete.dialog",
+      "strategy": "getByRole",
+      "value": "dialog",
+      "line": 189,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "name": "confirmDelete.deleteBtn",
+      "strategy": "getByRole",
+      "value": "button { name: 'Delete', exact: true }",
+      "line": 191,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "modal",
+      "strategy": "locator",
+      "value": "PF_MODAL (.pf-v6-c-modal-box)",
+      "line": 25,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "nextButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Next', exact: true }",
+      "line": 26,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "cancelButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Cancel' }",
+      "line": 27,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "createButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Create' }",
+      "line": 28,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getScopeTypeDropdown",
+      "strategy": "getByRole",
+      "value": "combobox",
+      "line": 41,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "selectScopeType.option",
+      "strategy": "getByRole",
+      "value": "option { name: scopeType }",
+      "line": 45,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getScopeInfoMessage",
+      "strategy": "getByText",
+      "value": "/This role assignment will apply to/",
+      "line": 52,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getScopeOption",
+      "strategy": "getByRole",
+      "value": "option { name: scopeType }",
+      "line": 56,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "checkTableRows",
+      "strategy": "getByRole",
+      "value": "row { name } > checkbox",
+      "line": 61,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "selectGranularity.combobox",
+      "strategy": "getByRole",
+      "value": "combobox",
+      "line": 74,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "selectGranularity.option",
+      "strategy": "getByRole",
+      "value": "option { name: option }",
+      "line": 75,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "searchProjects",
+      "strategy": "getByPlaceholder",
+      "value": "RBAC_WIZARD.projects.searchPlaceholder",
+      "line": 80,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "selectProjects",
+      "strategy": "getByRole",
+      "value": "row { name } > checkbox",
+      "line": 89,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getProjectTableRows",
+      "strategy": "getByRole",
+      "value": "row > checkbox (filter)",
+      "line": 94,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "selectRole",
+      "strategy": "getByRole",
+      "value": "radio { name: `Select role ${roleName}` }",
+      "line": 98,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "searchRole",
+      "strategy": "locator",
+      "value": "[aria-label=\"Search input\"]",
+      "line": 102,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getReviewSubject",
+      "strategy": "getByRole",
+      "value": "heading { name: 'User', level: 3 }",
+      "line": 108,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getReviewScope",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Scope', level: 3 }",
+      "line": 112,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getReviewRole",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Role', level: 3 }",
+      "line": 116,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "openViewExamples",
+      "strategy": "getByText",
+      "value": "RBAC_WIZARD.viewExamples.link",
+      "line": 120,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "closeViewExamples",
+      "strategy": "getByRole",
+      "value": "button { name: 'Close drawer panel' }",
+      "line": 124,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getExamplesDrawer",
+      "strategy": "getByText",
+      "value": "RBAC_WIZARD.viewExamples.drawerTitle",
+      "line": 128,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getSuccessNotification",
+      "strategy": "getByText",
+      "value": "RBAC_WIZARD.notifications.added",
+      "line": 131,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getUpdatedNotification",
+      "strategy": "getByText",
+      "value": "RBAC_WIZARD.notifications.updated",
+      "line": 132,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getDuplicateError",
+      "strategy": "getByText",
+      "value": "RBAC_WIZARD.notifications.duplicate",
+      "line": 133,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "selectIdentity.searchInput",
+      "strategy": "getByRole",
+      "value": "textbox { name: 'Search input' }",
+      "line": 136,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "selectIdentity.radio",
+      "strategy": "getByRole",
+      "value": "radio { name: `Select ${username}` }",
+      "line": 139,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getWizardTitle",
+      "strategy": "getByRole",
+      "value": "heading (first)",
+      "line": 142,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getNoChangesAlert",
+      "strategy": "locator",
+      "value": "RBAC_WIZARD.editMode.dangerAlertSelector",
+      "line": 151,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getDiffStrikethrough",
+      "strategy": "locator",
+      "value": "s",
+      "line": 155,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "name": "getUpdateButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Save', exact: true }",
+      "line": 159,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "name": "roleAssignmentsTab",
+      "strategy": "getByRole",
+      "value": "tab { name: RBAC_USER_DETAIL.tabs.roleAssignments }",
+      "line": 15,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "name": "getPageHeading",
+      "strategy": "getByRole",
+      "value": "heading { level: 1 }",
+      "line": 25,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "name": "getGeneralInfoSection",
+      "strategy": "getByRole",
+      "value": "heading { name: RBAC_USER_DETAIL.fields.generalInformation, level: 3 }",
+      "line": 29,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "name": "getRoleAssignmentsContent",
+      "strategy": "getByRole+getByText",
+      "value": "button { name: RBAC_WIZARD.title } OR text(RBAC_RA_TABLE.emptyState.title)",
+      "line": 48,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "name": "getYamlEditor",
+      "strategy": "locator",
+      "value": ".monaco-editor (first)",
+      "line": 58,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RolesListPage.ts",
+      "name": "getRoleLink",
+      "strategy": "getByRole",
+      "value": "link { name, exact: true }",
+      "line": 21,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/RolesListPage.ts",
+      "name": "getPermissionsCell",
+      "strategy": "getByRole",
+      "value": "row > gridcell (nth 1)",
+      "line": 25,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "name": "roleAssignmentsTab",
+      "strategy": "getByRole",
+      "value": "tab { name: RBAC_USER_DETAIL.tabs.roleAssignments }",
+      "line": 28,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "name": "getPageHeading",
+      "strategy": "getByRole",
+      "value": "heading { level: 1 }",
+      "line": 31,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "name": "getGeneralInfoSection",
+      "strategy": "getByRole",
+      "value": "heading { name: RBAC_USER_DETAIL.fields.generalInformation, level: 3 }",
+      "line": 36,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "name": "gotoUserViaSearch.searchInput",
+      "strategy": "locator",
+      "value": "input[placeholder=\"Search\"]",
+      "line": 51,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "name": "gotoGroupDetail.groupsTab",
+      "strategy": "getByRole",
+      "value": "tab { name: 'Groups' }",
+      "line": 80,
+      "referencesConstant": false
+    }
+  ],
+  "componentLocators": [
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "name": "getClusterCombobox",
+      "strategy": "locator",
+      "value": "input[placeholder=\"All clusters\"], input[placeholder=\"Select cluster\"]",
+      "line": 18,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "name": "getProjectCombobox",
+      "strategy": "locator",
+      "value": "input[placeholder=\"All projects\"], input[placeholder=\"Select project\"]",
+      "line": 24,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "name": "getHeading",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Advanced search', level: 1 }",
+      "line": 30,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "name": "selectCluster.option",
+      "strategy": "getByRole",
+      "value": "option { name: clusterName }",
+      "line": 38,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "name": "selectProject.toggle",
+      "strategy": "locator",
+      "value": "xpath=following::button[@aria-label=\"Multi select Typeahead menu toggle\"][1]",
+      "line": 50,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "name": "selectProject.option",
+      "strategy": "getByRole",
+      "value": "option { name: projectName, exact: true }",
+      "line": 53,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "name": "clickSearch",
+      "strategy": "getByRole",
+      "value": "button { name: 'Search', exact: true }",
+      "line": 60,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "saveSearch.saveSearchBtn",
+      "strategy": "getByRole",
+      "value": "button { name: FLEET_VIRT_SAVED_SEARCH.saveButton }",
+      "line": 15,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "saveSearch.heading",
+      "strategy": "getByRole",
+      "value": "heading { name: 'Save search' }",
+      "line": 18,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "saveSearch.nameInput",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput",
+      "line": 21,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "saveSearch.descInput",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput",
+      "line": 25,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "saveSearch.saveButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Save', exact: true }",
+      "line": 28,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "toggle",
+      "strategy": "getByRole",
+      "value": "button { name: FLEET_VIRT_SAVED_SEARCH.dropdown.toggle }",
+      "line": 42,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "removeSavedSearch.item",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_SAVED_SEARCH.dropdown.item(name)",
+      "line": 62,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "name": "removeSavedSearch.deleteButton",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_SAVED_SEARCH.dropdown.deleteItem(name)",
+      "line": 64,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/StatusFilter.ts",
+      "name": "getStatusButton",
+      "strategy": "getByRole",
+      "value": "button { name: /^Status/ } (first)",
+      "line": 7,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/StatusFilter.ts",
+      "name": "selectStatus",
+      "strategy": "getByRole",
+      "value": "menuitem { name: status }",
+      "line": 12,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/StatusFilter.ts",
+      "name": "clearAllFilters",
+      "strategy": "getByRole",
+      "value": "button { name: 'Clear all filters' }",
+      "line": 17,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/StatusFilter.ts",
+      "name": "clearAllFilters.closeChip",
+      "strategy": "getByRole",
+      "value": "button { name: /^Close/ } (first)",
+      "line": 21,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/TreeView.ts",
+      "name": "showVmProjectsSwitch",
+      "strategy": "getByRole",
+      "value": "switch",
+      "line": 8,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/TreeView.ts",
+      "name": "expandCluster.node",
+      "strategy": "locator",
+      "value": "li[id=\"${FLEET_VIRT_TREE_VIEW.clusterPrefix}/${clusterName}\"]",
+      "line": 20,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/TreeView.ts",
+      "name": "expandCluster.toggle",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_TREE_VIEW.nodeToggle",
+      "line": 22,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/TreeView.ts",
+      "name": "clickProject.node",
+      "strategy": "locator",
+      "value": "li[id=\"${FLEET_VIRT_TREE_VIEW.projectPrefix}/${clusterName}/${namespace}\"]",
+      "line": 29,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/TreeView.ts",
+      "name": "clickProject.nodeText",
+      "strategy": "locator",
+      "value": "FLEET_VIRT_TREE_VIEW.nodeText",
+      "line": 30,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fleet-virt/TreeView.ts",
+      "name": "getAllTreeItems",
+      "strategy": "locator",
+      "value": "[role=\"treeitem\"]",
+      "line": 34,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/VmCloneModal.ts",
+      "name": "container",
+      "strategy": "getByRole",
+      "value": "dialog",
+      "line": 16,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/VmCloneModal.ts",
+      "name": "nameInput",
+      "strategy": "getByRole",
+      "value": "textbox { name: 'Name' }",
+      "line": 17,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/VmCloneModal.ts",
+      "name": "startOnCloneCheckbox",
+      "strategy": "getByRole",
+      "value": "checkbox { name: /Start VirtualMachine/ }",
+      "line": 18,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fleet-virt/VmCloneModal.ts",
+      "name": "saveButton",
+      "strategy": "getByRole",
+      "value": "button { name: 'Clone' }",
+      "line": 19,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "name": "getRowByRole",
+      "strategy": "getByRole",
+      "value": "row > link { name: roleName, exact: true }",
+      "line": 14,
+      "referencesConstant": false
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "name": "getEmptyStateTitle",
+      "strategy": "getByText",
+      "value": "RBAC_RA_TABLE.emptyState.title",
+      "line": 20,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "name": "openKebabMenu",
+      "strategy": "locator",
+      "value": "RBAC_RA_TABLE.rowActions.kebabSelector",
+      "line": 29,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "name": "getEditItem",
+      "strategy": "locator",
+      "value": "#${RBAC_RA_TABLE.rowActions.editId}",
+      "line": 33,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "name": "getDeleteItem",
+      "strategy": "locator",
+      "value": "#${RBAC_RA_TABLE.rowActions.deleteId}",
+      "line": 37,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "name": "confirmDelete.confirmInput",
+      "strategy": "locator",
+      "value": "#${RBAC_RA_TABLE.rowActions.confirmInput}",
+      "line": 63,
+      "referencesConstant": true
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "name": "confirmDelete.deleteBtn",
+      "strategy": "getByRole",
+      "value": "button { name: 'Delete', exact: true }",
+      "line": 65,
+      "referencesConstant": false
+    }
+  ],
+  "libLocators": [
+    {
+      "file": "src/lib/fg-rbac/role-assignment-actions.ts",
+      "name": "openCreateRoleAssignment",
+      "strategy": "getByRole",
+      "value": "button { name: RBAC_RA_TABLE.toolbar.createButtonLabel }",
+      "line": 9,
+      "referencesConstant": true,
+      "source": "lib"
+    },
+    {
+      "file": "src/lib/openshift-login.ts",
+      "name": "idpLink",
+      "strategy": "getByRole",
+      "value": "link { name: options.idp }",
+      "line": 17,
+      "referencesConstant": false,
+      "source": "lib"
+    },
+    {
+      "file": "src/lib/openshift-login.ts",
+      "name": "usernameInput",
+      "strategy": "getByRole",
+      "value": "textbox { name: 'Username' }",
+      "line": 18,
+      "referencesConstant": false,
+      "source": "lib"
+    },
+    {
+      "file": "src/lib/openshift-login.ts",
+      "name": "passwordInput",
+      "strategy": "getByRole",
+      "value": "textbox { name: 'Password' }",
+      "line": 19,
+      "referencesConstant": false,
+      "source": "lib"
+    },
+    {
+      "file": "src/lib/openshift-login.ts",
+      "name": "submitButton",
+      "strategy": "getByRole",
+      "value": "button { name: /log in/i }",
+      "line": 20,
+      "referencesConstant": false,
+      "source": "lib"
+    },
+    {
+      "file": "src/lib/openshift-login.ts",
+      "name": "loginFailedAlert",
+      "strategy": "locator",
+      "value": ".pf-v6-c-alert, .alert-danger",
+      "line": 42,
+      "referencesConstant": false,
+      "source": "lib"
+    }
+  ],
+  "inlineLocators": [
+    {
+      "file": "src/tests/fg-rbac/delete-role-assignment.spec.ts",
+      "value": "page.getByText(/2 selected/)",
+      "strategy": "getByText",
+      "line": 129,
+      "flag": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/delete-role-assignment.spec.ts",
+      "value": "page.getByRole('button', { name: 'Actions', exact: true }).first()",
+      "strategy": "getByRole",
+      "line": 131,
+      "flag": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/delete-role-assignment.spec.ts",
+      "value": "page.getByRole('menuitem', { name: 'Delete role assignments' })",
+      "strategy": "getByRole",
+      "line": 133,
+      "flag": "INLINE_LOCATOR"
+    }
+  ],
+  "absenceAssertions": [],
+  "routes": [
+    {
+      "constant": "FLEET_VIRT_ROUTES.vmList",
+      "path": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+      "usedBy": [
+        "src/pages/fleet-virt/FleetVirtPage.ts:27"
+      ]
+    },
+    {
+      "constant": "RBAC_ROUTES.identities",
+      "path": "/multicloud/user-management/identities",
+      "usedBy": [
+        "src/pages/fg-rbac/UserDetailsPage.ts:49",
+        "src/pages/fg-rbac/UserDetailsPage.ts:78"
+      ]
+    },
+    {
+      "constant": "RBAC_ROUTES.roles",
+      "path": "/multicloud/user-management/roles",
+      "usedBy": [
+        "src/pages/fg-rbac/RolesListPage.ts:16"
+      ]
+    },
+    {
+      "constant": "RBAC_ROUTES.userDetails",
+      "path": "(id) => /multicloud/user-management/identities/users/${id}",
+      "usedBy": [
+        "src/pages/fg-rbac/UserDetailsPage.ts:43"
+      ]
+    },
+    {
+      "constant": "RBAC_ROUTES.userRoleAssignments",
+      "path": "(id) => /multicloud/user-management/identities/users/${id}/role-assignments",
+      "usedBy": [
+        "src/pages/fg-rbac/UserDetailsPage.ts:59"
+      ]
+    },
+    {
+      "constant": "RBAC_ROUTES.roleDetails",
+      "path": "(id) => /multicloud/user-management/roles/${id}",
+      "usedBy": [
+        "src/pages/fg-rbac/RoleDetailsPage.ts:20"
+      ]
+    },
+    {
+      "constant": "RBAC_ROUTES.clusterSetRoleAssignments",
+      "path": "(name) => /multicloud/infrastructure/clusters/sets/details/${name}/role-assignments",
+      "usedBy": [
+        "src/pages/infrastructure/ClusterSetDetailsPage.ts:17"
+      ]
+    },
+    {
+      "constant": "RBAC_ROUTES.clusterRoleAssignments",
+      "path": "(ns, name) => /multicloud/infrastructure/clusters/details/${ns}/${name}/role-assignments",
+      "usedBy": [
+        "src/pages/infrastructure/ClusterDetailsPage.ts:17"
+      ]
+    },
+    {
+      "constant": "FleetVirtPage.gotoVmDetails (inline)",
+      "path": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/cluster/${cluster}/ns/${namespace}/${vmName}",
+      "usedBy": [
+        "src/pages/fleet-virt/FleetVirtPage.ts:103"
+      ]
+    }
+  ],
+  "pfVersion": "pf-v6-c",
+  "pfVersionReferences": [
+    {
+      "file": "src/constants/selectors.ts",
+      "line": 13,
+      "value": "const PF = 'pf-v6-c'"
+    },
+    {
+      "file": "src/constants/fg-rbac.ts",
+      "line": 105,
+      "value": "button.pf-v6-c-menu-toggle[aria-label=\"Actions\"]"
+    },
+    {
+      "file": "src/constants/fg-rbac.ts",
+      "line": 185,
+      "value": ".pf-v6-c-alert.pf-m-danger"
+    },
+    {
+      "file": "src/constants/fleet-virt.ts",
+      "line": 73,
+      "value": ".pf-v6-c-menu__content"
+    },
+    {
+      "file": "src/constants/fleet-virt.ts",
+      "line": 110,
+      "value": "button.pf-v6-c-tree-view__node-toggle"
+    },
+    {
+      "file": "src/constants/fleet-virt.ts",
+      "line": 111,
+      "value": "button.pf-v6-c-tree-view__node-text"
+    },
+    {
+      "file": "src/lib/openshift-login.ts",
+      "line": 42,
+      "value": ".pf-v6-c-alert, .alert-danger"
+    }
+  ],
+  "dependencyGraph": {
+    "specToPageObjects": {
+      "src/tests/fleet-virt/advanced-search.spec.ts": [
+        "@fixtures/fleet-virt-test \u2192 FleetVirtPage, VmDetailsPage, AdvancedSearchModal, SavedSearches, TreeView, StatusFilter, VmCloneModal"
+      ],
+      "src/tests/fleet-virt/tree-view.spec.ts": [
+        "@fixtures/fleet-virt-test \u2192 FleetVirtPage, VmDetailsPage, AdvancedSearchModal, SavedSearches, TreeView, StatusFilter, VmCloneModal"
+      ],
+      "src/tests/fleet-virt/vm-actions.spec.ts": [
+        "@fixtures/fleet-virt-test \u2192 FleetVirtPage, VmDetailsPage, AdvancedSearchModal, SavedSearches, TreeView, StatusFilter, VmCloneModal"
+      ],
+      "src/tests/fleet-virt/vm-clone-delete.spec.ts": [
+        "@fixtures/fleet-virt-test \u2192 FleetVirtPage, VmDetailsPage, AdvancedSearchModal, SavedSearches, TreeView, StatusFilter, VmCloneModal"
+      ],
+      "src/tests/fleet-virt/saved-search-basic.spec.ts": [
+        "@fixtures/fleet-virt-test \u2192 FleetVirtPage, VmDetailsPage, AdvancedSearchModal, SavedSearches, TreeView, StatusFilter, VmCloneModal"
+      ],
+      "src/tests/fleet-virt/status-filter.spec.ts": [
+        "@fixtures/fleet-virt-test \u2192 FleetVirtPage, VmDetailsPage, AdvancedSearchModal, SavedSearches, TreeView, StatusFilter, VmCloneModal"
+      ],
+      "src/tests/fleet-virt/idp-comparison.spec.ts": [
+        "@fixtures/fg-rbac-test + FleetVirtPage, VmDetailsPage, TreeView"
+      ],
+      "src/tests/fleet-virt/role-visibility.spec.ts": [
+        "@fixtures/fg-rbac-test + FleetVirtPage, VmDetailsPage, TreeView"
+      ],
+      "src/tests/fleet-virt/hub-view-role.spec.ts": [
+        "@fixtures/fg-rbac-test + FleetVirtPage, VmDetailsPage, TreeView"
+      ],
+      "src/tests/fleet-virt/standard-roles-no-fleet.spec.ts": [
+        "@fixtures/fg-rbac-test + FleetVirtPage, SearchPage"
+      ],
+      "src/tests/fg-rbac/cross-page-integration.spec.ts": [
+        "@fixtures/fg-rbac-test \u2192 UserDetailsPage, RolesListPage, RoleDetailsPage, RoleAssignmentWizardPage, ClusterSetDetailsPage, ClusterDetailsPage"
+      ],
+      "src/tests/fg-rbac/role-assignment-global-access.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/role-assignment-clusterset.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/role-assignment-cluster.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/role-assignment-entry-points.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/roles-page-validation.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/edit-role-assignment.spec.ts": [
+        "@fixtures/fg-rbac-test + SearchPage, SearchDetailsPage"
+      ],
+      "src/tests/fg-rbac/edit-no-change.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/delete-role-assignment.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/common-projects.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/project-mismatch.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/group-role-assignment.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/scope-change.spec.ts": [
+        "@fixtures/fg-rbac-test"
+      ],
+      "src/tests/fg-rbac/ldap-fleet-admin.spec.ts": [
+        "@fixtures/fg-rbac-test + FleetVirtPage, VmDetailsPage, TreeView"
+      ],
+      "src/tests/fg-rbac/ldap-fleet-viewer.spec.ts": [
+        "@fixtures/fg-rbac-test + FleetVirtPage, VmDetailsPage, TreeView"
+      ],
+      "src/tests/fg-rbac/managed-admin-full-access.spec.ts": [
+        "@fixtures/fg-rbac-test + FleetVirtPage, VmDetailsPage"
+      ]
+    },
+    "specToDirectConstants": {
+      "src/tests/fg-rbac/cross-page-integration.spec.ts": [
+        "RBAC_USER_DETAIL"
+      ],
+      "src/tests/fg-rbac/role-assignment-global-access.spec.ts": [
+        "RBAC_WIZARD",
+        "MCRA_RESOURCE",
+        "SCOPE_TYPES"
+      ],
+      "src/tests/fg-rbac/role-assignment-clusterset.spec.ts": [
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS",
+        "RBAC_WIZARD",
+        "MCRA_RESOURCE"
+      ],
+      "src/tests/fg-rbac/role-assignment-cluster.spec.ts": [
+        "RBAC_WIZARD",
+        "GRANULARITY_OPTIONS"
+      ],
+      "src/tests/fg-rbac/role-assignment-entry-points.spec.ts": [
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS",
+        "RBAC_WIZARD"
+      ],
+      "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts": [
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS",
+        "RBAC_WIZARD"
+      ],
+      "src/tests/fg-rbac/roles-page-validation.spec.ts": [
+        "RBAC_ROLES"
+      ],
+      "src/tests/fg-rbac/edit-role-assignment.spec.ts": [
+        "SCOPE_TYPES",
+        "MCRA_RESOURCE"
+      ],
+      "src/tests/fg-rbac/edit-no-change.spec.ts": [
+        "RBAC_WIZARD"
+      ],
+      "src/tests/fg-rbac/common-projects.spec.ts": [
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS"
+      ],
+      "src/tests/fg-rbac/project-mismatch.spec.ts": [
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS"
+      ],
+      "src/tests/fg-rbac/group-role-assignment.spec.ts": [
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS",
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fg-rbac/scope-change.spec.ts": [
+        "SCOPE_TYPES"
+      ],
+      "src/tests/fg-rbac/ldap-fleet-admin.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fg-rbac/ldap-fleet-viewer.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/advanced-search.spec.ts": [],
+      "src/tests/fleet-virt/tree-view.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/vm-actions.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/vm-clone-delete.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/saved-search-basic.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/status-filter.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/idp-comparison.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/role-visibility.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/hub-view-role.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ],
+      "src/tests/fleet-virt/standard-roles-no-fleet.spec.ts": [
+        "FLEET_VIRT_DEFAULTS"
+      ]
+    },
+    "specToDirectConstantProperties": {
+      "SCOPE_TYPES.global": [
+        "role-assignment-global-access",
+        "scope-change",
+        "role-assignment-edge-cases",
+        "role-assignment-entry-points",
+        "group-role-assignment",
+        "edit-role-assignment"
+      ],
+      "SCOPE_TYPES.clusterSets": [
+        "role-assignment-global-access",
+        "role-assignment-clusterset",
+        "scope-change",
+        "role-assignment-edge-cases",
+        "common-projects"
+      ],
+      "SCOPE_TYPES.clusters": [
+        "role-assignment-global-access",
+        "scope-change",
+        "group-role-assignment",
+        "common-projects",
+        "project-mismatch"
+      ],
+      "GRANULARITY_OPTIONS.clusterSetRoleAssignment": [
+        "role-assignment-clusterset",
+        "role-assignment-entry-points",
+        "role-assignment-edge-cases"
+      ],
+      "GRANULARITY_OPTIONS.clusterRoleAssignment": [
+        "role-assignment-cluster",
+        "role-assignment-entry-points"
+      ],
+      "GRANULARITY_OPTIONS.projectRoleAssignment": [
+        "role-assignment-cluster",
+        "role-assignment-clusterset",
+        "group-role-assignment",
+        "common-projects",
+        "project-mismatch"
+      ],
+      "RBAC_WIZARD.scopeInfo.global": [
+        "role-assignment-global-access",
+        "role-assignment-entry-points"
+      ],
+      "RBAC_WIZARD.scopeInfo.clusterSets": [
+        "role-assignment-clusterset",
+        "role-assignment-entry-points",
+        "role-assignment-edge-cases"
+      ],
+      "RBAC_WIZARD.projects.createButtonId": [
+        "role-assignment-cluster",
+        "role-assignment-clusterset"
+      ],
+      "RBAC_WIZARD.editMode.noChangesAlert": [
+        "edit-no-change"
+      ],
+      "RBAC_WIZARD.notifications.added": [
+        "(via page object)"
+      ],
+      "MCRA_RESOURCE.managedByLabel": [
+        "role-assignment-global-access",
+        "role-assignment-clusterset"
+      ],
+      "MCRA_RESOURCE.managedByValue": [
+        "role-assignment-global-access",
+        "role-assignment-clusterset"
+      ],
+      "MCRA_RESOURCE.kind": [
+        "edit-role-assignment"
+      ],
+      "RBAC_ROLES.expected": [
+        "roles-page-validation"
+      ],
+      "RBAC_ROLES.permissions": [
+        "roles-page-validation"
+      ]
+    },
+    "specToPolarionIds": {
+      "src/tests/fleet-virt/tree-view.spec.ts": [
+        "RHACM4K-60558"
+      ],
+      "src/tests/fleet-virt/advanced-search.spec.ts": [
+        "RHACM4K-60770"
+      ],
+      "src/tests/fleet-virt/vm-actions.spec.ts": [
+        "RHACM4K-60771"
+      ],
+      "src/tests/fleet-virt/vm-clone-delete.spec.ts": [
+        "RHACM4K-60772"
+      ],
+      "src/tests/fleet-virt/saved-search-basic.spec.ts": [
+        "RHACM4K-60769"
+      ],
+      "src/tests/fleet-virt/status-filter.spec.ts": [
+        "RHACM4K-60560"
+      ],
+      "src/tests/fleet-virt/idp-comparison.spec.ts": [
+        "RHACM4K-60258"
+      ],
+      "src/tests/fleet-virt/role-visibility.spec.ts": [
+        "RHACM4K-60311"
+      ],
+      "src/tests/fleet-virt/hub-view-role.spec.ts": [
+        "RHACM4K-60310"
+      ],
+      "src/tests/fleet-virt/standard-roles-no-fleet.spec.ts": [
+        "RHACM4K-60309"
+      ],
+      "src/tests/fg-rbac/cross-page-integration.spec.ts": [
+        "RHACM4K-60254"
+      ],
+      "src/tests/fg-rbac/role-assignment-global-access.spec.ts": [
+        "RHACM4K-61726"
+      ],
+      "src/tests/fg-rbac/role-assignment-clusterset.spec.ts": [
+        "RHACM4K-61727",
+        "RHACM4K-61728",
+        "RHACM4K-61729",
+        "RHACM4K-61730"
+      ],
+      "src/tests/fg-rbac/role-assignment-cluster.spec.ts": [
+        "RHACM4K-61731",
+        "RHACM4K-61732",
+        "RHACM4K-61733",
+        "RHACM4K-61734"
+      ],
+      "src/tests/fg-rbac/role-assignment-entry-points.spec.ts": [
+        "RHACM4K-61863",
+        "RHACM4K-61856",
+        "RHACM4K-61862"
+      ],
+      "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts": [
+        "RHACM4K-61735",
+        "RHACM4K-61864"
+      ],
+      "src/tests/fg-rbac/roles-page-validation.spec.ts": [
+        "RHACM4K-61779"
+      ],
+      "src/tests/fg-rbac/edit-role-assignment.spec.ts": [
+        "RHACM4K-61823"
+      ],
+      "src/tests/fg-rbac/edit-no-change.spec.ts": [
+        "RHACM4K-61825"
+      ],
+      "src/tests/fg-rbac/delete-role-assignment.spec.ts": [
+        "RHACM4K-61866"
+      ],
+      "src/tests/fg-rbac/common-projects.spec.ts": [
+        "RHACM4K-61736"
+      ],
+      "src/tests/fg-rbac/project-mismatch.spec.ts": [
+        "RHACM4K-61865"
+      ],
+      "src/tests/fg-rbac/group-role-assignment.spec.ts": [
+        "RHACM4K-60255"
+      ],
+      "src/tests/fg-rbac/scope-change.spec.ts": [
+        "RHACM4K-61944"
+      ],
+      "src/tests/fg-rbac/ldap-fleet-admin.spec.ts": [
+        "RHACM4K-60251"
+      ],
+      "src/tests/fg-rbac/ldap-fleet-viewer.spec.ts": [
+        "RHACM4K-60229"
+      ],
+      "src/tests/fg-rbac/managed-admin-full-access.spec.ts": [
+        "RHACM4K-60468"
+      ]
+    },
+    "pageObjectToConstants": {
+      "src/pages/fleet-virt/FleetVirtPage.ts": [
+        "FLEET_VIRT_ROUTES",
+        "FLEET_VIRT_PAGE",
+        "FLEET_VIRT_SEARCH",
+        "FLEET_VIRT_ADVANCED_SEARCH"
+      ],
+      "src/pages/fleet-virt/VmDetailsPage.ts": [
+        "FLEET_VIRT_VM_ACTIONS"
+      ],
+      "src/pages/fg-rbac/RoleAssignmentWizardPage.ts": [
+        "PF_MODAL",
+        "SCOPE_TYPES",
+        "RBAC_WIZARD"
+      ],
+      "src/pages/fg-rbac/RoleDetailsPage.ts": [
+        "RBAC_ROUTES",
+        "RBAC_USER_DETAIL",
+        "RBAC_RA_TABLE",
+        "RBAC_WIZARD"
+      ],
+      "src/pages/fg-rbac/RolesListPage.ts": [
+        "RBAC_ROUTES"
+      ],
+      "src/pages/fg-rbac/UserDetailsPage.ts": [
+        "RBAC_ROUTES",
+        "RBAC_USER_DETAIL"
+      ],
+      "src/pages/infrastructure/ClusterDetailsPage.ts": [
+        "RBAC_ROUTES"
+      ],
+      "src/pages/infrastructure/ClusterSetDetailsPage.ts": [
+        "RBAC_ROUTES"
+      ]
+    },
+    "pageObjectToLibImports": {
+      "src/pages/fg-rbac/RoleDetailsPage.ts": [
+        "@lib/fg-rbac/role-assignment-actions"
+      ],
+      "src/pages/fg-rbac/UserDetailsPage.ts": [
+        "@lib/fg-rbac/role-assignment-actions"
+      ],
+      "src/pages/infrastructure/ClusterDetailsPage.ts": [
+        "@lib/fg-rbac/role-assignment-actions"
+      ],
+      "src/pages/infrastructure/ClusterSetDetailsPage.ts": [
+        "@lib/fg-rbac/role-assignment-actions"
+      ]
+    },
+    "libToConstants": {
+      "src/lib/fg-rbac/role-assignment-actions.ts": [
+        "RBAC_RA_TABLE"
+      ]
+    }
+  },
+  "orphans": {
+    "unusedConstants": [
+      {
+        "name": "WIZARD_STEP_IDS",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "fullObject",
+        "properties": 7,
+        "reason": "0 imports or property references outside constants/"
+      },
+      {
+        "name": "WIZARD_SELECT_IDS",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "fullObject",
+        "properties": 3,
+        "reason": "0 imports or property references outside constants/"
+      },
+      {
+        "name": "PF_ALERT",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "PF_SELECT",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "PF_DROPDOWN",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "PF_TABLE",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "FLEET_VIRT_PAGE.perspectiveSwitcher",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced outside constants (FLEET_VIRT_PAGE is imported for emptyState.noVMs only)"
+      },
+      {
+        "name": "FLEET_VIRT_SEARCH.searchResults",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_SEARCH.resetButton",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.detailsContainer",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.nameInput",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.cluster (sub-object)",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "propertyGroup",
+        "properties": 5,
+        "reason": "Page objects use inline placeholder locators instead of these constants"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.project (sub-object)",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "propertyGroup",
+        "properties": 5,
+        "reason": "Page objects use inline placeholder locators instead of these constants"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.menuContent",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.footer (sub-object)",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "propertyGroup",
+        "properties": 2,
+        "reason": "Page objects use getByRole instead of these text constants"
+      },
+      {
+        "name": "FLEET_VIRT_VM_ACTIONS.dropdown",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "VmDetailsPage uses getByRole('button', { name: 'Actions' }) instead"
+      },
+      {
+        "name": "RBAC_ROUTES.roleRoleAssignments",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not used in any page object goto()"
+      },
+      {
+        "name": "RBAC_ROUTES.clusterSetDetails",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not used (clusterSetRoleAssignments is used instead)"
+      },
+      {
+        "name": "RBAC_ROUTES.clusterDetails",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not used (clusterRoleAssignments is used instead)"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.tabs.details",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.tabs.yaml",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "RoleDetailsPage uses hardcoded 'YAML' string instead"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.tabs.groups",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "UserDetailsPage uses hardcoded 'Groups' string instead"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.navigation.backToUsers",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.fields.fullName",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.fields.username",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.fields.identityProvider",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.emptyStates.groups (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 2,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_RA_TABLE.columns (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 8,
+        "reason": "Defined but not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_RA_TABLE.toolbar.bulkDeleteButtonId",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_RA_TABLE.toolbar.searchPlaceholder",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_RA_TABLE.rowActions.kebabAriaLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "kebabSelector is used instead"
+      },
+      {
+        "name": "RBAC_RA_TABLE.rowActions.editLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "editId is used instead"
+      },
+      {
+        "name": "RBAC_RA_TABLE.rowActions.deleteLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "deleteId is used instead"
+      },
+      {
+        "name": "RBAC_RA_TABLE.filterIds (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 6,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_RA_TABLE.emptyState.viewDocumentation",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_RA_TABLE.defaults.allNamespaces",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.description",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.learnMore",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.identities.tabs (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 2,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.projects.enterProjectName",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.projects.enterDisplayName",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.projects.deselectTooltip",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.preAuthorizedUser (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 4,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.notifications.failed",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "MCRA_RESOURCE.apiVersion",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced outside constants"
+      },
+      {
+        "name": "MCRA_RESOURCE.namespace",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced outside constants"
+      },
+      {
+        "name": "MCRA_RESOURCE.subjectNameLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced outside constants"
+      }
+    ],
+    "unusedPageObjects": []
+  },
+  "summary": {
+    "totalConstants": 155,
+    "totalPageObjectLocators": 81,
+    "totalComponentLocators": 36,
+    "totalLibLocators": 6,
+    "totalInlineLocators": 3,
+    "totalAbsenceAssertions": 0,
+    "totalRoutes": 9,
+    "totalOrphanConstants": 45,
+    "orphanBreakdown": {
+      "fullObject": 2,
+      "propertyGroup": 9,
+      "property": 34
+    },
+    "totalOrphanPageObjects": 0
+  }
+}

@@ -1,0 +1,120 @@
+{
+ "scanTimestamp": "2026-07-23T19:31:52Z",
+ "clusterUrl": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com",
+ "pages": [
+ {
+ "name": "Fleet Virtualization - VirtualMachines (Overview Tab)",
+ "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+ "loaded": true,
+ "elements": {
+ "heading": "VirtualMachines",
+ "tabs": ["Overview", "Virtual machines"],
+ "selectedTab": "Overview",
+ "overviewWidgets": {
+  "clusterStatus": { "heading": "Cluster status", "clusters": ["local-cluster", "ashafi-virt-hub-5eb34"] },
+  "virtualMachineHealth": { "heading": "Virtual machine health", "alertsTotal": "3" },
+  "migrationStatuses": { "heading": "Migration statuses" },
+  "resourceAllocation": { "heading": "Virtualization resource allocation and consumption" }
+ },
+ "treeView": { "searchInput": "Search clusters and projects", "clusters": ["All clusters", "ashafi-virt-hub-5eb34", "local-cluster"] }
+ },
+ "navItems": ["VirtualMachines", "Templates", "Bootable volumes", "InstanceTypes", "MigrationPolicies", "Checkups"],
+ "perspectiveHeading": "Fleet virtualization",
+ "dataTestIds": ["perspective-switcher-toggle"]
+ },
+ {
+ "name": "User Management - Identities (Users Tab)",
+ "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/multicloud/user-management/identities/users",
+ "loaded": true,
+ "elements": {
+ "heading": "Identities",
+ "subtitle": "Manage all identities including users, groups, and service accounts in one place.",
+ "tabs": ["Users", "Groups"],
+ "selectedTab": "Users",
+ "tableHeaders": ["Name", "Identity provider", "Created"],
+ "pagination": { "totalItems": 77, "totalPages": 8 }
+ },
+ "navItems": ["Home", "Search", "Infrastructure", "Applications", "Governance", "Credentials", "User management"],
+ "userMgmtSubNav": ["Roles", "Identities"],
+ "perspectiveHeading": "Fleet management"
+ },
+ {
+ "name": "User Detail - Role Assignments Tab (Empty State)",
+ "loaded": true,
+ "elements": {
+ "heading": "clc-e2e-admin-cluster",
+ "tabs": ["Details", "YAML", "Role assignments", "Groups"],
+ "selectedTab": "Role assignments",
+ "emptyState": {
+  "heading": "No role assignment created yet",
+  "primaryAction": "Create role assignment"
+ },
+ "userDetailFields": [
+  {"label": "Full name", "value": "-"},
+  {"label": "Username", "value": "clc-e2e-admin-cluster"},
+  {"label": "Identity Provider", "value": "clc-e2e-htpasswd:clc-e2e-admin-cluster"}
+ ]
+ }
+ },
+ {
+ "name": "Role Assignment Wizard",
+ "loaded": true,
+ "elements": {
+ "wizardTitle": "Create role assignment for clc-e2e-admin-cluster",
+ "wizardSteps": ["Scope (sub-step: Select scope)", "Roles", "Review"],
+ "scopeOptions": [
+  {"label": "Global access", "description": "Grant access to all resources across all clusters registred in ACM", "default": true},
+  {"label": "Select cluster sets"},
+  {"label": "Select clusters"}
+ ],
+ "footerButtons": ["Back", "Next", "Cancel"]
+ }
+ },
+ {
+ "name": "Roles Page",
+ "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/multicloud/user-management/roles",
+ "loaded": true,
+ "elements": {
+ "heading": "Roles",
+ "subtitle": "Manage roles and permissions",
+ "tableHeaders": ["Role", "Permissions"],
+ "pagination": { "totalItems": 8 },
+ "roles": [
+  "acm-vm-cluster-migration:view", "acm-vm-extended:admin", "acm-vm-extended:view",
+  "acm-vm-fleet:admin", "acm-vm-fleet:view", "kubevirt.io:admin",
+  "kubevirt.io:edit", "kubevirt.io:view"
+ ]
+ },
+ "perspectiveHeading": "Fleet management"
+ },
+ {
+ "name": "User Management - Identities (Groups Tab)",
+ "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/multicloud/user-management/identities/groups",
+ "loaded": true,
+ "elements": {
+ "heading": "Identities",
+ "tabs": ["Users", "Groups"],
+ "selectedTab": "Groups",
+ "tableHeaders": ["Name", "Users", "Created"],
+ "pagination": { "totalItems": 10 },
+ "groupNames": ["clc-e2e-group-60239", "clc-e2e-group-60252", "clc-e2e-group-60255", "clc-e2e-group-60307", "qe-admin-group", "qe-admin-group-60251", "qe-edit-group", "qe-idp-vm-group", "qe-view-group", "qe-view-group-60229"]
+ }
+ }
+ ],
+ "perspectives": {
+ "switcherPresent": true,
+ "switcherDataTestId": "perspective-switcher-toggle",
+ "perspectives": ["Core platform", "Fleet management", "Fleet virtualization"],
+ "fleetVirtNavItems": ["VirtualMachines", "Templates", "Bootable volumes", "InstanceTypes", "MigrationPolicies", "Checkups"],
+ "fleetMgmtNavItems": ["Home", "Search", "Infrastructure", "Applications", "Governance", "Credentials", "User management"],
+ "userMgmtSubNav": ["Roles", "Identities"]
+ },
+ "roleAssignmentWizard": {
+ "accessible": true,
+ "steps": ["Scope", "Roles", "Review"],
+ "scopeOptions": ["Global access", "Select cluster sets", "Select clusters"],
+ "footerButtons": ["Back", "Next", "Cancel"],
+ "noteOnScopeTypo": "Description says 'registred' (missing 'e' - should be 'registered')"
+ },
+ "errors": []
+}

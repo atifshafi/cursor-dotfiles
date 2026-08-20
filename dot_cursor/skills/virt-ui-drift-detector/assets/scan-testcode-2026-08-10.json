@@ -1,0 +1,131 @@
+{
+ "scanTimestamp": "2026-08-10T16:33:00Z",
+ "source": "github:stolostron/console-e2e@main",
+ "constants": {
+ "fleet-virt.ts": {
+ "FLEET_VIRT_ROUTES": {
+ "type": "object",
+ "properties": {
+ "vmList": { "value": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces", "selectorType": "route" }
+ }
+ },
+ "FLEET_VIRT_PAGE": {
+ "type": "object",
+ "properties": {
+ "perspectiveSwitcher": { "value": "[data-test-id=\"perspective-switcher-toggle\"]", "selectorType": "data-test-id" },
+ "fleetManagementLabel": { "value": "Fleet Management", "selectorType": "text" },
+ "emptyState.noVMs": { "value": "No VirtualMachines found", "selectorType": "text" }
+ }
+ },
+ "FLEET_VIRT_SEARCH": {
+ "type": "object",
+ "properties": {
+ "searchInput": { "value": "[data-test=\"vm-search-input\"] input", "selectorType": "css" },
+ "searchResults": { "value": "[data-test=\"search-results\"]", "selectorType": "data-test" },
+ "resetButton": { "value": "button[aria-label=\"Reset\"]", "selectorType": "css-aria" }
+ }
+ },
+ "FLEET_VIRT_ADVANCED_SEARCH": {
+ "type": "object",
+ "properties": {
+ "openButton": { "value": "[data-test=\"vm-advanced-search-button\"]", "selectorType": "data-test" },
+ "detailsContainer": { "value": "[data-test=\"adv-search-details\"]", "selectorType": "data-test" },
+ "nameInput": { "value": "[data-test=\"adv-search-vm-name\"]", "selectorType": "data-test" },
+ "cluster.dataTest": { "value": "adv-search-vm-cluster", "selectorType": "data-test" },
+ "cluster.wrapper": { "value": "[data-test=\"adv-search-vm-cluster\"]", "selectorType": "data-test" },
+ "cluster.placeholder": { "value": "All clusters", "selectorType": "text" },
+ "cluster.selectPlaceholder": { "value": "Select cluster", "selectorType": "text" },
+ "cluster.toggleClose": { "value": "button[aria-label=\"Multi select Typeahead menu toggle\"]", "selectorType": "css-aria" },
+ "project.dataTest": { "value": "adv-search-vm-project", "selectorType": "data-test" },
+ "project.wrapper": { "value": "[data-test=\"adv-search-vm-project\"]", "selectorType": "data-test" },
+ "project.placeholder": { "value": "All projects", "selectorType": "text" },
+ "project.selectPlaceholder": { "value": "Select project", "selectorType": "text" },
+ "project.toggleClose": { "value": "button[aria-label=\"Multi select Typeahead menu toggle\"]", "selectorType": "css-aria" },
+ "menuContent": { "value": ".pf-v6-c-menu__content", "selectorType": "pf-class" },
+ "footer.searchButton": { "value": "Search", "selectorType": "text" },
+ "footer.clearAllButton": { "value": "Clear all", "selectorType": "text" }
+ }
+ },
+ "FLEET_VIRT_SAVED_SEARCH": {
+ "type": "object",
+ "properties": {
+ "saveButton": { "value": "Save search", "selectorType": "text" },
+ "modal.nameInput": { "value": "[data-test-id=\"save-search-name\"]", "selectorType": "data-test-id" },
+ "modal.descriptionInput": { "value": "[data-test-id=\"save-search-description\"]", "selectorType": "data-test-id" },
+ "modal.submitButton": { "value": "[data-test=\"save-button\"]", "selectorType": "data-test" },
+ "modal.cancelButton": { "value": "[data-test=\"cancel-button\"]", "selectorType": "data-test" },
+ "dropdown.toggle": { "value": "Saved searches", "selectorType": "text" },
+ "dropdown.list": { "value": "[data-test=\"saved-searches\"]", "selectorType": "data-test" },
+ "dropdown.item": { "value": "[data-test=\"saved-search-item-${name}\"]", "selectorType": "data-test-dynamic" },
+ "dropdown.deleteItem": { "value": "[data-test=\"delete-search-item-${name}\"]", "selectorType": "data-test-dynamic" },
+ "dropdown.deleteAriaLabel": { "value": "Delete saved search", "selectorType": "aria-label" }
+ }
+ },
+ "FLEET_VIRT_TREE_VIEW": {
+ "type": "object",
+ "properties": {
+ "clusterPrefix": { "value": "clusterSelector", "selectorType": "id-prefix" },
+ "projectPrefix": { "value": "projectSelector", "selectorType": "id-prefix" },
+ "nodeToggle": { "value": "button.pf-v6-c-tree-view__node-toggle", "selectorType": "pf-class" },
+ "nodeText": { "value": "button.pf-v6-c-tree-view__node-text", "selectorType": "pf-class" }
+ }
+ },
+ "FLEET_VIRT_VM_ACTIONS": {
+ "type": "object",
+ "properties": {
+ "dropdown": { "value": "[data-test=\"actions-dropdown\"]", "selectorType": "data-test" },
+ "startButton": { "value": "[data-test-id=\"vm-action-start-button\"]", "selectorType": "data-test-id" },
+ "stopButton": { "value": "[data-test-id=\"vm-action-stop-button\"]", "selectorType": "data-test-id" },
+ "pauseButton": { "value": "[data-test-id=\"vm-action-pause-button\"]", "selectorType": "data-test-id" },
+ "restartButton": { "value": "[data-test-id=\"vm-action-restart-button\"]", "selectorType": "data-test-id" },
+ "statusLabel": { "value": "[data-test-id=\"virtual-machine-overview-details-status\"]", "selectorType": "data-test-id" },
+ "confirmAction": { "value": "[data-test=\"confirm-action\"]", "selectorType": "data-test" }
+ }
+ },
+ "FLEET_VIRT_DEFAULTS": {
+ "type": "object",
+ "properties": {
+ "hubCluster": { "value": "local-cluster", "selectorType": "config" },
+ "vmNamespace": { "value": "default", "selectorType": "config" },
+ "spokeCluster": { "value": "process.env.VIRT_SPOKE_CLUSTER?.split(',')[0] || 'local-cluster'", "selectorType": "config-env" }
+ }
+ }
+ },
+ "fg-rbac.ts": {
+ "RBAC_ROUTES": { "type": "object", "properties": { "identities": { "value": "/multicloud/user-management/identities", "selectorType": "route" }, "roles": { "value": "/multicloud/user-management/roles", "selectorType": "route" }, "users": { "value": "/multicloud/user-management/identities/users", "selectorType": "route" }, "userDetails": { "value": "/multicloud/user-management/identities/users/${id}", "selectorType": "route-dynamic" }, "userRoleAssignments": { "value": "/multicloud/user-management/identities/users/${id}/role-assignments", "selectorType": "route-dynamic" }, "roleDetails": { "value": "/multicloud/user-management/roles/${id}", "selectorType": "route-dynamic" }, "roleRoleAssignments": { "value": "/multicloud/user-management/roles/${id}/role-assignments", "selectorType": "route-dynamic" }, "clusterSetDetails": { "value": "/multicloud/infrastructure/clusters/sets/details/${name}", "selectorType": "route-dynamic" }, "clusterSetRoleAssignments": { "value": "/multicloud/infrastructure/clusters/sets/details/${name}/role-assignments", "selectorType": "route-dynamic" }, "clusterDetails": { "value": "/multicloud/infrastructure/clusters/details/${namespace}/${name}", "selectorType": "route-dynamic" }, "clusterRoleAssignments": { "value": "/multicloud/infrastructure/clusters/details/${namespace}/${name}/role-assignments", "selectorType": "route-dynamic" } } },
+ "RBAC_USER_DETAIL": { "type": "object", "properties": { "tabs.details": { "value": "Details", "selectorType": "text" }, "tabs.yaml": { "value": "YAML", "selectorType": "text" }, "tabs.roleAssignments": { "value": "Role assignments", "selectorType": "text" }, "tabs.groups": { "value": "Groups", "selectorType": "text" }, "navigation.backToUsers": { "value": "Back to users", "selectorType": "text" }, "fields.generalInformation": { "value": "General information", "selectorType": "text" }, "fields.fullName": { "value": "Full name", "selectorType": "text" }, "fields.username": { "value": "Username", "selectorType": "text" }, "fields.identityProvider": { "value": "Identity Provider", "selectorType": "text" }, "emptyStates.groups.title": { "value": "No groups found", "selectorType": "text" }, "emptyStates.groups.message": { "value": "This user is not a member of any groups yet.", "selectorType": "text" } } },
+ "RBAC_RA_TABLE": { "type": "object", "properties": { "toolbar.createButtonId": { "value": "create-role-assignment", "selectorType": "id" }, "toolbar.createButtonLabel": { "value": "Create role assignment", "selectorType": "text" }, "toolbar.bulkDeleteButtonId": { "value": "deleteRoleAssignments", "selectorType": "id" }, "toolbar.searchPlaceholder": { "value": "Search for role assignments...", "selectorType": "placeholder" }, "rowActions.kebabAriaLabel": { "value": "Actions", "selectorType": "aria-label" }, "rowActions.kebabSelector": { "value": "button.pf-v6-c-menu-toggle[aria-label=\"Actions\"]", "selectorType": "pf-class-aria" }, "rowActions.editId": { "value": "edit-role-assignment", "selectorType": "id" }, "rowActions.editLabel": { "value": "Edit role assignment", "selectorType": "text" }, "rowActions.deleteId": { "value": "delete-role-assignment", "selectorType": "id" }, "rowActions.deleteLabel": { "value": "Delete role assignment", "selectorType": "text" }, "rowActions.confirmInput": { "value": "confirm", "selectorType": "id" }, "filterIds.role": { "value": "role", "selectorType": "id" }, "filterIds.identity": { "value": "identity", "selectorType": "id" }, "filterIds.clusterSets": { "value": "clusterSets", "selectorType": "id" }, "filterIds.clusters": { "value": "clusters", "selectorType": "id" }, "filterIds.namespace": { "value": "namespace", "selectorType": "id" }, "filterIds.status": { "value": "status", "selectorType": "id" }, "emptyState.title": { "value": "No role assignment created yet", "selectorType": "text" }, "emptyState.viewDocumentation": { "value": "View documentation", "selectorType": "text" }, "defaults.allNamespaces": { "value": "All namespaces", "selectorType": "text" } } },
+ "RBAC_WIZARD": { "type": "object", "properties": { "title": { "value": "Create role assignment", "selectorType": "text" }, "scopeInfo.global": { "value": "all current and future resources in all clusters", "selectorType": "text" }, "scopeInfo.clusterSets": { "value": "all current and future resources on the selected cluster set", "selectorType": "text" }, "projects.searchPlaceholder": { "value": "Search projects", "selectorType": "placeholder" }, "projects.createButtonId": { "value": "create-project", "selectorType": "id" }, "projects.enterProjectName": { "value": "Enter project name", "selectorType": "placeholder" }, "projects.enterDisplayName": { "value": "Enter display name (optional)", "selectorType": "placeholder" }, "projects.deselectTooltip": { "value": "Deselect projects to create a new common project", "selectorType": "text" }, "preAuthorizedUser.identifierPlaceholder": { "value": "user@company.com or username", "selectorType": "placeholder" }, "preAuthorizedUser.saveButton": { "value": "Save pre-authorized user", "selectorType": "text" }, "preAuthorizedUser.cancelLink": { "value": "Cancel and search users instead", "selectorType": "text" }, "preAuthorizedUser.createdNotification": { "value": "Pre-authorized user created", "selectorType": "text" }, "viewExamples.link": { "value": "View examples", "selectorType": "text" }, "viewExamples.drawerTitle": { "value": "Example scopes", "selectorType": "text" }, "notifications.added": { "value": "Role assignment added", "selectorType": "text" }, "notifications.updated": { "value": "Role assignment updated", "selectorType": "text" }, "notifications.failed": { "value": "Role assignment creation failed", "selectorType": "text" }, "notifications.duplicate": { "value": "This role assignment already exists. Please modify the selection to create a unique assignment.", "selectorType": "text" }, "editMode.noChangesAlert": { "value": "No changes have been made. Please modify or cancel to exit.", "selectorType": "text" }, "editMode.dangerAlertSelector": { "value": ".pf-v6-c-alert.pf-m-danger", "selectorType": "pf-class" } } },
+ "WIZARD_STEP_IDS": { "type": "object", "properties": { "scopeSelection": { "value": "scope-selection", "selectorType": "id" }, "clusterSetGranularity": { "value": "scope-cluster-set-granularity", "selectorType": "id" }, "clusterGranularity": { "value": "scope-cluster-granularity", "selectorType": "id" }, "identities": { "value": "identities", "selectorType": "id" }, "scope": { "value": "scope", "selectorType": "id" }, "role": { "value": "role", "selectorType": "id" }, "review": { "value": "review", "selectorType": "id" } } },
+ "WIZARD_SELECT_IDS": { "type": "object", "properties": { "scopeType": { "value": "scope-type", "selectorType": "id" }, "clustersAccessLevel": { "value": "clusters-access-level", "selectorType": "id" }, "clusterSetAccessLevel": { "value": "clusters-set-access-level", "selectorType": "id" } } },
+ "SCOPE_TYPES": { "type": "object", "properties": { "global": { "value": "Global access", "selectorType": "text" }, "clusterSets": { "value": "Select cluster sets", "selectorType": "text" }, "clusters": { "value": "Select clusters", "selectorType": "text" } } },
+ "GRANULARITY_OPTIONS": { "type": "object", "properties": { "clusterSetRoleAssignment": { "value": "Cluster set role assignment", "selectorType": "text" }, "clusterRoleAssignment": { "value": "Cluster role assignment", "selectorType": "text" }, "projectRoleAssignment": { "value": "Project role assignment", "selectorType": "text" } } },
+ "RBAC_ROLES": { "type": "object", "properties": { "expected": { "value": "[8 role names]", "selectorType": "text-array" }, "permissions": { "value": "[8 objects with name + keywords]", "selectorType": "data-array" } } },
+ "MCRA_RESOURCE": { "type": "object", "properties": { "apiVersion": { "value": "rbac.open-cluster-management.io/v1beta1", "selectorType": "k8s" }, "kind": { "value": "MulticlusterRoleAssignment", "selectorType": "k8s" }, "namespace": { "value": "open-cluster-management-global-set", "selectorType": "k8s" }, "managedByLabel": { "value": "open-cluster-management.io/managed-by", "selectorType": "k8s-label" }, "managedByValue": { "value": "console", "selectorType": "k8s-label-value" }, "subjectNameLabel": { "value": "rbac.authorization.k8s.io/subject-name", "selectorType": "k8s-label" } } }
+ },
+ "selectors.ts": {
+ "PF_MASTHEAD": { "value": ".pf-v6-c-masthead, .co-masthead", "selectorType": "pf-class" },
+ "PF_SPINNER": { "value": ".pf-v6-c-spinner", "selectorType": "pf-class" },
+ "PF_SKELETON": { "value": ".pf-v6-c-skeleton", "selectorType": "pf-class" },
+ "PF_MODAL": { "value": ".pf-v6-c-modal-box", "selectorType": "pf-class" },
+ "PF_ALERT": { "value": ".pf-v6-c-alert", "selectorType": "pf-class" },
+ "PF_SELECT": { "value": ".pf-v6-c-select", "selectorType": "pf-class" },
+ "PF_DROPDOWN": { "value": ".pf-v6-c-dropdown", "selectorType": "pf-class" },
+ "PF_TABLE": { "value": ".pf-v6-c-table", "selectorType": "pf-class" },
+ "SELECTORS.common.searchInput": { "value": "[aria-label=\"Search input\"]", "selectorType": "aria-label" },
+ "SELECTORS.common.userDropdown": { "value": "[data-test=\"user-dropdown-toggle\"], [data-test=\"user-dropdown\"]", "selectorType": "data-test" }
+ },
+ "app.ts": "NOT_VIRT_RELATED"
+ },
+ "summary": {
+ "totalConstants": 18,
+ "totalPageObjectLocators": 125,
+ "totalComponentLocators": 31,
+ "totalInlineLocators": 5,
+ "totalAbsenceAssertions": 0,
+ "totalRoutes": 12,
+ "totalOrphanConstants": 2,
+ "orphanBreakdown": { "fullObject": 2, "propertyGroup": 0, "property": 0 },
+ "totalOrphanPageObjects": 0
+ }
+}

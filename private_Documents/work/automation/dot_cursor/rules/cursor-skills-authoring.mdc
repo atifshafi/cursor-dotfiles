@@ -1,0 +1,43 @@
+---
+description: Enforce skill authoring standards and environment isolation when creating or editing Agent Skills (SKILL.md files)
+globs: "**/skills/**/SKILL.md"
+alwaysApply: false
+---
+
+# Skill Authoring -- Mandatory Standards
+
+When creating or modifying Agent Skill files (`SKILL.md`):
+
+1. **Read BOTH skill references** before writing:
+   - `~/.cursor/skills-cursor/create-skill/SKILL.md` -- workflow and file creation
+   - `~/.cursor/skills/skill-authoring-standards/SKILL.md` -- Anthropic quality standards
+
+2. **Follow structure**: YAML frontmatter (`name`, `description`), concise body under 500 lines.
+
+3. **Write descriptions in third person** with WHAT + WHEN + trigger phrases.
+
+4. **Use progressive disclosure**: Core in SKILL.md, detail in `references/` one level deep.
+
+5. **Run the quality checklist** from `skill-authoring-standards` before delivering.
+
+## Environment Isolation (MANDATORY)
+
+Skills developed in Cursor IDE and skills developed in Claude Code (AI repo)
+are **fully independent implementations**. This rule enforces strict isolation:
+
+- **No cross-environment references**: A Cursor skill must NEVER reference
+  `~/.claude/`, Claude Code config, or the AI repo's skill files. A Claude Code
+  skill must NEVER reference `~/.cursor/`, Cursor rules, or Cursor skill files.
+- **No shared file dependencies**: Each skill must be self-contained within
+  its own environment. No symlinks, no cross-references, no "read the file at
+  this other tool's path" instructions.
+- **Repo portability**: Skills inside a git repo (e.g., AI repo `.claude/skills/`)
+  must work for anyone who clones the repo. No absolute paths, no references
+  to personal directories (`~/`, `~/.cursor/`, `~/.claude/`), no machine-specific
+  assumptions.
+- **Duplication is acceptable**: If both Cursor and Claude Code need the same
+  guidelines, each gets its own independent copy. This is the explicit trade-off
+  for zero dependency between environments.
+
+When the agent detects a cross-environment reference during skill authoring,
+it must flag it immediately and remove it before delivering.

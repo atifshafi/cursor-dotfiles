@@ -1,0 +1,35 @@
+---
+description: Chrome DevTools MCP for browser-based UI debugging, DOM inspection, network analysis, console errors. Use when investigating ACM console UI issues, RBAC visibility, or finding DOM selectors.
+alwaysApply: false
+---
+
+# Chrome DevTools MCP - Browser Automation & Debugging
+
+**MCP Server Name**: `chrome-devtools`
+
+## When to Use
+- Navigate to ACM/OpenShift console URLs
+- Check UI elements, buttons, page behavior
+- Investigate RBAC visibility issues
+- Debug Fleet Virtualization tree view or VM actions
+- Analyze network requests to ACM API
+- Check console errors or JavaScript issues
+- Find DOM selectors for Cypress test automation
+
+## Available Tools
+
+| Category | Tools |
+|----------|-------|
+| **Navigation** | `navigate_page`, `new_page`, `close_page`, `list_pages`, `select_page`, `wait_for` |
+| **Input** | `click`, `fill`, `hover`, `press_key`, `drag`, `upload_file`, `handle_dialog`, `fill_form` |
+| **Debugging** | `take_screenshot`, `take_snapshot`, `evaluate_script`, `list_console_messages`, `get_console_message` |
+| **Network** | `list_network_requests`, `get_network_request` |
+| **Performance** | `performance_start_trace`, `performance_stop_trace`, `performance_analyze_insight` |
+| **Emulation** | `emulate`, `resize_page` |
+
+## Exceptions (Use Dedicated Tools Instead)
+
+- NEVER use Chrome DevTools for GitHub pages -> use `gh` CLI
+- NEVER use Chrome DevTools for JIRA pages -> use `jira` MCP server
+
+Browser operations via MCP are read-only and do NOT require permission checkpoint.

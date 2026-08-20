@@ -1,0 +1,45 @@
+---
+description: Enforce write-automation-script-cypress skill for Cypress E2E test work in stolostron/clc-ui-e2e. Skill uses subagent pipeline with parallel context gathering, code quality review, and failure debugging.
+globs: "**/cypress/**/*.spec.js, **/cypress/**/*.js, **/cypress/**/*.ts"
+alwaysApply: false
+---
+
+# E2E Automation -- Cypress (clc-ui-e2e)
+
+When working with Cypress E2E test files in `stolostron/clc-ui-e2e`:
+
+- Spec files, view/page object files, helpers, actions, API wrappers
+
+1. **ALWAYS read and follow** the skill at `~/.cursor/skills/write-automation-script-cypress/SKILL.md` BEFORE:
+   - Writing or updating any spec file
+   - Creating or modifying view / page object files
+   - Creating or modifying API wrapper files
+   - Creating or modifying actions or orchestration files
+   - Adding selectors, helpers, or cleanup functions
+   - Debugging test failures
+
+2. **Follow the subagent pipeline** defined in SKILL.md. 6 Cursor Subagents are registered in `~/.cursor/agents/`:
+   - `requirements-extractor` -- Phase 1: Polarion, JIRA, PR context extraction
+   - `ui-discovery` -- Phase 1: acm-source MCP + browser MCP for selectors, routes, translations
+   - `pattern-analyzer` -- Phase 1: existing code analysis, reuse detection
+   - `code-quality-reviewer` -- Phase 3.5: POM compliance, anti-patterns, dead code
+   - `test-runner` -- Phase 4: test execution and artifact collection
+   - `failure-debugger` -- Phase 4.5: failure classification, root cause, fix/report
+   - Area knowledge bases (`knowledge/{area}.md`) and framework guide (`framework/cypress-patterns.md`) provide domain context
+
+3. **Follow repo conventions**:
+   - Single `it()` per test case
+   - Centralized selectors in view files
+   - `cy.waitUntil()` over `cy.wait()`
+   - `failOnStatusCode: false` on cleanup requests
+   - `commonElementSelectors` for generic PF6 elements
+
+4. **Use ACM Source MCP** (`user-acm-ui`) for source code discovery -- find components, selectors, translations. Never hardcode assumed selectors.
+
+5. **Use Browser MCP** (`cursor-ide-browser`) for live-page validation -- navigate to the ACM console, snapshot the accessibility tree, verify elements.
+
+6. **Use ACM Search MCP** (`acm-search`) for live cluster resource queries -- verify test prerequisites exist (pods, namespaces, policies) and check resource state across managed clusters. **Use ACM Kubectl MCP** (`acm-kubectl`) for multicluster kubectl operations and managed cluster listing.
+
+6. **Set correct ACM/CNV version** via MCP before any source code lookups.
+
+7. **Never commit or push** -- report results and let the user decide.

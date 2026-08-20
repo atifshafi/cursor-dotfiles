@@ -1,0 +1,39 @@
+# PR Minimal Diff Principle
+
+## Core Rule
+
+When working on any PR, **keep changes to `main` as minimal as possible**. The goal is to add or modify only what is specifically required for the feature/fix to work. Main has been reviewed and merged -- respect that.
+
+## Decision Framework
+
+Before including any change in a PR, answer:
+
+1. **Is this change specifically needed for my feature/pipeline/fix to work?** (YES -> include)
+2. **Does this revert or modify existing main logic that other teams rely on?** (YES -> do NOT include unless proven necessary)
+3. **Is this a cosmetic/cleanup change to a shared file?** (YES -> do NOT include, file a separate PR if important)
+
+## What to Include
+
+- New files that implement the feature
+- Minimal edits to shared files that are required for the feature to function
+- Legitimate bug fixes discovered during development (as separate, clearly labeled commits)
+
+## What to Exclude
+
+- Reverting parameter additions/removals made by other teams
+- Reformatting or whitespace changes in shared files
+- Removing functions/helpers that other pipelines might use
+- Simplifying code paths (e.g., removing switch cases) in shared libraries
+- Changing default values in shared parameters unless specifically needed
+
+## Conflict Resolution
+
+When rebasing/merging causes conflicts:
+
+1. **Default to main's version** unless you can prove the change is needed
+2. If your feature requires overriding main in a specific section, document why in the commit message
+3. Never carry forward accidental reversions of other teams' merged work
+
+## Applies To
+
+All repositories, all PRs, all branches. This is a universal principle for code hygiene and team collaboration.

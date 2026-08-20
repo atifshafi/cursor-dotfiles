@@ -1,0 +1,31 @@
+---
+description: Pre-flight checklist for rm, rmdir, delete operations -- symlink safety, blast radius check
+alwaysApply: false
+---
+
+# Destructive Operations Pre-Flight
+
+BEFORE any `rm`, `rm -rf`, `rmdir`, or file/directory deletion:
+
+## Checklist
+
+1. **RESOLVE**: Run `ls -la <target>` -- check if it's a symlink
+   - If symlink: `readlink -f <target>` to see REAL path
+   - State clearly: "This is a symlink pointing to X"
+
+2. **SCOPE**: Verify resolved path is within intended scope
+   - NEVER delete if resolved path is `~/Documents/work/*` (workspace root)
+
+3. **BLAST RADIUS**: `du -sh <target>` and `find <target> | wc`
+   - If >100 files or >50MB: STOP and confirm with user
+
+4. **PREFER TRASH**: Use `trash <target>` instead of `rm -rf`
+   - Only use `rm -rf` if trash unavailable AND user confirms
+
+5. **ASK**: Show what will be deleted, get confirmation
+
+## Skip This Checklist Only For
+
+- Temp files the agent just created in the same session
+- Empty files/dirs the agent just created
+- Explicit user command: "delete X" where X is unambiguous

@@ -1,0 +1,18 @@
+---
+description: User identity, timezone, location, and role context for all agent sessions
+alwaysApply: true
+---
+
+# User Profile
+
+- **Name:** Atif Shafi | **Email:** ashafi@redhat.com | **JIRA:** rhn-support-ashafi
+- **Location:** Toronto, Ontario, Canada | **Timezone:** Eastern Time (ET)
+- **Title:** SDET | **Team:** ACM Console Squad (Red Hat Advanced Cluster Management)
+- **Manager:** Kevin Cormier
+- **Focus:** ACM RBAC UI, Virtualization (CNV/MTV), Fleet Virtualization
+- **Work:** Frontend QE -- Cypress/Playwright E2E automation, Polarion test cases
+
+## Schedule & Sprint
+
+- Business hours ~9 AM - 5 PM ET | Daily scrum at 11:30 AM ET
+- For sprint intelligence, see `active-sprint-tasks` skill

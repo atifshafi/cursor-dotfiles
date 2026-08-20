@@ -1,0 +1,640 @@
+{
+  "scanTimestamp": "2026-08-05T17:10:30Z",
+  "clusterUrl": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com",
+  "patternFlyVersion": "PF6",
+  "ouiaComponentTypes": [
+    "PF6/Button",
+    "PF6/Toolbar",
+    "PF6/MenuToggle",
+    "PF6/Nav",
+    "PF6/Title",
+    "PF6/NavItem",
+    "PF6/Content",
+    "PF6/Tabs",
+    "PF6/TabButton",
+    "PF6/TabContent",
+    "PF6/Alert",
+    "PF6/Card"
+  ],
+  "pages": [
+    {
+      "name": "Fleet Virt",
+      "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+      "loaded": true,
+      "pageHeading": "VirtualMachines",
+      "tabStructure": {
+        "defaultTab": "Overview",
+        "tabs": [
+          "Overview",
+          "Virtual machines"
+        ],
+        "tabGroupLabel": "Virtual machines tabs",
+        "tabDataTests": {
+          "Overview": "data-test=overview-tab",
+          "Virtual machines": "data-test=vm-list-tab"
+        }
+      },
+      "navItems": [
+        {
+          "text": "VirtualMachines",
+          "url": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+          "dataTest": "virtualmachines-nav-item"
+        },
+        {
+          "text": "Templates",
+          "url": "/fleet-virtualization/templates/all-clusters/all-namespaces",
+          "dataTest": "templates-nav-item"
+        },
+        {
+          "text": "Bootable volumes",
+          "url": "/fleet-virtualization/bootablevolumes/all-clusters/all-namespaces",
+          "dataTest": "bootablevolumes-nav-item"
+        },
+        {
+          "text": "InstanceTypes",
+          "url": "/fleet-virtualization/instancetype.kubevirt.io~v1beta1~VirtualMachineClusterInstancetype/all-clusters/all-namespaces",
+          "dataTest": "instancetype-nav-item"
+        },
+        {
+          "text": "MigrationPolicies",
+          "url": "/fleet-virtualization/migrations.kubevirt.io~v1alpha1~MigrationPolicy/all-clusters",
+          "dataTest": "migrationpolicies-nav-item"
+        },
+        {
+          "text": "Checkups",
+          "url": "/fleet-virtualization/checkups/all-clusters/all-namespaces/storage",
+          "dataTest": "checkups-nav-item"
+        }
+      ],
+      "navDataTestId": "fleet-virtualization-perspective-perspective-nav",
+      "overviewTabContent": {
+        "sections": [
+          {
+            "heading": "Cluster status",
+            "dataTest": "cluster-status-widget",
+            "expandable": true,
+            "content": {
+              "openShiftVirtualization": {
+                "dataTest": "openshift-virtualization-widget",
+                "clustersCritical": "1",
+                "clustersDegraded": "0",
+                "statusCountDataTests": [
+                  "status-count-clusters-critical",
+                  "status-count-clusters-degraded"
+                ]
+              },
+              "allClustersResources": {
+                "dataTest": "all-clusters-resources-card",
+                "clusters": "0",
+                "nodes": "14",
+                "projects": "0",
+                "vms": "0"
+              },
+              "clustersUtilization": {
+                "topClusters": [
+                  {
+                    "name": "local-cluster",
+                    "score": "41%"
+                  },
+                  {
+                    "name": "ashafi-virt-hub-5b653",
+                    "score": "32%"
+                  }
+                ]
+              },
+              "clustersLoadBalance": {
+                "topClusters": [
+                  {
+                    "name": "local-cluster",
+                    "score": "high"
+                  },
+                  {
+                    "name": "ashafi-virt-hub-5b653",
+                    "score": "medium"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "heading": "Virtual machine health",
+            "dataTest": "vm-health-widget",
+            "expandable": true,
+            "content": {
+              "alertsWidget": "vm-alerts-widget",
+              "alertCount": "1",
+              "statusCounts": {
+                "critical": {
+                  "value": "0",
+                  "dataTest": "status-count-critical"
+                },
+                "warning": {
+                  "value": "1",
+                  "dataTest": "status-count-warning"
+                },
+                "info": {
+                  "value": "0",
+                  "dataTest": "status-count-info"
+                }
+              }
+            }
+          },
+          {
+            "heading": "Migration statuses",
+            "dataTest": "migration-status-section",
+            "expandable": true,
+            "content": {
+              "label": "Cross cluster migration plans",
+              "statusCounts": {
+                "failed": {
+                  "value": "0",
+                  "dataTest": "status-count-failed"
+                },
+                "running": {
+                  "value": "0",
+                  "dataTest": "status-count-running"
+                },
+                "other": {
+                  "value": "0",
+                  "dataTest": "status-count-other"
+                }
+              }
+            }
+          },
+          {
+            "heading": "Virtualization resource allocation and consumption",
+            "dataTest": "resource-allocation-section",
+            "expandable": true,
+            "content": {
+              "widget": "resource-allocation-widget",
+              "charts": [
+                "resource-allocation-chart-Running VMs",
+                "resource-allocation-chart-vCPU usage",
+                "resource-allocation-chart-Memory",
+                "resource-allocation-chart-Storage"
+              ],
+              "columns": [
+                "Virtual machines / Running",
+                "vCPU usage / Usage",
+                "Memory usage / Usage",
+                "Storage allocated / Allocated"
+              ]
+            }
+          }
+        ],
+        "emptyStateAlert": {
+          "heading": "No data to display yet.",
+          "message": "Create your first virtual machine to begin monitoring health and performance metrics.",
+          "createVmLink": "/fleet-virtualization/vm-wizard/cluster/local-cluster/all-namespaces"
+        }
+      },
+      "virtualMachinesTabContent": {
+        "emptyState": {
+          "heading": "You don't have any VirtualMachines yet",
+          "messages": [
+            "To get started, create a VirtualMachine or view the Catalog tab to create a VirtualMachine from the available options.",
+            "Don't have a project yet? Right-click a cluster in the navigation tree to create your first one."
+          ],
+          "createButton": "Create VirtualMachine"
+        }
+      },
+      "treeView": {
+        "searchbox": "Search clusters and projects",
+        "toggle": "Show only projects with VirtualMachines",
+        "toggleState": "disabled",
+        "items": [
+          {
+            "name": "All clusters",
+            "expanded": true,
+            "selected": true
+          },
+          {
+            "name": "ashafi-virt-hub-5b653",
+            "parent": "All clusters"
+          },
+          {
+            "name": "local-cluster",
+            "parent": "All clusters"
+          }
+        ]
+      },
+      "toolbar": {
+        "createButton": {
+          "text": "Create",
+          "fullText": "Create VirtualMachine",
+          "dataTest": "item-create"
+        },
+        "createDropdownArrow": true
+      },
+      "dataTestAttributes": [
+        "data-test=masthead-logo",
+        "data-test-id=application-launcher",
+        "data-test=quick-create-dropdown",
+        "data-test=help-dropdown-toggle",
+        "data-test=user-dropdown-toggle",
+        "data-test=username",
+        "data-test-id=perspective-switcher-toggle",
+        "data-test-id=fleet-virtualization-perspective-perspective-nav",
+        "data-test=virtualmachines-nav-item",
+        "data-test=templates-nav-item",
+        "data-test=bootablevolumes-nav-item",
+        "data-test=instancetype-nav-item",
+        "data-test=migrationpolicies-nav-item",
+        "data-test=checkups-nav-item",
+        "data-test=global-notifications",
+        "data-test=page-heading",
+        "data-test-id=details-actions",
+        "data-test=item-create",
+        "data-test=vms-treeview",
+        "data-test=overview-tab",
+        "data-test=vm-list-tab",
+        "data-test=dashboard",
+        "data-test=vm-list-summary",
+        "data-test=cluster-status-widget",
+        "data-test=openshift-virtualization-widget",
+        "data-test=status-count-clusters-critical",
+        "data-test=status-count-clusters-degraded",
+        "data-test=all-clusters-resources-card",
+        "data-test=vm-health-widget",
+        "data-test=vm-alerts-widget",
+        "data-test=status-count-critical",
+        "data-test=status-count-warning",
+        "data-test=status-count-info",
+        "data-test=migration-status-section",
+        "data-test=status-count-failed",
+        "data-test=status-count-running",
+        "data-test=status-count-other",
+        "data-test=resource-allocation-section",
+        "data-test=resource-allocation-widget",
+        "data-test=resource-allocation-chart-Running VMs",
+        "data-test=resource-allocation-chart-vCPU usage",
+        "data-test=resource-allocation-chart-Memory",
+        "data-test=resource-allocation-chart-Storage"
+      ],
+      "pfClasses": [
+        "pf-v6-c-menu-toggle",
+        "pf-v6-c-page__main-section",
+        "pf-v6-c-drawer__content"
+      ],
+      "screenshotTaken": true
+    },
+    {
+      "name": "User Management",
+      "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/multicloud/user-management/identities/users",
+      "loaded": true,
+      "pageHeading": "Identities",
+      "pageSubtitle": "Manage all identities including users, groups, and service accounts in one place. Assign access individually or by group, with users automatically inheriting group permissions.",
+      "tabStructure": {
+        "defaultTab": "Users",
+        "tabs": [
+          "Users",
+          "Groups"
+        ],
+        "tabGroupLabel": "Secondary page navigation tabs",
+        "note": "No 'Service accounts' tab present"
+      },
+      "usersTab": {
+        "tableHeaders": [
+          "Name",
+          "Identity provider",
+          "Created"
+        ],
+        "tableLabel": "Simple Table",
+        "totalItems": 61,
+        "itemsPerPage": 10,
+        "totalPages": 7,
+        "sampleUsers": [
+          {
+            "name": "clc-e2e-admin-cluster",
+            "idp": "clc-e2e-htpasswd:clc-e2e-admin-cluster",
+            "created": "Aug 2, 2026, 7:25 PM"
+          },
+          {
+            "name": "clc-e2e-admin-ns",
+            "idp": "clc-e2e-htpasswd:clc-e2e-admin-ns",
+            "created": "Aug 2, 2026, 7:25 PM"
+          },
+          {
+            "name": "clc-e2e-cclm-admin-60989",
+            "idp": "clc-e2e-htpasswd:clc-e2e-cclm-admin-60989",
+            "created": "Aug 3, 2026, 1:21 AM"
+          }
+        ],
+        "toolbar": {
+          "searchInput": {
+            "placeholder": "Search"
+          },
+          "filterButtons": 2,
+          "pagination": "1 - 10 of 61"
+        }
+      },
+      "groupsTab": {
+        "tableHeaders": [
+          "Name",
+          "Users",
+          "Created"
+        ],
+        "totalItems": 10,
+        "totalPages": 1,
+        "sampleGroups": [
+          {
+            "name": "clc-e2e-group-60239",
+            "users": "2",
+            "created": "Aug 3, 2026, 1:21 AM"
+          },
+          {
+            "name": "qe-admin-group",
+            "users": "1",
+            "created": "Aug 2, 2026, 7:26 PM"
+          },
+          {
+            "name": "qe-edit-group",
+            "users": "1",
+            "created": "Aug 2, 2026, 7:26 PM"
+          },
+          {
+            "name": "qe-idp-vm-group",
+            "users": "0",
+            "created": "Aug 3, 2026, 1:21 AM"
+          },
+          {
+            "name": "qe-view-group",
+            "users": "1",
+            "created": "Aug 2, 2026, 7:26 PM"
+          }
+        ],
+        "toolbar": {
+          "searchInput": {
+            "placeholder": "Search"
+          },
+          "filterButton": 1
+        }
+      },
+      "userDetailPage": {
+        "url": "/multicloud/user-management/identities/users/{uuid}",
+        "tabs": [
+          "Details",
+          "YAML",
+          "Role assignments",
+          "Groups"
+        ],
+        "breadcrumb": [
+          "Identities",
+          "Users",
+          "{username}"
+        ],
+        "detailsTab": {
+          "heading": "General information",
+          "fields": [
+            "Full name",
+            "Username",
+            "Identity Provider"
+          ]
+        }
+      },
+      "dataTestAttributes": [
+        "data-test=masthead-logo",
+        "data-test-id=application-launcher",
+        "data-test=quick-create-dropdown",
+        "data-test=help-dropdown-toggle",
+        "data-test=user-dropdown-toggle",
+        "data-test=username",
+        "data-test-id=perspective-switcher-toggle",
+        "data-test-id=acm-perspective-nav",
+        "data-test=nav",
+        "data-test=global-notifications",
+        "data-test=timestamp"
+      ],
+      "screenshotTaken": true
+    },
+    {
+      "name": "Role Assignment Wizard",
+      "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/multicloud/user-management/identities/users/{uuid}/role-assignments",
+      "loaded": true,
+      "accessedFrom": "User detail page > Role assignments tab > 'Create role assignment' button",
+      "elements": {
+        "dialogTitle": "Create role assignment for {username}",
+        "description": "A role assignment specifies a distinct action users or groups can perform when associated with a particular role.",
+        "learnMoreLink": {
+          "text": "Learn more about user management, including an example YAML file.",
+          "url": "https://docs.redhat.com/en/documentation/red_hat_advanced_cluster_management_for_kubernetes/5.0/html-single/about/welcome-to-red-hat-advanced-cluster-management-for-kubernetes"
+        },
+        "wizardSteps": [
+          {
+            "name": "Scope",
+            "subSteps": [
+              "Select scope"
+            ],
+            "active": true
+          },
+          {
+            "name": "Roles",
+            "disabled": true
+          },
+          {
+            "name": "Review",
+            "disabled": true
+          }
+        ],
+        "scopeStep": {
+          "heading": "Scope",
+          "viewExamplesButton": true,
+          "instructions": [
+            "Define the scope of access by selecting which resources this role will apply to.",
+            "Select one option:"
+          ],
+          "scopeTypes": [
+            {
+              "name": "Global access",
+              "description": "Grant access to all resources across all clusters registred in ACM",
+              "default": true,
+              "selectionNote": "This role assignment will apply to all current and future resources in all clusters."
+            },
+            {
+              "name": "Select cluster sets",
+              "description": "Grant access to 1 or more cluster sets. Optionally, narrow this access to specific clusters and projects",
+              "default": false
+            },
+            {
+              "name": "Select clusters",
+              "description": "Grant access to 1 or more clusters. Optionally, narrow this access to projects",
+              "default": false
+            }
+          ]
+        },
+        "buttons": [
+          "Back (disabled)",
+          "Next",
+          "Cancel"
+        ],
+        "closeButton": "Close wizard"
+      },
+      "screenshotTaken": true
+    },
+    {
+      "name": "Roles Page",
+      "url": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com/multicloud/user-management/roles",
+      "loaded": true,
+      "elements": {
+        "heading": "Roles",
+        "subtitle": "Manage roles and permissions",
+        "tableHeaders": [
+          "Role",
+          "Permissions"
+        ],
+        "totalRoles": 11,
+        "roles": [
+          {
+            "name": "acm-vm-cluster-migration:view",
+            "permissions": "config.openshift.io, operators.coreos.com"
+          },
+          {
+            "name": "acm-vm-extended:admin",
+            "permissions": "k8s.cni.cncf.io, events.k8s.io, cdi.kubevirt.io, metrics.k8s.io, monitoring.coreos.com, hco.kubevirt.io, snapshot.storage.k8s.io, storage.k8s.io, config.openshift.io, project.openshift.io, template.openshift.io, migrations.kubevirt.io, observability.open-cluster-management.io"
+          },
+          {
+            "name": "acm-vm-extended:view",
+            "permissions": "k8s.cni.cncf.io, events.k8s.io, cdi.kubevirt.io, metrics.k8s.io, monitoring.coreos.com, hco.kubevirt.io, snapshot.storage.k8s.io, storage.k8s.io, config.openshift.io, project.openshift.io, template.openshift.io, migrations.kubevirt.io, observability.open-cluster-management.io"
+          },
+          {
+            "name": "acm-vm-fleet:admin",
+            "permissions": "forklift.konveyor.io, clusterview.open-cluster-management.io, cluster.open-cluster-management.io, project.openshift.io, kubevirt.io, user.openshift.io, instancetype.kubevirt.io, template.openshift.io, cdi.kubevirt.io, hco.kubevirt.io"
+          },
+          {
+            "name": "acm-vm-fleet:view",
+            "permissions": "clusterview.open-cluster-management.io, cluster.open-cluster-management.io, project.openshift.io, kubevirt.io, user.openshift.io, instancetype.kubevirt.io, template.openshift.io, cdi.kubevirt.io, hco.kubevirt.io"
+          },
+          {
+            "name": "kubevirt.io:admin",
+            "permissions": "subresources.kubevirt.io, kubevirt.io, snapshot.kubevirt.io, backup.kubevirt.io, plugin.kubevirt.io, export.kubevirt.io, clone.kubevirt.io, instancetype.kubevirt.io, pool.kubevirt.io, migrations.kubevirt.io"
+          },
+          {
+            "name": "kubevirt.io:edit",
+            "permissions": "subresources.kubevirt.io, kubevirt.io, snapshot.kubevirt.io, backup.kubevirt.io, export.kubevirt.io, clone.kubevirt.io, instancetype.kubevirt.io, pool.kubevirt.io, migrations.kubevirt.io"
+          },
+          {
+            "name": "kubevirt.io:view",
+            "permissions": "kubevirt.io, subresources.kubevirt.io, snapshot.kubevirt.io, backup.kubevirt.io, export.kubevirt.io, clone.kubevirt.io, instancetype.kubevirt.io, pool.kubevirt.io, migrations.kubevirt.io, plugin.kubevirt.io"
+          },
+          {
+            "name": "migrations.kubevirt.io:storagemigrate",
+            "permissions": "migrations.kubevirt.io"
+          },
+          {
+            "name": "migrations.kubevirt.io:storagemigrate-multins",
+            "permissions": "migrations.kubevirt.io"
+          },
+          {
+            "name": "migrations.kubevirt.io:view",
+            "permissions": "migrations.kubevirt.io"
+          }
+        ],
+        "toolbar": {
+          "searchInput": {
+            "placeholder": "Search"
+          },
+          "filterButton": 1,
+          "pagination": "1 - 10 of 11"
+        }
+      },
+      "screenshotTaken": true
+    }
+  ],
+  "perspectives": {
+    "switcherPresent": true,
+    "switcherDataTestId": "perspective-switcher-toggle",
+    "switcherOuiaType": "PF6/MenuToggle",
+    "switcherCssClass": "pf-v6-c-menu-toggle pf-m-full-width",
+    "perspectives": [
+      "Core platform",
+      "Fleet management",
+      "Fleet virtualization"
+    ],
+    "currentPerspective": "Fleet virtualization (on fleet-virt pages) / Fleet management (on multicloud pages)"
+  },
+  "fleetManagementNav": {
+    "dataTestId": "acm-perspective-nav",
+    "items": [
+      {
+        "text": "Home",
+        "expandable": true
+      },
+      {
+        "text": "Search",
+        "url": "/multicloud/search"
+      },
+      {
+        "text": "Infrastructure",
+        "expandable": true
+      },
+      {
+        "text": "Applications",
+        "url": "/multicloud/applications"
+      },
+      {
+        "text": "Governance",
+        "url": "/multicloud/governance"
+      },
+      {
+        "text": "Credentials",
+        "url": "/multicloud/credentials"
+      },
+      {
+        "text": "User management",
+        "expandable": true,
+        "subItems": [
+          {
+            "text": "Roles",
+            "url": "/multicloud/user-management/roles"
+          },
+          {
+            "text": "Identities",
+            "url": "/multicloud/user-management/identities"
+          }
+        ]
+      }
+    ]
+  },
+  "fleetVirtNav": {
+    "dataTestId": "fleet-virtualization-perspective-perspective-nav",
+    "items": [
+      {
+        "text": "VirtualMachines",
+        "url": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces"
+      },
+      {
+        "text": "Templates",
+        "url": "/fleet-virtualization/templates/all-clusters/all-namespaces"
+      },
+      {
+        "text": "Bootable volumes",
+        "url": "/fleet-virtualization/bootablevolumes/all-clusters/all-namespaces"
+      },
+      {
+        "text": "InstanceTypes",
+        "url": "/fleet-virtualization/instancetype.kubevirt.io~v1beta1~VirtualMachineClusterInstancetype/all-clusters/all-namespaces"
+      },
+      {
+        "text": "MigrationPolicies",
+        "url": "/fleet-virtualization/migrations.kubevirt.io~v1alpha1~MigrationPolicy/all-clusters"
+      },
+      {
+        "text": "Checkups",
+        "url": "/fleet-virtualization/checkups/all-clusters/all-namespaces/storage"
+      }
+    ]
+  },
+  "errors": [
+    "Console JS errors detected (85-139 across pages) but pages rendered successfully",
+    "Perspective switcher click blocked by drawer overlay - required JavaScript force-click workaround"
+  ],
+  "notableFindings": [
+    "Page heading is 'Identities' not 'User Management' - this is the actual rendered h1",
+    "Only 2 tabs on Identities page: Users and Groups (no 'Service accounts' tab)",
+    "Wizard scope combobox has typo: 'registred' instead of 'registered' in Global access description",
+    "Role Assignment Wizard is accessed from user detail page (not from the Identities list)",
+    "All 11 roles are virtualization-specific (kubevirt.io, migrations.kubevirt.io, acm-vm-*)",
+    "Fleet Virt perspective nav label is 'Fleet virtualization' (lowercase 'v')",
+    "ACM documentation link in wizard references version 5.0"
+  ]
+}

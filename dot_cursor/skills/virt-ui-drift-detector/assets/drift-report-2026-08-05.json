@@ -1,0 +1,738 @@
+{
+  "reportDate": "2026-08-05",
+  "acmVersion": "2.19",
+  "cnvVersion": "4.23",
+  "previousBaseline": "2026-07-29",
+  "summary": {
+    "breaking": 0,
+    "warning": 5,
+    "info": 4,
+    "total": 9
+  },
+  "driftItems": [
+    {
+      "id": "DRIFT-001",
+      "category": "attribute-mismatch",
+      "severity": "WARNING",
+      "description": "save-search-name: upstream uses data-test attribute, test code queries data-test-id. Values match but attribute type differs. 3rd consecutive occurrence — CHRONICALLY UNSTABLE.",
+      "upstream": {
+        "selector": "save-search-name",
+        "attributeType": "data-test",
+        "sourceFile": "src/views/search/components/SaveSearchModal.tsx"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput",
+        "currentValue": "[data-test-id=\"save-search-name\"]"
+      },
+      "live": {
+        "validated": false,
+        "note": "SaveSearchModal not navigated in live scan; prior runs confirmed tests pass despite mismatch (Playwright data-test-id selector may match data-test on some engines)"
+      },
+      "confidence": "HIGH",
+      "impactChain": {
+        "constant": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput",
+        "pageObject": "src/components/fleet-virt/SavedSearches.ts:21",
+        "specs": [
+          "src/tests/fleet-virt/saved-search-basic.spec.ts",
+          "src/tests/fleet-virt/advanced-search.spec.ts"
+        ],
+        "polarionIds": ["RHACM4K-60769", "RHACM4K-60770"]
+      },
+      "historyOccurrences": 3,
+      "historyDates": ["2026-07-23", "2026-07-29", "2026-08-05"],
+      "recommendedFix": "Update FLEET_VIRT_SAVED_SEARCH.modal.nameInput in src/constants/fleet-virt.ts from [data-test-id=\"save-search-name\"] to [data-test=\"save-search-name\"]"
+    },
+    {
+      "id": "DRIFT-002",
+      "category": "attribute-mismatch",
+      "severity": "WARNING",
+      "description": "save-search-description: upstream uses data-test attribute, test code queries data-test-id. Values match but attribute type differs. 3rd consecutive occurrence — CHRONICALLY UNSTABLE.",
+      "upstream": {
+        "selector": "save-search-description",
+        "attributeType": "data-test",
+        "sourceFile": "src/views/search/components/SaveSearchModal.tsx"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput",
+        "currentValue": "[data-test-id=\"save-search-description\"]"
+      },
+      "live": {
+        "validated": false,
+        "note": "Same as DRIFT-001; SaveSearchModal not in live scan scope"
+      },
+      "confidence": "HIGH",
+      "impactChain": {
+        "constant": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput",
+        "pageObject": "src/components/fleet-virt/SavedSearches.ts:25",
+        "specs": [
+          "src/tests/fleet-virt/saved-search-basic.spec.ts",
+          "src/tests/fleet-virt/advanced-search.spec.ts"
+        ],
+        "polarionIds": ["RHACM4K-60769", "RHACM4K-60770"]
+      },
+      "historyOccurrences": 3,
+      "historyDates": ["2026-07-23", "2026-07-29", "2026-08-05"],
+      "recommendedFix": "Update FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput in src/constants/fleet-virt.ts from [data-test-id=\"save-search-description\"] to [data-test=\"save-search-description\"]"
+    },
+    {
+      "id": "DRIFT-003",
+      "category": "attribute-mismatch",
+      "severity": "WARNING",
+      "description": "virtual-machine-overview-details-status: upstream kubevirt-plugin uses data-test attribute, test code queries data-test-id. Values match but attribute type differs. New finding (not in previous drift runs).",
+      "upstream": {
+        "selector": "virtual-machine-overview-details-status",
+        "attributeType": "data-test",
+        "sourceFile": "src/views/topology/components/vm/VMDetailsPanel/components/VMDetailsPanelRightColumn/components/VMStatusDetailsItem.tsx"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_VM_ACTIONS.statusLabel",
+        "currentValue": "[data-test-id=\"virtual-machine-overview-details-status\"]"
+      },
+      "live": {
+        "validated": false,
+        "note": "VM details page not navigated in live scan; status label element not in live DOM snapshot"
+      },
+      "confidence": "MEDIUM",
+      "impactChain": {
+        "constant": "FLEET_VIRT_VM_ACTIONS.statusLabel",
+        "pageObject": "src/pages/fleet-virt/VmDetailsPage.ts:146",
+        "specs": [
+          "src/tests/fleet-virt/vm-actions.spec.ts",
+          "src/tests/fleet-virt/vm-clone-delete.spec.ts",
+          "src/tests/fleet-virt/advanced-search.spec.ts",
+          "src/tests/fleet-virt/tree-view.spec.ts"
+        ],
+        "polarionIds": ["RHACM4K-60771", "RHACM4K-60772", "RHACM4K-60770", "RHACM4K-60558"]
+      },
+      "historyOccurrences": 1,
+      "historyDates": ["2026-08-05"],
+      "recommendedFix": "Update FLEET_VIRT_VM_ACTIONS.statusLabel in src/constants/fleet-virt.ts from [data-test-id=\"virtual-machine-overview-details-status\"] to [data-test=\"virtual-machine-overview-details-status\"]. Note: ACM Console wrapper may re-emit as data-test-id — verify on live cluster before changing."
+    },
+    {
+      "id": "DRIFT-004",
+      "category": "translation-mismatch",
+      "severity": "WARNING",
+      "description": "Perspective label case mismatch: test code has 'Fleet Management' (capital M), upstream translation and live DOM both have 'Fleet management' (lowercase m). If test uses exact text match, this will fail.",
+      "upstream": {
+        "translation": "Fleet management",
+        "sourceKey": "Fleet management"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_PAGE.fleetManagementLabel",
+        "currentValue": "Fleet Management"
+      },
+      "live": {
+        "validated": true,
+        "liveValue": "Fleet management",
+        "source": "perspectives array in live validator"
+      },
+      "confidence": "HIGH",
+      "impactChain": {
+        "constant": "FLEET_VIRT_PAGE.fleetManagementLabel",
+        "pageObject": "Used in fleet-virt specs for perspective navigation",
+        "specs": [
+          "src/tests/fleet-virt/advanced-search.spec.ts",
+          "src/tests/fleet-virt/tree-view.spec.ts",
+          "src/tests/fleet-virt/vm-actions.spec.ts",
+          "src/tests/fleet-virt/vm-clone-delete.spec.ts",
+          "src/tests/fleet-virt/saved-search-basic.spec.ts",
+          "src/tests/fleet-virt/status-filter.spec.ts"
+        ],
+        "polarionIds": ["RHACM4K-60558", "RHACM4K-60770", "RHACM4K-60771", "RHACM4K-60772", "RHACM4K-60769", "RHACM4K-60560"]
+      },
+      "historyOccurrences": 2,
+      "historyDates": ["2026-07-23", "2026-08-05"],
+      "recommendedFix": "Update FLEET_VIRT_PAGE.fleetManagementLabel in src/constants/fleet-virt.ts from 'Fleet Management' to 'Fleet management'"
+    },
+    {
+      "id": "DRIFT-005",
+      "category": "data-mismatch",
+      "severity": "WARNING",
+      "description": "RBAC_ROLES.expected lists 8 roles but live DOM shows 11 roles. Three new migrations.kubevirt.io roles were added: storagemigrate, storagemigrate-multins, view. Tests asserting exact role count or list will fail.",
+      "upstream": {
+        "roleCount": 11,
+        "newRoles": [
+          "migrations.kubevirt.io:storagemigrate",
+          "migrations.kubevirt.io:storagemigrate-multins",
+          "migrations.kubevirt.io:view"
+        ]
+      },
+      "testCode": {
+        "file": "src/constants/fg-rbac.ts",
+        "constantName": "RBAC_ROLES.expected",
+        "currentValue": "[\"acm-vm-cluster-migration:view\",\"acm-vm-extended:admin\",\"acm-vm-extended:view\",\"acm-vm-fleet:admin\",\"acm-vm-fleet:view\",\"kubevirt.io:admin\",\"kubevirt.io:edit\",\"kubevirt.io:view\"]"
+      },
+      "live": {
+        "validated": true,
+        "liveRoleCount": 11,
+        "source": "Roles Page in live validator"
+      },
+      "confidence": "HIGH",
+      "impactChain": {
+        "constant": "RBAC_ROLES.expected",
+        "pageObject": "src/pages/fg-rbac/RolesListPage.ts",
+        "specs": [
+          "src/tests/fg-rbac/roles-page-validation.spec.ts"
+        ],
+        "polarionIds": ["RHACM4K-61779"]
+      },
+      "historyOccurrences": 1,
+      "historyDates": ["2026-08-05"],
+      "recommendedFix": "Add 'migrations.kubevirt.io:storagemigrate', 'migrations.kubevirt.io:storagemigrate-multins', 'migrations.kubevirt.io:view' to RBAC_ROLES.expected in src/constants/fg-rbac.ts"
+    },
+    {
+      "id": "DRIFT-006",
+      "category": "new-elements",
+      "severity": "INFO",
+      "description": "Service accounts tab route exists in source (/multicloud/user-management/identities/service-accounts) but live DOM shows only 2 tabs: Users and Groups. Tab may be feature-gated or not yet deployed.",
+      "upstream": {
+        "route": "/multicloud/user-management/identities/service-accounts",
+        "sourceFile": "frontend/src/routes/UserManagement/Identities/ServiceAccounts/ServiceAccountRoleAssignments.tsx",
+        "selectorId": "service-account-role-assignments"
+      },
+      "testCode": {
+        "file": null,
+        "constantName": null,
+        "currentValue": null
+      },
+      "live": {
+        "validated": true,
+        "note": "Only 2 tabs on Identities page: Users and Groups (no Service accounts tab)",
+        "source": "User Management page in live validator"
+      },
+      "confidence": "MEDIUM",
+      "impactChain": {
+        "specs": [],
+        "polarionIds": []
+      },
+      "historyOccurrences": 1,
+      "historyDates": ["2026-08-05"],
+      "recommendedFix": "No action needed. Monitor for future deployment. When tab appears on live, add test coverage."
+    },
+    {
+      "id": "DRIFT-007",
+      "category": "new-elements",
+      "severity": "INFO",
+      "description": "New RBAC selector 'namespace-selector' (id attribute) found in upstream source at NamespaceSelector.tsx. Not referenced in test code constants. Used for namespace selection in role assignment wizard.",
+      "upstream": {
+        "selector": "namespace-selector",
+        "attributeType": "id",
+        "sourceFile": "frontend/src/routes/UserManagement/RoleAssignment/NamespaceSelector.tsx"
+      },
+      "testCode": {
+        "file": null,
+        "constantName": null,
+        "currentValue": null
+      },
+      "confidence": "LOW",
+      "impactChain": {
+        "specs": [],
+        "polarionIds": []
+      },
+      "historyOccurrences": 1,
+      "historyDates": ["2026-08-05"],
+      "recommendedFix": "Consider adding namespace-selector to RBAC wizard constants if namespace selection tests are planned."
+    },
+    {
+      "id": "DRIFT-008",
+      "category": "new-elements",
+      "severity": "INFO",
+      "description": "New RBAC selector 'clusters-dual-list-selector-tree' (id attribute) found in upstream source at ClustersDualListSelector.tsx. Not referenced in test code constants. Used for cluster selection in role assignment wizard scope step.",
+      "upstream": {
+        "selector": "clusters-dual-list-selector-tree",
+        "attributeType": "id",
+        "sourceFile": "frontend/src/routes/UserManagement/RoleAssignment/ClustersDualListSelector.tsx"
+      },
+      "testCode": {
+        "file": null,
+        "constantName": null,
+        "currentValue": null
+      },
+      "confidence": "LOW",
+      "impactChain": {
+        "specs": [],
+        "polarionIds": []
+      },
+      "historyOccurrences": 1,
+      "historyDates": ["2026-08-05"],
+      "recommendedFix": "Consider adding to RBAC wizard constants for improved cluster selection test stability."
+    },
+    {
+      "id": "DRIFT-009",
+      "category": "live-finding",
+      "severity": "INFO",
+      "description": "Typo 'registred' (missing second 'e') in wizard Global access scope description on live DOM. Source text: 'Grant access to all resources across all clusters registred in ACM'. Cosmetic issue, not a test-breaking drift.",
+      "upstream": {
+        "text": "Grant access to all resources across all clusters registred in ACM"
+      },
+      "testCode": {
+        "file": null,
+        "constantName": null,
+        "currentValue": null
+      },
+      "live": {
+        "validated": true,
+        "source": "Role Assignment Wizard scope step in live validator"
+      },
+      "confidence": "HIGH",
+      "impactChain": {
+        "specs": [],
+        "polarionIds": []
+      },
+      "historyOccurrences": 1,
+      "historyDates": ["2026-08-05"],
+      "recommendedFix": "File upstream bug for typo fix. No test code change needed unless tests assert this exact string."
+    }
+  ],
+  "selectorVerification": {
+    "verified": 16,
+    "notInTestCode": 232,
+    "attributeMismatched": 3,
+    "details": {
+      "rbac": {
+        "verified": 10,
+        "notInTestCode": 3,
+        "verifiedSelectors": [
+          "identities", "review", "role", "scope",
+          "scope-cluster-granularity", "scope-cluster-set-granularity",
+          "scope-selection", "scope-type",
+          "clusters-access-level", "clusters-set-access-level"
+        ],
+        "notInTestCodeSelectors": [
+          "service-account-role-assignments",
+          "namespace-selector",
+          "clusters-dual-list-selector-tree"
+        ]
+      },
+      "fleetVirt": {
+        "verified": 6,
+        "attributeMismatched": 3,
+        "notInTestCode": 219,
+        "verifiedSelectors": [
+          "vm-advanced-search-button", "adv-search-vm-name",
+          "save-button", "cancel-button",
+          "saved-searches", "actions-dropdown"
+        ],
+        "attributeMismatchedSelectors": [
+          "save-search-name", "save-search-description",
+          "virtual-machine-overview-details-status"
+        ],
+        "note": "219 not-in-test-code selectors are kubevirt-plugin internals (VM details, network, storage, migration cells, etc.) not targeted by fleet-virt E2E tests"
+      },
+      "infrastructure": {
+        "verified": 0,
+        "notInTestCode": 10,
+        "note": "Infrastructure selectors (vm-modal-confirm, deadline, timestamp, etc.) are not covered by current fg-rbac or fleet-virt test suites"
+      }
+    }
+  },
+  "orphanReport": {
+    "unusedConstants": [
+      {
+        "name": "WIZARD_STEP_IDS",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "fullObject",
+        "properties": 7,
+        "reason": "0 imports or property references outside constants/"
+      },
+      {
+        "name": "WIZARD_SELECT_IDS",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "fullObject",
+        "properties": 3,
+        "reason": "0 imports or property references outside constants/"
+      },
+      {
+        "name": "PF_ALERT",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "PF_SELECT",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "PF_DROPDOWN",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "PF_TABLE",
+        "file": "src/constants/selectors.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "0 imports outside constants/"
+      },
+      {
+        "name": "FLEET_VIRT_PAGE.perspectiveSwitcher",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced outside constants (FLEET_VIRT_PAGE is imported for emptyState.noVMs only)"
+      },
+      {
+        "name": "FLEET_VIRT_SEARCH.searchResults",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_SEARCH.resetButton",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.detailsContainer",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.nameInput",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.cluster (sub-object)",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "propertyGroup",
+        "properties": 5,
+        "reason": "Page objects use inline placeholder locators instead of these constants"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.project (sub-object)",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "propertyGroup",
+        "properties": 5,
+        "reason": "Page objects use inline placeholder locators instead of these constants"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.menuContent",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not referenced in any page object or spec"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.footer (sub-object)",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "propertyGroup",
+        "properties": 2,
+        "reason": "Page objects use getByRole instead of these text constants"
+      },
+      {
+        "name": "FLEET_VIRT_VM_ACTIONS.dropdown",
+        "file": "src/constants/fleet-virt.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "VmDetailsPage uses getByRole('button', { name: 'Actions' }) instead"
+      },
+      {
+        "name": "RBAC_ROUTES.roleRoleAssignments",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not used in any page object goto()"
+      },
+      {
+        "name": "RBAC_ROUTES.clusterSetDetails",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not used (clusterSetRoleAssignments is used instead)"
+      },
+      {
+        "name": "RBAC_ROUTES.clusterDetails",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Defined but not used (clusterRoleAssignments is used instead)"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.tabs.details",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.tabs.yaml",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "RoleDetailsPage uses hardcoded 'YAML' string instead"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.tabs.groups",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "UserDetailsPage uses hardcoded 'Groups' string instead"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.navigation.backToUsers",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.fields.fullName",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.fields.username",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.fields.identityProvider",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_USER_DETAIL.emptyStates.groups (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 2,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_RA_TABLE.columns (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 8,
+        "reason": "Defined but not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_RA_TABLE.toolbar.bulkDeleteButtonId",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_RA_TABLE.toolbar.searchPlaceholder",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_RA_TABLE.rowActions.kebabAriaLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "kebabSelector is used instead"
+      },
+      {
+        "name": "RBAC_RA_TABLE.rowActions.editLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "editId is used instead"
+      },
+      {
+        "name": "RBAC_RA_TABLE.rowActions.deleteLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "deleteId is used instead"
+      },
+      {
+        "name": "RBAC_RA_TABLE.filterIds (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 6,
+        "reason": "Not referenced in page objects or specs"
+      },
+      {
+        "name": "RBAC_RA_TABLE.emptyState.viewDocumentation",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_RA_TABLE.defaults.allNamespaces",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.description",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.learnMore",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.identities.tabs (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 2,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.projects.enterProjectName",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.projects.enterDisplayName",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.projects.deselectTooltip",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.preAuthorizedUser (sub-object)",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "propertyGroup",
+        "properties": 4,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "RBAC_WIZARD.notifications.failed",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced"
+      },
+      {
+        "name": "MCRA_RESOURCE.apiVersion",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced outside constants"
+      },
+      {
+        "name": "MCRA_RESOURCE.namespace",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced outside constants"
+      },
+      {
+        "name": "MCRA_RESOURCE.subjectNameLabel",
+        "file": "src/constants/fg-rbac.ts",
+        "type": "property",
+        "properties": 1,
+        "reason": "Not referenced outside constants"
+      }
+    ],
+    "unusedPageObjects": [],
+    "summary": {
+      "totalOrphanConstants": 45,
+      "orphanBreakdown": {
+        "fullObject": 2,
+        "propertyGroup": 9,
+        "property": 34
+      },
+      "totalOrphanPageObjects": 0,
+      "changeFromBaseline": "21 → 45 orphans (+24). Increase is from expanded fg-rbac.ts constants that define UI text, filter IDs, column names, and pre-authorized user fields not yet consumed by page objects."
+    }
+  },
+  "fragilitySummary": {
+    "totalLocators": 137,
+    "avgFragility": 21.3,
+    "highRiskCount": 7,
+    "maxScore": 75,
+    "changeFromBaseline": {
+      "locators": "134 → 137 (+3)",
+      "avgFragility": "21.4 → 21.3 (-0.1)",
+      "highRisk": "7 → 7 (unchanged)"
+    },
+    "highRiskLocators": [
+      "FleetVirtPage.ts:37 — bare h1 tag selector (score 75)",
+      "FleetVirtPage.ts:58 — xpath following::button sibling (score 75)",
+      "UserDetailsPage.ts:51 — input[placeholder=\"Search\"] (score 75)",
+      "AdvancedSearchModal.ts:50 — xpath following::button aria-label toggle (score 75)",
+      "UserDetailsPage.ts:38 — parent traversal via locator('..') (score 70)",
+      "RoleDetailsPage.ts:31 — parent traversal via locator('..') (score 70)",
+      "RoleDetailsPage.ts:58 — .monaco-editor CSS class (score 70)"
+    ],
+    "dominantStrategy": "getByRole+name (65/137 = 47%)"
+  },
+  "historyTrend": {
+    "totalRuns": 5,
+    "runDates": ["2026-07-22", "2026-07-23", "2026-07-23b", "2026-07-29", "2026-08-05"],
+    "chronicallyUnstable": [
+      {
+        "element": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput",
+        "occurrences": 3,
+        "dates": ["2026-07-23", "2026-07-29", "2026-08-05"],
+        "category": "attribute-mismatch",
+        "status": "UNFIXED — data-test-id vs data-test persists across 3 consecutive runs"
+      },
+      {
+        "element": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput",
+        "occurrences": 3,
+        "dates": ["2026-07-23", "2026-07-29", "2026-08-05"],
+        "category": "attribute-mismatch",
+        "status": "UNFIXED — data-test-id vs data-test persists across 3 consecutive runs"
+      }
+    ],
+    "resolved": [
+      {
+        "element": "PF_VERSION_MISMATCH",
+        "resolvedDate": "2026-07-29",
+        "note": "kubevirt-plugin migrated fully to pf-v6 in CNV 4.23"
+      }
+    ],
+    "trendMetrics": {
+      "locators": [86, 134, 137],
+      "orphans": [21, 21, 45],
+      "avgFragility": [23.0, 21.4, 21.3],
+      "labels": ["2026-07-23b", "2026-07-29", "2026-08-05"]
+    }
+  },
+  "pfVersionStatus": {
+    "source": "pf-v5/pf-v6 mixed (theme.tsx references both; kubevirt-plugin uses pf-v6-c exclusively)",
+    "testCode": "pf-v6-c",
+    "live": "PF6",
+    "status": "ALIGNED — all three layers render/target pf-v6. Mixed references in theme.tsx are for backward compatibility only."
+  },
+  "markdownReport": "# Virt UI Drift Report — 2026-08-05\n\n**ACM 2.19 / CNV 4.23** | Baseline: 2026-07-29 | PF6 aligned\n\n## Summary\n\n| Severity | Count |\n|----------|-------|\n| BREAKING | 0 |\n| WARNING | 5 |\n| INFO | 4 |\n| **Total** | **9** |\n\n---\n\n## WARNING Items (5)\n\n### DRIFT-001: save-search-name attribute mismatch (CHRONICALLY UNSTABLE)\n\n| Field | Value |\n|-------|-------|\n| Source | `data-test=\"save-search-name\"` in SaveSearchModal.tsx |\n| Test Code | `[data-test-id=\"save-search-name\"]` in `FLEET_VIRT_SAVED_SEARCH.modal.nameInput` |\n| File | `src/constants/fleet-virt.ts` |\n| Occurrences | 3 (2026-07-23, 07-29, 08-05) |\n| Polarion | RHACM4K-60769, RHACM4K-60770 |\n| Fix | Change `data-test-id` to `data-test` in constant value |\n\n### DRIFT-002: save-search-description attribute mismatch (CHRONICALLY UNSTABLE)\n\n| Field | Value |\n|-------|-------|\n| Source | `data-test=\"save-search-description\"` in SaveSearchModal.tsx |\n| Test Code | `[data-test-id=\"save-search-description\"]` in `FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput` |\n| File | `src/constants/fleet-virt.ts` |\n| Occurrences | 3 (2026-07-23, 07-29, 08-05) |\n| Polarion | RHACM4K-60769, RHACM4K-60770 |\n| Fix | Change `data-test-id` to `data-test` in constant value |\n\n### DRIFT-003: statusLabel attribute mismatch (NEW)\n\n| Field | Value |\n|-------|-------|\n| Source | `data-test=\"virtual-machine-overview-details-status\"` in VMStatusDetailsItem.tsx |\n| Test Code | `[data-test-id=\"virtual-machine-overview-details-status\"]` in `FLEET_VIRT_VM_ACTIONS.statusLabel` |\n| File | `src/constants/fleet-virt.ts` |\n| Occurrences | 1 (new finding) |\n| Polarion | RHACM4K-60771, RHACM4K-60772, RHACM4K-60770, RHACM4K-60558 |\n| Fix | Verify on live cluster first; ACM wrapper may re-emit as data-test-id |\n\n### DRIFT-004: Fleet Management label case mismatch\n\n| Field | Value |\n|-------|-------|\n| Source | `Fleet management` (lowercase m) |\n| Test Code | `Fleet Management` (capital M) in `FLEET_VIRT_PAGE.fleetManagementLabel` |\n| Live | `Fleet management` (lowercase m) confirmed |\n| File | `src/constants/fleet-virt.ts` |\n| Polarion | RHACM4K-60558 through RHACM4K-60772, RHACM4K-60769, RHACM4K-60560 |\n| Fix | Update constant to `Fleet management` |\n\n### DRIFT-005: RBAC roles list stale (8 vs 11)\n\n| Field | Value |\n|-------|-------|\n| Test Code | 8 roles in `RBAC_ROLES.expected` |\n| Live | 11 roles (3 new: `migrations.kubevirt.io:storagemigrate`, `storagemigrate-multins`, `view`) |\n| File | `src/constants/fg-rbac.ts` |\n| Polarion | RHACM4K-61779 |\n| Fix | Add 3 new `migrations.kubevirt.io` roles to `RBAC_ROLES.expected` |\n\n---\n\n## INFO Items (4)\n\n### DRIFT-006: Service accounts tab not visible on live DOM\n\nRoute `/multicloud/user-management/identities/service-accounts` exists in source with selector `service-account-role-assignments`, but live Identities page shows only Users and Groups tabs. Likely feature-gated.\n\n### DRIFT-007: New upstream selector `namespace-selector`\n\nFound in `NamespaceSelector.tsx` (id attribute). Not in test code. Consider adding when namespace selection tests are planned.\n\n### DRIFT-008: New upstream selector `clusters-dual-list-selector-tree`\n\nFound in `ClustersDualListSelector.tsx` (id attribute). Not in test code. Consider adding for cluster selection test stability.\n\n### DRIFT-009: Typo 'registred' in wizard\n\nGlobal access scope description on live DOM reads 'clusters registred in ACM' (missing 'e'). Cosmetic issue.\n\n---\n\n## Fragility Summary\n\n| Metric | Baseline (07-29) | Current (08-05) | Delta |\n|--------|-------------------|------------------|-------|\n| Total locators | 134 | 137 | +3 |\n| Avg fragility | 21.4 | 21.3 | -0.1 |\n| High-risk (score ≥70) | 7 | 7 | 0 |\n| Dominant strategy | getByRole+name | getByRole+name (47%) | — |\n\n7 high-risk locators unchanged: 4 tag/xpath selectors (score 75), 3 CSS class/parent selectors (score 70).\n\n---\n\n## Orphan Report\n\n| Metric | Baseline (07-29) | Current (08-05) | Delta |\n|--------|-------------------|------------------|-------|\n| Orphan constants | 21 | 45 | +24 |\n| Full objects | 6 | 2 | -4 |\n| Property groups | — | 9 | — |\n| Properties | 15 | 34 | +19 |\n| Orphan page objects | 0 | 0 | 0 |\n\nIncrease from 21 to 45 orphans reflects expanded fg-rbac.ts constants (column names, filter IDs, pre-authorized user fields, wizard text) that define values for completeness but are not yet consumed by page objects or specs.\n\n---\n\n## Chronically Unstable Elements\n\n| Element | Occurrences | Status |\n|---------|-------------|--------|\n| `FLEET_VIRT_SAVED_SEARCH.modal.nameInput` | 3 | UNFIXED since 2026-07-23 |\n| `FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput` | 3 | UNFIXED since 2026-07-23 |\n\n---\n\n## PF Version Status\n\n**ALIGNED** across all three layers. Source (kubevirt-plugin) uses `pf-v6-c` exclusively. Test code targets `pf-v6-c`. Live DOM renders PF6 components. theme.tsx mixed references are backward-compat only.\n\n---\n\n## Recommended Priority\n\n1. **DRIFT-005** (RBAC roles) — highest risk of test failure; `roles-page-validation.spec.ts` will fail on exact list/count assertion\n2. **DRIFT-004** (Fleet Management label) — will fail any exact text match on perspective navigation\n3. **DRIFT-001/002** (save-search attribute) — chronically unstable; fix to prevent eventual breakage if Playwright engine behavior changes\n4. **DRIFT-003** (statusLabel) — verify on live VM details page before fixing; ACM wrapper behavior may differ from kubevirt source"
+}

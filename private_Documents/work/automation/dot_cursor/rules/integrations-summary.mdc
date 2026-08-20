@@ -1,0 +1,56 @@
+---
+description: Integration summaries -- Engram knowledge base, ACM docs location, terminal config, YouTube auto-processing, memory staleness guard, auto context loading. Load when using Engram, processing YouTube URLs, working with ACM docs, or managing memory across sessions.
+alwaysApply: false
+---
+
+# Integration Summaries
+
+## Engram Persistent Knowledge Base
+
+Engram (`engram` MCP) -- 64+ memories covering ACM architecture, failure patterns, MCP usage, test conventions, cluster baselines. Persists across sessions.
+
+**Use**: Before investigating a component, writing a test, or checking MCP usage.
+**Store**: When discovering new failure patterns, product facts, diagnostic commands, or classification corrections.
+
+Key tools: `engram_recall`, `engram_remember`, `engram_briefing`, `engram_consolidate`, `engram_surface`, `engram_connect`, `engram_entities`, `engram_ingest`, `engram_stats`, `engram_forget`.
+
+## ACM Documentation
+
+**Location**: `/Users/ashafi/Documents/work/automation/documentation/architecture/rhacm-docs/` (branch: 2.15_stage)
+**Use**: Questions about ACM features, APIs, RBAC, CNV/MTV, addons.
+**Priority**: Official documentation over assumptions or general knowledge.
+
+## Terminal Configuration
+
+- Avoid complex echo with emojis/UTF-8 -- use simple echo or printf
+- Always single-quote literal strings
+- Break complex commands into multiple simple commands
+- Prefer POSIX-compliant commands in Cursor terminal
+
+## YouTube Auto-Processing
+
+When user pastes a YouTube URL (`youtube.com/watch?v=*`, `youtu.be/*`):
+1. Extract transcript: `yt "<URL>"`
+2. Analyze content from transcript
+3. Respond with video analysis
+
+The `yt` command is aliased to `python3 ~/.youtube-cursor/get_transcript.py`.
+
+## Memory Staleness Guard
+
+Claude-Mem observations from past sessions may be outdated. Classify by volatility:
+
+**VOLATILE (re-verify before acting):** Cluster versions, pod states, UI structures, selectors, translations, Jenkins build URLs.
+
+**STABLE (trust with confidence):** Architectural decisions, MCP limitations, code structure, workflow patterns, Cypher patterns, Polarion syntax.
+
+When observations conflict with live data: LIVE DATA wins. State explicitly what changed.
+
+## Auto Context Loading (AI Systems Apps)
+
+When working in `/work/ai/ai_systems/apps/{app-name}/`:
+1. Scan for `docs/`, `README.md`, `CLAUDE.*.md` files
+2. Load app architecture context
+3. Respond with app-specific knowledge
+
+Priority: `docs/quick-start.md` > `docs/framework-workflow-details.md` > `CLAUDE.core.md` > `README.md`

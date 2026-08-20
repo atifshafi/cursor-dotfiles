@@ -1,0 +1,70 @@
+{
+  "scanTimestamp": "2026-07-29T16:51:43Z",
+  "clusterUrl": "https://console-openshift-console.apps.ashafi-virt-hub.az.dev09.red-chesterfield.com",
+  "acmVersion": "5.0",
+  "pfVersion": "PF6 only (pf-v6-c-* classes exclusively, no legacy pf-v4/pf-v5 detected)",
+  "tabStructure": {
+    "fleetVirt": {
+      "defaultTab": "Overview",
+      "tabs": ["Overview", "Virtual machines"],
+      "tabDataTests": {"Overview": "overview-tab", "Virtual machines": "vm-list-tab"}
+    },
+    "userManagement": {
+      "defaultTab": "Users",
+      "tabs": ["Users", "Groups"]
+    },
+    "userDetail": {
+      "defaultTab": "Details",
+      "tabs": ["Details", "YAML", "Role assignments", "Groups"]
+    }
+  },
+  "perspectives": {
+    "switcherPresent": true,
+    "switcherTestId": "perspective-switcher-toggle",
+    "perspectives": ["Core platform", "Fleet management", "Fleet virtualization"],
+    "fleetVirtNavId": "fleet-virtualization-perspective-perspective-nav",
+    "fleetMgmtNavId": "acm-perspective-nav"
+  },
+  "fleetVirtNav": ["VirtualMachines", "Templates", "Bootable volumes", "InstanceTypes", "MigrationPolicies", "Checkups"],
+  "fleetMgmtNav": ["Home", "Search", "Infrastructure", "Applications", "Governance", "Credentials", "User management"],
+  "userManagementSubNav": ["Roles", "Identities"],
+  "wizard": {
+    "title": "Create role assignment for {username}",
+    "steps": ["Scope", "Roles", "Review"],
+    "scopeOptions": ["Global access", "Select cluster sets", "Select clusters"],
+    "buttons": ["Back", "Next", "Cancel"]
+  },
+  "rolesPage": {
+    "heading": "Roles",
+    "subtitle": "Manage roles and permissions",
+    "columns": ["Role", "Permissions"],
+    "totalRoles": 8,
+    "roleNames": [
+      "acm-vm-cluster-migration:view",
+      "acm-vm-extended:admin",
+      "acm-vm-extended:view",
+      "acm-vm-fleet:admin",
+      "acm-vm-fleet:view",
+      "kubevirt.io:admin",
+      "kubevirt.io:edit",
+      "kubevirt.io:view"
+    ]
+  },
+  "confirmedSelectors": {
+    "perspective-switcher-toggle": {"found": true, "attributeType": "data-test-id"},
+    "fleet-virtualization-perspective-perspective-nav": {"found": true, "attributeType": "data-test-id"},
+    "acm-perspective-nav": {"found": true, "attributeType": "data-test-id"},
+    "overview-tab": {"found": true, "attributeType": "data-test"},
+    "vm-list-tab": {"found": true, "attributeType": "data-test"},
+    "vms-treeview": {"found": true, "attributeType": "data-test"},
+    "item-create": {"found": true, "attributeType": "data-test"},
+    "page-heading": {"found": true, "attributeType": "data-test"},
+    "user-dropdown-toggle": {"found": true, "attributeType": "data-test"},
+    "global-notifications": {"found": true, "attributeType": "data-test"}
+  },
+  "treeView": {
+    "clusters": ["ashafi-virt-hub-5eb34", "local-cluster"],
+    "dataTest": "vms-treeview"
+  },
+  "errors": []
+}

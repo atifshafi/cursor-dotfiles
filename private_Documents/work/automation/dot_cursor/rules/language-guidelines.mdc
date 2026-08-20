@@ -1,0 +1,14 @@
+---
+description: Prohibited marketing terms and terminology guidelines
+alwaysApply: true
+---
+
+# Language & Terminology
+
+## Prohibited Terms (NEVER use in code, docs, or messages)
+
+"Enhanced", "Advanced", "Comprehensive", "Revolutionary", "Cutting-edge", "Robust", "Sophisticated", "Seamless", "Optimized", "Streamlined", "Enterprise-grade", "Mission-critical", "Innovative", "Groundbreaking", "Game-changing", "Best-in-class"
+
+**Use plain technical language:** "Enhanced AI system" → "AI system". "Robust framework" → "Framework".
+
+Applies to: code comments, function names, variable names, log messages, documentation, error messages.

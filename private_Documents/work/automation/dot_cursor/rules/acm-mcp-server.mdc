@@ -1,0 +1,150 @@
+---
+description: ACM MCP servers (acm-search + acm-kubectl) for live cluster resource queries and multicluster kubectl. Use when querying live cluster resources, running kubectl across managed clusters, or searching ACM Search database.
+alwaysApply: false
+---
+
+# ACM MCP Servers -- Live Cluster Access
+
+## acm-search (HTTP, on-cluster)
+
+Queries the ACM Search PostgreSQL database for live Kubernetes resources across all managed clusters.
+
+**Source:** [stolostron/search-mcp-server](https://github.com/stolostron/search-mcp-server) (Go, Helm)
+**MCP Server Name:** `acm-search`
+**Transport:** HTTP (Streamable HTTP) at `/mcp`, bridged through `mcp-remote` for TLS handling
+**Auth:** OCP bearer token (`oc whoami -t`), validated server-side via K8s TokenReview API
+
+### Tool: `find_resources`
+
+Single tool with advanced filtering and output modes:
+
+**Basic filters:**
+- `kind` -- Kubernetes resource kind (Pod, Deployment, ManagedCluster, etc.)
+- `name` -- Resource name (substring match)
+- `namespace` -- Target namespace
+- `cluster` -- Target managed cluster name
+- `status` -- Comma-separated status values (e.g., "Failed,Error,CrashLoopBackOff")
+
+**Advanced filters:**
+- `labelSelector` -- Kubernetes label selector (e.g., "app=search-collector")
+- `clusterSelector` -- Filter by cluster labels (e.g., "env=prod")
+- `textSearch` -- Full-text search across resource fields
+- `ageNewerThan` -- Resources created within duration (e.g., "1h", "30m")
+- `ageOlderThan` -- Resources older than duration
+
+**Output modes:**
+- `list` (default) -- Full resource details
+- `count` -- Count of matching resources
+- `summary` -- Grouped summary
+- `health` -- Health analysis across clusters
+
+**Aggregation:**
+- `groupBy` -- Group results (e.g., "cluster", "namespace", "status")
+- `sortBy`, `sortOrder` -- Sort results
+- `limit` -- Max results returned
+- `countOnly` -- Return count without resource details
+
+### On-cluster dependency
+
+This server runs as a pod on the ACM hub cluster (deployed into the MCH namespace, e.g. `ocm`). It connects to the ACM Search PostgreSQL database within the same namespace and exposes an HTTP endpoint via an OpenShift route. When the hub cluster is torn down or changed, the MCP becomes unavailable.
+
+### Connectivity
+
+**Auto-connect wrapper** (primary): `~/Documents/work/ai/tools/mcp/acm-search-mcp-connect.sh`
+
+This is the `command` in `mcp.json`. Every time the MCP is toggled on, it reads `~/Documents/work/notes/notes.md` (lines 1-3), auto-logins, deploys via Helm if needed, creates a 1-year SA token, and connects via `mcp-remote`. No manual steps required beyond toggling.
+
+**Standalone deploy script** (fallback/uninstall): `~/Documents/work/ai/tools/mcp/deploy-acm-search.sh`
+
+```bash
+# Full deploy (Helm install -- use if wrapper fails)
+~/Documents/work/ai/tools/mcp/deploy-acm-search.sh
+
+# Refresh token only (no Helm changes)
+~/Documents/work/ai/tools/mcp/deploy-acm-search.sh --refresh-token
+
+# Remove deployment
+~/Documents/work/ai/tools/mcp/deploy-acm-search.sh --uninstall
+```
+
+**Prerequisites:** `oc` logged into ACM hub, `helm` 3.x installed, `jq` installed.
+If not logged in, both scripts auto-read `~/Documents/work/notes/notes.md` (lines 1-3: version, console URL, kubeadmin password) and login automatically.
+
+**Token expiry:** The wrapper creates a 1-year ServiceAccount token. No daily refresh needed. The token only becomes invalid when:
+- The cluster is torn down/reprovisioned
+- The ServiceAccount is deleted (e.g., Helm uninstall + redeploy)
+
+When the acm-search MCP shows "Error" after a cluster change:
+1. Update `notes/notes.md` lines 1-3 with the new cluster
+2. Run `deploy-acm-search.sh` (full redeploy to new cluster)
+3. Toggle MCP off/on in Cursor Settings
+
+### Default cluster (agent rule)
+
+The default cluster for acm-search is always the one documented at **`~/Documents/work/notes/notes.md` lines 1-3**:
+- Line 1: ACM version
+- Line 2: Console URL (+ version metadata in parentheses)
+- Line 3: kubeadmin password
+
+When the agent needs to deploy, refresh, or reconnect acm-search, it should use this cluster unless the user explicitly specifies a different one. The deploy script reads this file automatically.
+
+### AI Agent: When to deploy
+
+**When:** acm-search MCP shows "Error" AND the task needs fleet-wide resource queries (cross-cluster pod search, addon status across all spokes, resource counts by cluster).
+
+**When NOT needed:** Simple single-namespace `oc get` operations -- use Shell directly (faster, no deploy overhead).
+
+**Decision flow:**
+```
+Need fleet-wide resource data?
+  ├─ acm-search MCP is healthy → Use find_resources directly
+  ├─ acm-search MCP shows Error
+  │     ├─ Is oc logged in? → Ask permission, deploy, instruct restart
+  │     └─ oc not logged in → Ask user for cluster credentials
+  └─ Not needed → Use oc CLI directly
+```
+
+### When acm-search adds value over oc CLI
+
+| Query type | acm-search | oc CLI alternative |
+|---|---|---|
+| Resources across ALL managed clusters | `find_resources(kind, cluster="*")` | Would need `oc` on each spoke |
+| Fleet health summary | `find_resources(outputMode="health")` | No equivalent |
+| Resource count by cluster | `find_resources(outputMode="count", groupBy="cluster")` | No equivalent |
+| Find failing pods fleet-wide | `find_resources(status="CrashLoopBackOff")` | Would need per-spoke access |
+| Simple pod listing in one namespace | Overkill | `oc get pods -n X` is faster |
+
+---
+
+## acm-kubectl (stdio, local)
+
+Multicluster kubectl operations via local kubeconfig.
+
+**Source:** [stolostron/acm-mcp-server](https://github.com/stolostron/acm-mcp-server) (Node.js, legacy clone at `acm-kubectl-server/`)
+**MCP Server Name:** `acm-kubectl`
+**Transport:** stdio (local Node.js process)
+
+**Tools:**
+- `clusters` -- List all managed clusters with status and endpoints
+- `kubectl` -- Run kubectl commands on hub or any managed cluster
+- `connect_cluster` -- Generate kubeconfig + RBAC for a managed cluster
+
+Uses `KUBECONFIG` env var. No deployment needed -- runs locally. Works as long as the kubeconfig is valid.
+
+**Rebuild after upstream changes:**
+```bash
+cd ~/Documents/work/ai/tools/mcp/acm-kubectl-server && git pull
+cd servers/multicluster-kubectl && npm install && npm run build
+```
+
+---
+
+## Complementary MCP Landscape
+
+| Need | MCP Server |
+|------|-----------|
+| Live cluster resources (fleet-wide) | **acm-search** (deploy if errored) |
+| Multicluster kubectl, cluster listing | **acm-kubectl** |
+| ACM architecture dependencies | **neo4j-rhacm** |
+| ACM Console UI source code | **acm-source** |
+| JIRA tickets and sprint management | **jira** |

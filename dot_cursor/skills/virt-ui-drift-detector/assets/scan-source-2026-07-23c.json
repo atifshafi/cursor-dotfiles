@@ -1,0 +1,41 @@
+{
+  "scanTimestamp": "2026-07-23T23:16:00.000Z",
+  "acmVersion": "2.18",
+  "cnvVersion": "4.22",
+  "acmBranch": "main",
+  "cnvBranch": "main",
+  "selectorCounts": { "fleetVirt": 103, "rbac": 10 },
+  "keySelectors": {
+    "vm-advanced-search-button": { "value": "vm-advanced-search-button", "sourceFile": "src/views/search/components/SearchTextInput.tsx", "attributeType": "data-test" },
+    "vm-adv-search-toolbar": { "value": "vm-adv-search-toolbar", "sourceFile": "src/views/search/components/SearchBar.tsx", "attributeType": "data-test" },
+    "adv-search-vm-name": { "value": "adv-search-vm-name", "sourceFile": "src/views/search/components/AdvancedSearchModal/formFields/NameField.tsx", "attributeType": "data-test" },
+    "adv-search-vm-cluster": { "value": "adv-search-vm-cluster", "sourceFile": "src/views/search/components/AdvancedSearchModal/AdvancedSearchModal.tsx", "attributeType": "data-test", "note": "NOT found in grep - need to verify if cluster field uses data-test" },
+    "saved-searches": { "value": "saved-searches", "sourceFile": "src/views/search/components/SavedSearchesDropdown/SavedSearchesDropdown.tsx", "attributeType": "data-test" },
+    "save-button": { "value": "save-button", "sourceFile": "src/utils/components/TabModal/components/TabModalFooter.tsx", "attributeType": "data-test" },
+    "cancel-button": { "value": "cancel-button", "sourceFile": "src/utils/components/TabModal/components/TabModalFooter.tsx", "attributeType": "data-test" },
+    "save-search-name": { "value": "save-search-name", "sourceFile": "src/views/search/components/SaveSearchModal.tsx", "attributeType": "data-test" },
+    "save-search-description": { "value": "save-search-description", "sourceFile": "src/views/search/components/SaveSearchModal.tsx", "attributeType": "data-test" },
+    "actions-dropdown": { "value": "actions-dropdown", "sourceFile": "src/utils/components/ActionsDropdown/ActionsDropdown.tsx", "attributeType": "data-test" },
+    "vms-treeview": { "value": "vms-treeview", "sourceFile": "src/views/virtualmachines/tree/VirtualMachineTreeView.tsx", "attributeType": "data-test" },
+    "overview-tab": { "value": "overview-tab", "sourceFile": "src/views/virtualmachines/navigator/VirtualMachineNavigator.tsx", "attributeType": "data-test" },
+    "vm-list-tab": { "value": "vm-list-tab", "sourceFile": "src/views/virtualmachines/navigator/VirtualMachineNavigator.tsx", "attributeType": "data-test" }
+  },
+  "attributeTypeMismatches": [
+    {
+      "selector": "save-search-name",
+      "upstream": "data-test",
+      "testCode": "data-test-id",
+      "note": "Test code uses [data-test-id='save-search-name'] but upstream uses data-test='save-search-name'"
+    },
+    {
+      "selector": "save-search-description",
+      "upstream": "data-test",
+      "testCode": "data-test-id",
+      "note": "Test code uses [data-test-id='save-search-description'] but upstream uses data-test='save-search-description'"
+    }
+  ],
+  "translationCount": 60,
+  "routeCount": 63,
+  "pfVersion": "pf-v5+pf-v6 coexistence",
+  "note": "Full source scanner output with 103 fleetVirt selectors and 10 rbac selectors stored in subagent transcript"
+}

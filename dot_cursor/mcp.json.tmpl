@@ -1,0 +1,166 @@
+{{- /* chezmoi:template:missing-key=zero */ -}}
+{
+  "mcpServers": {
+    "neo4j-rhacm": {
+      "command": "{{ .chezmoi.homeDir }}/.local/bin/uvx",
+      "args": [
+        "--with",
+        "fastmcp<3",
+        "mcp-neo4j-cypher",
+        "--db-url",
+        "bolt://localhost:7687",
+        "--username",
+        "neo4j",
+        "--password",
+        "{{ .secrets.neo4j_password }}",
+        "--read-only"
+      ],
+      "timeout": 120
+    },
+    "acm-source": {
+      "command": "/Users/ashafi/bin/python",
+      "args": [
+        "-m",
+        "acm_source_mcp_server.main"
+      ],
+      "cwd": "/Users/ashafi/Documents/work/ai/tools/mcp/acm-source-mcp-server",
+      "env": {
+        "PATH": "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      },
+      "timeout": 90
+    },
+    "jira": {
+      "command": "/Users/ashafi/Documents/work/ai/tools/mcp/jira-mcp-server/.venv/bin/python",
+      "args": [
+        "-m",
+        "jira_mcp_server.main"
+      ],
+      "cwd": "/Users/ashafi/Documents/work/ai/tools/mcp/jira-mcp-server",
+      "env": {
+        "JIRA_SERVER_URL": "https://redhat.atlassian.net",
+        "JIRA_ACCESS_TOKEN": "{{ .secrets.jira_token }}",
+        "JIRA_EMAIL": "ashafi@redhat.com",
+        "JIRA_TIMEOUT": "60",
+        "JIRA_MAX_RESULTS": "100"
+      },
+      "timeout": 60
+    },
+    "jenkins": {
+      "command": "/Users/ashafi/Documents/work/ai/tools/mcp/jenkins-mcp/.venv/bin/python",
+      "args": [
+        "/Users/ashafi/Documents/work/ai/tools/mcp/jenkins-mcp/jenkins_mcp_server.py"
+      ],
+      "timeout": 60
+    },
+    "polarion": {
+      "command": "/Users/ashafi/.local/bin/uvx",
+      "args": [
+        "--with",
+        "polarion-mcp",
+        "--with",
+        "mcp<2",
+        "python",
+        "/Users/ashafi/Documents/work/ai/tools/mcp/polarion/polarion-mcp-wrapper.py"
+      ],
+      "cwd": "/Users/ashafi",
+      "env": {
+        "POLARION_BASE_URL": "https://polarion.engineering.redhat.com/polarion",
+        "POLARION_PAT": "{{ .secrets.polarion_pat }}"
+      },
+      "timeout": 90
+    },
+    "playwright": {
+      "command": "/Users/ashafi/.nvm/versions/node/v22.17.1/bin/node",
+      "args": [
+        "/Users/ashafi/.nvm/versions/node/v22.17.1/lib/node_modules/npm/bin/npx-cli.js",
+        "@playwright/mcp@latest",
+        "--ignore-https-errors",
+        "--test-id-attribute",
+        "data-test",
+        "--codegen",
+        "typescript",
+        "--caps",
+        "core,testing"
+      ],
+      "env": {
+        "PATH": "/Users/ashafi/.nvm/versions/node/v22.17.1/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+      },
+      "timeout": 60
+    },
+    "figma": {
+      "url": "https://mcp.figma.com/mcp"
+    },
+    "google-workspace": {
+      "command": "/Users/ashafi/.local/bin/uvx",
+      "args": [
+        "workspace-mcp",
+        "--tool-tier",
+        "extended"
+      ],
+      "env": {
+        "GOOGLE_OAUTH_CLIENT_ID": "884378370845-fqebs3jdop12eg5itc2s2234pkrjttr2.apps.googleusercontent.com",
+        "GOOGLE_OAUTH_CLIENT_SECRET": "{{ .secrets.google_oauth_secret }}",
+        "OAUTHLIB_INSECURE_TRANSPORT": "1",
+        "WORKSPACE_MCP_PORT": "9000"
+      },
+      "timeout": 120
+    },
+    "engram": {
+      "command": "/Users/ashafi/.nvm/versions/node/v22.17.1/bin/node",
+      "args": [
+        "/Users/ashafi/.cursor/hooks/engram-mcp-wrapper.js"
+      ],
+      "env": {
+        "GEMINI_API_KEY": "{{ .secrets.gemini_api_key }}",
+        "PATH": "/Users/ashafi/.nvm/versions/node/v22.17.1/bin:/usr/local/bin:/usr/bin:/bin"
+      },
+      "timeout": 120
+    },
+    "acm-search": {
+      "command": "/Users/ashafi/Documents/work/ai/tools/mcp/acm-search-mcp-connect.sh",
+      "args": [],
+      "env": {
+        "PATH": "/opt/homebrew/bin:/Users/ashafi/.nvm/versions/node/v22.17.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+        "NODE_TLS_REJECT_UNAUTHORIZED": "0"
+      },
+      "timeout": 180
+    },
+    "github": {
+      "command": "/Users/ashafi/.nvm/versions/node/v22.17.1/bin/npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{{ .secrets.github_pat }}"
+      },
+      "timeout": 90
+    },
+    "acm-kubectl": {
+      "command": "/Users/ashafi/.nvm/versions/node/v22.17.1/bin/node",
+      "args": [
+        "/Users/ashafi/Documents/work/ai/tools/mcp/acm-kubectl-server/servers/multicluster-kubectl/build/index.js"
+      ],
+      "env": {
+        "PATH": "/opt/homebrew/bin:/Users/ashafi/.nvm/versions/node/v22.17.1/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+        "KUBECONFIG": "/Users/ashafi/.kube/config"
+      },
+      "timeout": 90
+    },
+    "monarch": {
+      "url": "https://api.monarch.com/mcp"
+    },
+    "acm-knowledge": {
+      "command": "/Library/Frameworks/Python.framework/Versions/3.12/bin/python3",
+      "args": [
+        "-m",
+        "src.server"
+      ],
+      "cwd": "/Users/ashafi/Documents/work/ai/tools/mcp/acm-knowledge-mcp",
+      "env": {
+        "TOKENIZERS_PARALLELISM": "false"
+      },
+      "timeout": 120
+    }
+  }
+}

@@ -1,0 +1,60 @@
+---
+description: Neo4j RHACM knowledge graph - ACM architecture, component dependencies, impact analysis. Use when asking about ACM component dependencies, what breaks if X fails, architecture questions, or subsystem relationships.
+alwaysApply: false
+---
+
+# Neo4j RHACM - Architecture Knowledge Graph
+
+**MCP Server Name**: `neo4j-rhacm`
+
+Contains **291 ACM components** across 7 subsystems with **419 relationships** (DEPENDS_ON, CONTAINS, MANAGES, USES, INTEGRATES_WITH).
+
+## Common Cypher Patterns
+
+```cypher
+# What depends on component X?
+MATCH (dep)-[r:DEPENDS_ON]->(target) 
+WHERE target.label CONTAINS 'ComponentName' 
+RETURN dep.label, type(r)
+
+# What does component X depend on?
+MATCH (source)-[r]->(target) 
+WHERE source.label CONTAINS 'ComponentName' 
+RETURN target.label, type(r)
+
+# All components in a subsystem
+MATCH (n:RHACMComponent) 
+WHERE n.subsystem = 'Cluster' 
+RETURN n.label, n.type, n.description
+```
+
+## Local Setup
+
+Requires Podman with Neo4j container + MCP server on `localhost:8000`.
+
+**Data Sources:**
+- Base Graph: `/Users/ashafi/Documents/work/ai/tools/mcp/knowledge-graph/acm/agentic-docs/dependency-analysis/knowledge-graph/rhacm_architecture_comprehensive_final.cypher` (place the `.cypher` file here if missing; see `ai/tools/mcp/knowledge-graph/README.md`)
+- Virt Extensions: `/Users/ashafi/Documents/work/automation/documentation/architecture/virt-rbac-knowledge-graph.cypher`
+
+**Quick Start:**
+```bash
+podman machine start
+podman run -d --name neo4j-rhacm --restart always \
+    -p 7474:7474 -p 7687:7687 \
+    -e NEO4J_AUTH=neo4j/rhacmgraph \
+    -e 'NEO4J_PLUGINS=["apoc"]' \
+    neo4j:2025.01.0
+
+sleep 30
+
+podman cp .../rhacm_architecture_comprehensive_final.cypher neo4j-rhacm:/tmp/
+podman exec neo4j-rhacm cypher-shell -u neo4j -p rhacmgraph -f /tmp/rhacm_architecture_comprehensive_final.cypher
+
+NEO4J_IP=$(podman inspect neo4j-rhacm --format '{{.NetworkSettings.IPAddress}}')
+podman run -d --name neo4j-mcp -p 8000:8000 \
+    quay.io/bjoydeep/neo4j-cypher:fixed \
+    mcp-neo4j-cypher --db-url bolt://${NEO4J_IP}:7687 \
+    --username neo4j --password rhacmgraph --transport sse
+```
+
+**Detailed Documentation:** `/Users/ashafi/Documents/work/ai/tools/mcp/neo4j-rhacm/Neo4j-RHACM-MCP-Complete-Guide.md`

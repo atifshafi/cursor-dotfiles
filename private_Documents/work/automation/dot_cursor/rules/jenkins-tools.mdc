@@ -1,0 +1,136 @@
+---
+description: Jenkins MCP server and CLI tools for pipeline analysis, build monitoring, failure investigation. Use when working with Jenkins pipelines, build failures, or CI/CD analysis.
+alwaysApply: false
+---
+
+# Jenkins MCP + CLI Tools - Pipeline Analysis & CI/CD
+
+**MCP Server**: `jenkins` (11 tools, prefer over CLI)
+**CLI Fallback**: `jenkins-run` via shell (use when MCP unavailable)
+**Jenkins Instance**: `https://jenkins-csb-rhacm-tests.dno.corp.redhat.com`
+**Primary Skill**: `~/.cursor/skills/jenkins-expert/SKILL.md` (full ACM CI/CD architecture, pipeline deep-dives, Polarion integration)
+**Legacy Skill**: `~/.cursor/skills/jenkins-tools/SKILL.md` (deprecated -- use jenkins-expert instead)
+**MCP Server Code**: `/Users/ashafi/Documents/work/ai/tools/mcp/jenkins-mcp/`
+**CLI env helper**: `~/Documents/work/ai/tools/integrations/jenkins/jenkins-env.sh` (source before `jenkins-run`). **`JENKINS_TOOLS_DIR`**: optional; set to a clone of the **jenkins-tools** skill tree from [stolostron/acm-workflows](https://github.com/stolostron/acm-workflows) for MCP analysis tools that shell out to those scripts.
+
+## MCP Server Tools (Primary -- Use These First)
+
+### Core Tools (read-only, no permission needed)
+
+| MCP Tool | Args | Purpose |
+|----------|------|---------|
+| `get_all_jobs` | (none) | List root-level jobs with name, URL, status |
+| `get_job` | `job_path` | Job details by slash-separated path (e.g. `CI-Jobs/e2e_ui_test_pipeline`) |
+| `get_build` | `job_path`, `build_number?` | Build info; omit build_number for last build |
+| `get_build_log` | `job_path`, `build_number?`, `start?`, `max_lines?` | Console output as text (default 500 lines) |
+| `get_build_status` | `build_url` | Quick status check from full build URL |
+| `get_pipeline_stages` | `job_path`, `build_number?` | Pipeline stage names, statuses, durations (wfapi) |
+
+### Analysis Tools (read-only, no permission needed)
+
+| MCP Tool | Args | Purpose |
+|----------|------|---------|
+| `analyze_pipeline` | `build_url`, `max_depth?`, `console_lines?` | Root cause failure analysis with fix recommendations |
+| `get_downstream_tree` | `build_url`, `max_depth?`, `output_format?` | Downstream job tree (tree/markdown/json) |
+| `get_test_results` | `job_path`, `build_number?`, `mode?` | Test results: summary, full, or failures |
+| `analyze_test_results` | `job_path`, `build_number?`, `failures_only?`, `output_format?` | Component/squad test breakdown |
+
+### State-Changing Tool (REQUIRES PERMISSION)
+
+| MCP Tool | Args | Purpose |
+|----------|------|---------|
+| `trigger_build` | `job_path`, `parameters?` | Trigger a build with optional params. **MUST ask user first.** |
+
+## Job Path Format
+
+Use slash-separated paths for `job_path` arguments. The MCP handles conversion to Jenkins API format automatically.
+
+```
+"CI-Jobs"                              → Lists jobs in CI-Jobs folder
+"CI-Jobs/e2e_ui_test_pipeline"         → Specific pipeline in nested folder
+"CI-Jobs/CLC/some-job"                 → Deeply nested job
+```
+
+For `build_url` arguments, pass the full Jenkins URL:
+```
+https://jenkins-csb-rhacm-tests.dno.corp.redhat.com/job/CI-Jobs/job/e2e_ui_test_pipeline/123/
+```
+
+## When to Use MCP vs CLI
+
+| Scenario | Use |
+|----------|-----|
+| Get job info, build details, stages, status | MCP `get_job`, `get_build`, `get_pipeline_stages` |
+| Failure analysis | MCP `analyze_pipeline` |
+| Downstream tree | MCP `get_downstream_tree` |
+| Test results | MCP `get_test_results`, `analyze_test_results` |
+| Console log | MCP `get_build_log` |
+| Monitor running build (polling) | CLI `jenkins-run monitor <URL>` |
+| Map JIRA params to Jenkins | CLI `jenkins-run params <URL>` |
+| Trigger with --dry-run preview | CLI `jenkins-run trigger <URL> --dry-run` |
+
+## CLI Fallback Setup
+
+```bash
+source /Users/ashafi/Documents/work/ai/tools/integrations/jenkins/jenkins-env.sh
+```
+
+| CLI Command | Equivalent MCP Tool |
+|-------------|-------------------|
+| `jenkins-run analyzer --url <URL> --no-verify-ssl` | `analyze_pipeline(build_url=<URL>)` |
+| `jenkins-run tree --url <URL> --no-verify-ssl` | `get_downstream_tree(build_url=<URL>)` |
+| `jenkins-run results <URL>` | `get_test_results(job_path, build_number)` |
+| `jenkins-run fetch-results --job <PATH> --build <N>` | `get_test_results(job_path, build_number)` |
+| `jenkins-run monitor <URL>` | (no MCP equivalent -- use CLI) |
+| `jenkins-run trigger <URL> --dry-run` | (dry-run only in CLI) |
+| `jenkins-run params <URL> --list-params` | (no MCP equivalent -- use CLI) |
+
+## Permission Rules
+
+- **READ-ONLY (no permission needed):** All MCP tools except `trigger_build`. All CLI tools except `trigger`.
+- **STATE-CHANGING (MUST ask first):** `trigger_build` (MCP), `jenkins-run trigger` (CLI). Always preview/dry-run before triggering.
+
+## Credentials
+
+Stored at `~/.jenkins/config.json` (shared by both MCP and CLI):
+```json
+{
+  "jenkins_url": "https://jenkins-csb-rhacm-tests.dno.corp.redhat.com",
+  "jenkins_user": "ashafi",
+  "jenkins_token": "<API_TOKEN>"
+}
+```
+
+## Common Workflows
+
+### Investigate a Failed Build (MCP)
+```
+1. get_downstream_tree(build_url="<FAILED_URL>")             -- see job tree
+2. get_pipeline_stages(job_path="<PATH>", build_number=<N>)  -- see which stages failed
+3. analyze_pipeline(build_url="<FAILED_URL>")                -- root cause analysis
+```
+
+### Check Test Results (MCP)
+```
+1. get_test_results(job_path="CI-Jobs/e2e_ui_test_pipeline", build_number=42, mode="failures")
+2. analyze_test_results(job_path="CI-Jobs/e2e_ui_test_pipeline", build_number=42, failures_only=True)
+```
+
+### Monitor a Running Build (CLI -- no MCP equivalent)
+```bash
+source ~/Documents/work/ai/tools/integrations/jenkins/jenkins-env.sh
+jenkins-run monitor <BUILD_URL>
+```
+
+## Known Limitations
+
+1. `analyze_pipeline` and `get_pipeline_stages` require Pipeline jobs (wfapi); FreeStyle jobs have limited data
+2. SSL verification disabled by default (Red Hat internal CA)
+3. `get_build_log` returns last 500 lines by default; use `start` param for pagination
+4. Long-running monitoring uses CLI (`jenkins-run monitor`); MCP `get_build_status` is single-poll only
+5. Specialized MCP tools (`analyze_pipeline`, `get_downstream_tree`, etc.) shell out to scripts under the directory in **`JENKINS_TOOLS_DIR`** (typically a clone of the **`jenkins-tools`** tree from [stolostron/acm-workflows](https://github.com/stolostron/acm-workflows) — not shipped under `ai/tools/`). Load credentials with **`integrations/jenkins/jenkins-env.sh`**; set **`JENKINS_TOOLS_DIR`** to that clone before using those MCP tools.
+
+## Source
+
+- MCP server forked from: https://github.com/redhat-community-ai-tools/jenkins-mcp
+- CLI tools from: https://github.com/stolostron/acm-workflows/tree/main/Claude/plugins/jenkins-tools

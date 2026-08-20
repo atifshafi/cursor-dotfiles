@@ -1,0 +1,60 @@
+---
+description: MCP server routing table -- maps query types to MCP servers, disambiguation rules, decision flow. Load when making MCP tool calls, querying external services, or deciding which MCP server to use.
+alwaysApply: false
+---
+
+# MCP Server Priority
+
+**Core Principle**: Before searching documentation or falling back to other methods, ALWAYS check if a specialized MCP server exists for the query type and use it FIRST.
+
+## Query Type to MCP Server Mapping
+
+| Query Type | MCP Server | When to Use |
+|------------|------------|-------------|
+| **ACM/K8s/OCP docs, "what is X", "how does X work", writing test cases, investigating failures, writing automation** | `acm-knowledge` | Retrieving documentation content, explanations, feature details, failure signatures, test conventions, automation patterns. Searches indexed rhacm-docs + knowledge DB with hybrid semantic+keyword search. **Always consult before**: writing test cases (check conventions + area knowledge), investigating failures (check failure signatures + diagnostics), writing automation scripts (check automation patterns for the target area), answering architecture questions (check architecture + data-flow). |
+| **ACM component DEPENDENCIES, "what breaks if X fails"** | `neo4j-rhacm` | Graph queries about component relationships, dependency chains, blast radius. Uses Cypher against the architecture graph (370 nodes, 541 edges). |
+| **Past learnings, "remember that", session memory** | `engram` | Storing/recalling agent observations from past sessions. NOT for doc retrieval. |
+| **ACM Console SOURCE CODE, selectors, routes** | `acm-source` | Reading actual source files, translations, test IDs, wizard steps from stolostron/console or kubevirt-plugin. |
+| **JIRA tickets, bugs, comments** | `jira` | Any JIRA operation. Trigger: JIRA IDs (ACM-*, CNV-*), "bug", "ticket", "create issue". |
+| **Polarion test cases, work items** | `polarion` | Polarion operations. Trigger: Polarion IDs (RHACM4K-*), "test case", "Polarion". |
+| **GitHub PRs, issues, Actions, code search** | `github` | GitHub operations. Trigger: GitHub URLs, PR numbers, "pull request", "Actions". |
+| **Jenkins pipelines, builds, test results** | `jenkins` | CI/CD operations. Trigger: "Jenkins", "pipeline", "build failed". |
+| **Live cluster resources, pods, policies** | `acm-search` | Fleet-wide resource queries on a live ACM hub. Trigger: "what pods", "find resources", "non-compliant". |
+| **Multicluster kubectl, managed clusters** | `acm-kubectl` | Running kubectl on hub or spokes. Trigger: "managed clusters", "run kubectl", "spoke cluster". |
+| **UI debugging, DOM, browser automation** | `playwright` | Browser interaction, screenshots, form filling. Trigger: "UI", "DOM", "browser", "snapshot". |
+| **Gmail, Drive, Calendar, Google Docs** | `google-workspace` | Google Workspace operations. Trigger: "email", "calendar", "Google Doc", "Drive". |
+| **Figma designs, mockups, UX specs** | `figma` | Figma file access. Trigger: Figma URLs, "mockup", "design spec". |
+
+## Disambiguation: When Servers Overlap
+
+| Question | Use This | NOT This | Why |
+|----------|----------|----------|-----|
+| "How does governance policy propagation work?" | `acm-knowledge` | `neo4j-rhacm` | You want documentation/explanation, not a graph query |
+| "What components depend on governance?" | `neo4j-rhacm` | `acm-knowledge` | You want relationship traversal, not prose |
+| "What's the selector for the policy table?" | `acm-source` | `acm-knowledge` | You want live source code, not docs |
+| "We learned last week that X causes Y" | `engram` | `acm-knowledge` | You want session memory recall, not indexed docs |
+| "What is a ManagedClusterAddon CRD?" | `acm-knowledge` | `acm-source` | You want conceptual explanation, not source code |
+| "Write a test case for VM live migration" | `acm-knowledge` | `acm-source` | Check conventions + area knowledge first, then source for selectors |
+| "Investigate why governance tests fail" | `acm-knowledge` | `jira` | Check failure signatures + diagnostics before searching JIRA |
+| "Automate the credentials page" | `acm-knowledge` | `acm-source` | Check automation patterns for the area first, then source for selectors |
+| "What changed in search between 2.18 and 5.0?" | `acm-knowledge` | `neo4j-rhacm` | You want documented architecture changes, not graph queries |
+
+## Decision Flow
+
+1. DETECT query type from keywords
+2. CHECK disambiguation table if ambiguous
+3. USE the correct MCP server tool FIRST
+4. ONLY fall back if MCP returns no results
+
+**Priority Order**: MCP servers → `gh` CLI → local file read → general exploration.
+
+## Playwright Screenshot Paths
+
+When using `browser_take_screenshot`, ALWAYS specify a full path -- never just a filename. Use `/tmp/screenshots/<descriptive-name>.png`. A bare filename saves to the workspace root, littering the project directory.
+
+```
+WRONG: browser_take_screenshot(filename="step1.png")
+RIGHT: browser_take_screenshot(filename="/tmp/screenshots/step1.png")
+```
+
+**Detailed tool references**: See corresponding `.cursor/rules/*.mdc` files (jira-integration, polarion-integration, jenkins-tools, google-workspace, neo4j-rhacm, acm-source-mcp, acm-mcp-server, github-cli).

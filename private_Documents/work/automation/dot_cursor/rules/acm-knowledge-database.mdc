@@ -1,0 +1,82 @@
+---
+description: ACM Knowledge Database auto-update protocol -- when/where to read and write verified ACM facts, directory map, quality gates, frontmatter rules. Load when working on ACM-related tasks, discovering new ACM architecture/behavior facts, or updating knowledge files.
+alwaysApply: false
+---
+
+# ACM Knowledge Database -- Auto-Update Protocol
+
+**Location:** `/Users/ashafi/Documents/work/notes/knowledge/`
+
+A unified knowledge database covering 14 ACM subsystems. Agents MUST update it when they learn verified new facts about ACM architecture, UI behavior, failure patterns, or health issues.
+
+## When to Read (BEFORE acting on ACM-related tasks)
+
+Before performing any ACM-related task, check if the knowledge DB has relevant content. Use `acm-knowledge` MCP with `search_knowledge(query=<task topic>)`. If the MCP is unavailable, read the relevant file directly from `/Users/ashafi/Documents/work/notes/knowledge/`.
+
+| Task Type | Read These First |
+|-----------|-----------------|
+| Writing or updating test cases | `conventions/test-case-format.md`, `conventions/polarion-html-templates.md`, `ui/<area>.md` |
+| Investigating cluster health | `diagnostics/diagnostic-layers.md`, `diagnostics/diagnostic-traps.md`, `health/<subsystem>/known-issues.md` |
+| Writing automation scripts | `automation/playwright/<area>.md` or `automation/cypress/<area>.md` |
+| Answering architecture questions | `architecture/<subsystem>/architecture.md`, `data-flow/<subsystem>/data-flow.md` |
+| Classifying test failures | `failures/<subsystem>/failure-signatures.md`, `failures/classification-decision-tree.md` |
+| Hunting for bugs | `failures/<subsystem>/failure-signatures.md`, `architecture/<subsystem>/architecture.md` |
+| Verifying bug fixes | `failures/<subsystem>/failure-signatures.md`, `health/<subsystem>/known-issues.md` |
+| Investigating or deep-diving a topic | `architecture/<subsystem>/architecture.md`, `data-flow/<subsystem>/data-flow.md`, `ui/<area>.md` |
+| ACM cluster operations | `architecture/<subsystem>/architecture.md`, `baselines/` |
+
+## When to Update (ALL conditions must be true)
+
+1. The fact is **verified** -- confirmed via live cluster (`oc` output), official docs (`rhacm-docs/`), source code (acm-source MCP), or JIRA/Polarion
+2. The fact is **not already present** -- read the target file first, check for duplicates
+3. The fact is **relevant to ACM QE work** -- architecture, UI behavior, failure patterns, health diagnostics, testing considerations
+4. The fact is **durable** -- not a temporary state (e.g., "bm12 is running ACM 2.16" is ephemeral; "ACM 2.16 introduced FG-RBAC" is durable)
+
+## When NOT to Update
+
+- Ephemeral cluster state (pod counts on a specific cluster, current build tags)
+- Speculative or unverified information
+- Information already covered in the target file (even if worded differently)
+- Personal workflow notes (use Engram or `notes/` instead)
+
+## Permission Exemption
+
+Knowledge database updates are **exempt from the file-creation checkpoint** in `agent-safety.mdc`. The user has explicitly authorized automatic knowledge updates. No need to ask before writing to files under `notes/knowledge/`.
+
+## Directory Map -- Where Each Fact Goes
+
+| Fact Type | Target Directory | File Pattern | Frontmatter type | Example |
+|-----------|-----------------|--------------|------------------|---------|
+| How a subsystem works (components, CRDs, pods, controllers, reconciliation) | `architecture/<subsystem>/` | `architecture.md` | `architecture` | "The subscription-controller generates ManifestWork per target cluster" |
+| How data flows through a subsystem | `data-flow/<subsystem>/` | `data-flow.md` | `data-flow` | "Search collector sends metadata to indexer via gRPC" |
+| UI behavior (routes, translations, field orders, wizard steps, filtering) | `ui/` | `<area>.md` | `ui` | "Applications overview tab shows Subscription and ArgoCD apps" |
+| Known health issues, bugs, degradation patterns | `health/<subsystem>/` | `known-issues.md` | `health` | "ACM-28668: Status sync re-emits events causing hub API throttling" |
+| Failure signatures for test classification | `failures/<subsystem>/` | `failure-signatures.md` | `failures` | "Propagator TLS cert corruption causes all policy operations to fail" |
+| Expected cluster state (pod counts, services, webhooks) | `baselines/` | Various `.yaml` | `baselines` | "search-postgres StatefulSet expects 1 replica" |
+| Playwright test automation (fixtures, page objects, selectors, gotchas) | `automation/playwright/` | `<area>.md` | `automation` | "rbac-test.ts provides asUser(role) returning { page }" |
+| Cypress test automation (views, actions, selectors, gotchas) | `automation/cypress/` | `<area>.md` | `automation` | "managedClustersSelectors exports cluster table locators" |
+
+### The 14 Subsystems
+
+addon-framework, application-lifecycle, automation, cluster-lifecycle, console, foundation, governance, infrastructure, install, networking, observability, rbac, search, virtualization
+
+## Update Procedure
+
+1. **Read the target file first** -- understand what's already there
+2. **Check for duplicates** -- semantic match, not just exact string. If the concept is already covered (even with different wording), do NOT add it again
+3. **Append to the appropriate section** -- don't reorganize existing content
+4. **Follow the format exactly** -- match the heading style, table format, and field names already in the file. Read the format templates in `acm-knowledge-formats.mdc` if creating a new file.
+5. **Include YAML frontmatter** -- Every knowledge file MUST have a YAML frontmatter block with at minimum: `type`, `subsystem` (if applicable), `acm_version`, `last_verified`. When updating an existing file, update `last_verified` to today's date and `acm_version` to the version you verified against. When creating a new file, include the full frontmatter from the format templates in `acm-knowledge-formats.mdc`.
+6. **Update `related` links** -- If the file references other knowledge files, ensure they are listed in the frontmatter `related` field using relative paths from the knowledge root.
+7. **If the file doesn't exist** -- read an existing file in the same directory first (for format reference), then create using the templates from `acm-knowledge-formats.mdc`
+8. **Write directly to the target file** -- do NOT stage in `learned/`. ALL agents write to the final location immediately. `learned/` is deprecated.
+
+## Quality Gates
+
+- Never contradict existing content without strong evidence and a note explaining the change
+- Never add placeholder text ("TBD", "TODO", "needs verification")
+- Every JIRA reference must be a real ticket ID
+- Every pod label, namespace, or CRD must be verified (not guessed)
+- Keep entries concise -- 3-5 sentences per component, not paragraphs
+- Every file MUST have valid YAML frontmatter with `type`, `acm_version`, and `last_verified` fields
+- When modifying a file, always update `last_verified` to today's date

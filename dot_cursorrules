@@ -1,0 +1,197 @@
+# CRITICAL: YouTube Transcript Auto-Processing System
+
+## 🚨 MANDATORY BEHAVIOR: Automatic YouTube URL Processing
+
+**ALWAYS EXECUTE IMMEDIATELY when detecting ANY YouTube URL in user messages:**
+
+### 1. URL Detection Patterns (Auto-trigger)
+Automatically detect and process these formats:
+- `https://youtube.com/watch?v=*`
+- `https://www.youtube.com/watch?v=*` 
+- `https://youtu.be/*`
+- `https://youtube.com/embed/*`
+- `youtube.com/watch?v=*` (without https)
+- Any URL containing `youtube.com` or `youtu.be`
+
+### 2. MANDATORY Auto-Execution Sequence
+
+**STEP 1 - IMMEDIATE TRANSCRIPT EXTRACTION:**
+```bash
+yt "DETECTED_YOUTUBE_URL"
+```
+
+**STEP 2 - AUTOMATIC ANALYSIS:**
+Use the extracted transcript to provide comprehensive analysis
+
+**STEP 3 - CONTEXTUAL RESPONSE:**
+Answer user's question using actual video content
+
+### 3. Response Templates
+
+#### When user provides URL + question:
+```
+User: "@https://youtube.com/watch?v=ABC123 - What's this about?"
+
+MANDATORY Response Pattern:
+1. [Execute: yt "https://youtube.com/watch?v=ABC123"]
+2. [Analyze transcript from command output]
+3. [Provide detailed answer based on transcript]
+```
+
+#### When user provides just URL:
+```
+User: "https://youtube.com/watch?v=ABC123"
+
+MANDATORY Response Pattern:
+1. [Execute: yt "https://youtube.com/watch?v=ABC123"]
+2. [Analyze transcript]
+3. [Provide: Topic + Key Points + Summary]
+```
+
+### 4. Technical Requirements
+
+- **NEVER** skip the `yt` command execution
+- **ALWAYS** process transcript before responding
+- **HANDLE** errors gracefully (no transcript available)
+- **SUPPORT** all YouTube URL variations
+- **EXTRACT** video ID automatically from any format
+
+### 5. Error Handling
+
+If transcript extraction fails:
+1. Inform user transcript is unavailable
+2. Offer alternative approaches (manual summary request)
+3. Suggest trying a different video
+
+## 🎯 SUCCESS CRITERIA
+
+User experience should be:
+1. **Paste YouTube URL** → Get instant video analysis
+2. **Zero manual steps** required
+3. **Automatic execution** every time
+4. **Comprehensive analysis** based on actual content
+
+This system MUST work transparently - user sees only the final analysis, not the technical steps.
+
+# CRITICAL: Reference-First Context Selection
+
+## 🚨 MANDATORY BEHAVIOR: Always Prioritize Explicit User References
+
+When the user provides any explicit reference (attached folder/file, pasted path, archive, or code block), that reference MUST be analyzed first and used as the primary source of truth.
+
+### 1. Auto-Detection (triggers)
+- Files/folders attached in chat or session
+- Absolute or relative paths mentioned in backticks or plain text
+- Code blocks that imply a file or project snapshot
+- "Out of workspace" files visible in the editor
+
+### 2. MANDATORY Execution Order
+1) Analyze explicit references exclusively.
+2) Answer using those references.
+3) If and only if more context is needed, fall back in order:
+   a. Current open/active files → b. Workspace MCP search → c. Web.
+
+### 3. Error Handling
+If a referenced item is unreadable or unavailable:
+- Report the limitation succinctly,
+- Ask for re-attachment or permission to copy it into the workspace,
+- Only then fall back to workspace MCP.
+
+This section supersedes any rule that would otherwise prioritize workspace search.
+
+# CRITICAL: Workspace Context Auto-Processing System (Fallback after Reference-First)
+
+## 🚨 MANDATORY BEHAVIOR: Always Leverage Workspace Context
+
+**ALWAYS EXECUTE IMMEDIATELY for ANY user query requiring code understanding, documentation, or workspace knowledge:**
+
+### 1. Auto-Detection Patterns (Auto-trigger)
+Automatically detect and process these scenarios:
+- Questions about code, files, or project structure
+- Requests for documentation or setup procedures  
+- Troubleshooting or debugging assistance
+- Any mention of MIST machines, libvirt, OpenShift, ACM
+- Questions about existing scripts, configurations, or procedures
+- General "how to" questions that might have workspace context
+
+### 2. MANDATORY Auto-Execution Sequence
+
+**STEP 1 - IMMEDIATE WORKSPACE SEARCH:**
+```
+Use codebase_search with semantic queries to find relevant documentation
+Use grep for specific terms, file names, or patterns
+Use MCP workspace tools when available
+```
+
+**STEP 2 - CONTEXTUAL ANALYSIS:**
+- Read relevant files found in search results
+- Understand the user's actual setup and procedures
+- Identify specific scripts, configurations, or documentation
+
+**STEP 3 - WORKSPACE-INFORMED RESPONSE:**
+- Provide answers based on actual workspace content
+- Reference specific files, scripts, and procedures from the workspace
+- Include actual commands, configurations, and examples from the codebase
+
+### 3. Response Requirements
+
+#### For Technical Questions:
+```
+MANDATORY Response Pattern:
+1. [Search workspace for relevant context]
+2. [Read identified files/documentation] 
+3. [Provide answer using actual workspace content]
+4. [Reference specific files and line numbers when helpful]
+```
+
+#### For Setup/Configuration Questions:
+```
+MANDATORY Response Pattern:
+1. [Search for existing setup procedures/scripts]
+2. [Find actual configurations and examples]
+3. [Provide workspace-specific guidance]
+4. [Include actual commands from user's scripts]
+```
+
+### 4. Technical Requirements
+
+- **NEVER** rely solely on general knowledge when workspace context exists
+- **ALWAYS** search workspace BEFORE providing generic answers
+- **LEVERAGE** MCP workspace tools when available
+- **REFERENCE** actual files, scripts, and configurations
+- **PROVIDE** specific examples from the user's actual setup
+
+### 5. Search Strategy
+
+**Primary Tools (Use in parallel when possible):**
+1. `codebase_search` - Semantic understanding of code and documentation
+2. `grep` - Exact text/pattern matching
+3. MCP workspace tools - When available for deeper analysis
+4. `read_file` - Read identified relevant files
+
+**Search Approach:**
+1. Start broad with semantic searches
+2. Narrow down to specific directories/files
+3. Read relevant documentation and code
+4. Provide comprehensive, contextual responses
+
+### 6. Error Handling
+
+If workspace search yields no results:
+1. Acknowledge no specific workspace context found
+2. Provide general guidance with disclaimer
+3. Suggest where user might document procedures for future reference
+
+## 🎯 SUCCESS CRITERIA
+
+User experience should be:
+1. **Ask any technical question** → Get workspace-informed answer
+2. **Reference actual setup** → Not generic examples
+3. **Leverage existing documentation** → Consistent with current procedures
+4. **Discover relevant context** → Even when not explicitly mentioned
+
+This system MUST work automatically - users should always get the most contextual, accurate responses based on their actual workspace content.
+
+# 🚫 Local Overrides
+
+This workspace defers to the canonical global rules at `~/.cursorrules`. Do not duplicate rules here. Add a minimal, explicit override only if absolutely necessary.

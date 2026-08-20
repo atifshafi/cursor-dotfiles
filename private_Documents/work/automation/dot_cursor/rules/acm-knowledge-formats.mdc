@@ -1,0 +1,253 @@
+---
+description: Format templates for writing to the ACM Knowledge Database. Loaded only when working with knowledge files.
+globs:
+  - "**/knowledge/**/*.md"
+  - "**/.claude/knowledge/**/*.md"
+---
+
+# ACM Knowledge Database -- Format Templates
+
+Use these templates when creating NEW knowledge files. When updating existing files, match the format already in the file.
+
+## architecture/<subsystem>/architecture.md
+
+```markdown
+---
+type: architecture
+subsystem: <subsystem>
+acm_version: "5.0"
+last_verified: YYYY-MM-DD
+related:
+  - data-flow/<subsystem>/data-flow.md
+  - health/<subsystem>/known-issues.md
+  - failures/<subsystem>/failure-signatures.md
+---
+
+# <Subsystem Name> -- Architecture
+
+## What <Subsystem Name> Does
+<1-2 paragraph description>
+
+---
+
+## Key Components
+
+### <component-name>
+- **Pod label:** `app=<label>`
+- **Namespace:** <namespace>
+<What it does, 2-3 sentences>
+
+---
+
+## Cross-Subsystem Dependencies
+| Dependency | Why |
+|---|---|
+
+## What Depends on <Subsystem Name>
+| Consumer | Impact When Down |
+|---|---|
+```
+
+## ui/<area>.md
+
+```markdown
+---
+type: ui
+subsystem: <area>
+acm_version: "5.0"
+last_verified: YYYY-MM-DD
+related:
+  - automation/playwright/<area>.md
+  - automation/cypress/<area>.md
+---
+
+# <Area> Area Knowledge
+
+## Overview
+<1-2 sentences>
+
+## Key Components
+<Tables of components, CRDs>
+
+## Navigation Routes
+| Route Key | Path | Page |
+|-----------|------|------|
+
+## Testing Considerations
+<Bullet list of gotchas, known issues, prerequisites>
+```
+
+## health/<subsystem>/known-issues.md
+
+```markdown
+---
+type: health
+subsystem: <subsystem>
+acm_version: "5.0"
+last_verified: YYYY-MM-DD
+related:
+  - architecture/<subsystem>/architecture.md
+  - failures/<subsystem>/failure-signatures.md
+---
+
+# <Subsystem> -- Known Issues
+
+## <N>. <Short Title> (<JIRA-ID>)
+**Versions:** <affected> | **Severity:** <level> | **Fix:** <description>
+<Root cause explanation>
+**Signals:** <how to detect>
+**Workaround:** <if any>
+```
+
+## failures/<subsystem>/failure-signatures.md
+
+```markdown
+---
+type: failures
+subsystem: <subsystem>
+acm_version: "5.0"
+last_verified: YYYY-MM-DD
+related:
+  - architecture/<subsystem>/architecture.md
+  - health/<subsystem>/known-issues.md
+---
+
+# <Subsystem> Failure Signatures
+
+## INFRASTRUCTURE Patterns
+### <Pattern Name>
+- **Error:** <error message or symptom>
+- **Pattern:** <what it looks like across tests>
+- **Classification:** INFRASTRUCTURE (<confidence>%)
+- **Diagnostic:** <oc command to verify>
+
+## AUTOMATION_BUG Patterns
+### <Pattern Name>
+- **Error:** ...
+- **Classification:** AUTOMATION_BUG (<confidence>%)
+
+## PRODUCT_BUG Patterns
+### <Pattern Name>
+- **Error:** ...
+- **Classification:** PRODUCT_BUG (<confidence>%)
+```
+
+## data-flow/<subsystem>/data-flow.md
+
+```markdown
+---
+type: data-flow
+subsystem: <subsystem>
+acm_version: "5.0"
+last_verified: YYYY-MM-DD
+related:
+  - architecture/<subsystem>/architecture.md
+---
+
+# <Subsystem> -- Data Flow
+
+## Overview
+<1-2 sentences describing the main data flow>
+
+## Flow Diagram
+
+```
+<ASCII art flow diagram>
+```
+
+## Step 1: <Step Title>
+<What happens, which component is involved>
+**Failure:** <What happens if this step fails>
+
+## Step N: <Step Title>
+...
+
+---
+
+## Failure Modes
+
+### <Failure Name>
+- **Symptom:** <what the user sees>
+- **Scope:** <which tests/features are affected>
+- **Detection:** <oc command or diagnostic>
+```
+
+## automation/{playwright,cypress}/<area>.md
+
+```markdown
+---
+type: automation
+subsystem: <subsystem>
+acm_version: "5.0"
+last_verified: YYYY-MM-DD
+related:
+  - ui/<area>.md
+---
+
+# <Area> Area Knowledge Base
+
+## Prerequisites
+<Bullet list of required setup for testing this area>
+
+## Environment Variables
+
+| Variable | Required | Description |
+|----------|----------|-------------|
+
+## Navigation
+<How to reach the target page in the console>
+
+## Selectors Reference
+
+| Element | Selector | Type |
+|---------|----------|------|
+
+## Gotchas
+<Bullet list of known issues, timing problems, or non-obvious behavior>
+```
+
+## diagnostics/<name>.md
+
+```markdown
+---
+type: diagnostics
+acm_version: "5.0"
+last_verified: YYYY-MM-DD
+related:
+  - diagnostics/<related-diagnostic>.md
+---
+
+# <Diagnostic Model/Reference Name>
+
+## Purpose
+<1-2 sentences>
+
+## Model / Decision Tree
+
+```
+<ASCII art diagram or table>
+```
+
+## <Section per layer/step/category>
+| Symptom | Diagnosis | Command |
+|---------|-----------|---------|
+
+## Cross-References
+- See <related file> for ...
+```
+
+## baselines/<name>.yaml
+
+```yaml
+---
+# <Purpose of this baseline>
+# Validated against: <cluster/environment>
+# Refresh frequency: <when to re-validate>
+
+acm_version: "5.0"
+last_refreshed: "YYYY-MM-DD"
+validated_against_live_cluster: "<cluster-url>"
+
+baseline:
+  <structured data matching the baseline's purpose>
+```

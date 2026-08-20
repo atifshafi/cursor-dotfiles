@@ -1,0 +1,2372 @@
+{
+  "constants": [
+    {
+      "name": "FLEET_VIRT_ROUTES",
+      "file": "src/constants/fleet-virt.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "vmList",
+          "value": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+          "selectorType": "route"
+        }
+      ]
+    },
+    {
+      "name": "FLEET_VIRT_PAGE",
+      "file": "src/constants/fleet-virt.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "perspectiveSwitcher",
+          "value": "[data-test-id=\"perspective-switcher-toggle\"]",
+          "selectorType": "css-data-test-id"
+        },
+        {
+          "name": "fleetManagementLabel",
+          "value": "Fleet Management",
+          "selectorType": "text"
+        },
+        {
+          "name": "emptyState.noVMs",
+          "value": "No VirtualMachines found",
+          "selectorType": "text"
+        }
+      ]
+    },
+    {
+      "name": "FLEET_VIRT_SEARCH",
+      "file": "src/constants/fleet-virt.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "searchInput",
+          "value": "[data-test=\"vm-search-input\"] input",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "searchResults",
+          "value": "[data-test=\"search-results\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "resetButton",
+          "value": "button[aria-label=\"Reset\"]",
+          "selectorType": "css-aria-label"
+        }
+      ]
+    },
+    {
+      "name": "FLEET_VIRT_ADVANCED_SEARCH",
+      "file": "src/constants/fleet-virt.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "openButton",
+          "value": "[data-test=\"vm-advanced-search-button\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "detailsContainer",
+          "value": "[data-test=\"adv-search-details\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "nameInput",
+          "value": "[data-test=\"adv-search-vm-name\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "cluster.dataTest",
+          "value": "adv-search-vm-cluster",
+          "selectorType": "data-test-value"
+        },
+        {
+          "name": "cluster.wrapper",
+          "value": "[data-test=\"adv-search-vm-cluster\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "cluster.placeholder",
+          "value": "All clusters",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "cluster.selectPlaceholder",
+          "value": "Select cluster",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "cluster.toggleClose",
+          "value": "button[aria-label=\"Multi select Typeahead menu toggle\"]",
+          "selectorType": "css-aria-label"
+        },
+        {
+          "name": "project.dataTest",
+          "value": "adv-search-vm-project",
+          "selectorType": "data-test-value"
+        },
+        {
+          "name": "project.wrapper",
+          "value": "[data-test=\"adv-search-vm-project\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "project.placeholder",
+          "value": "All projects",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "project.selectPlaceholder",
+          "value": "Select project",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "project.toggleClose",
+          "value": "button[aria-label=\"Multi select Typeahead menu toggle\"]",
+          "selectorType": "css-aria-label"
+        },
+        {
+          "name": "menuContent",
+          "value": ".pf-v6-c-menu__content",
+          "selectorType": "css-pf-class"
+        },
+        {
+          "name": "footer.searchButton",
+          "value": "Search",
+          "selectorType": "text"
+        },
+        {
+          "name": "footer.clearAllButton",
+          "value": "Clear all",
+          "selectorType": "text"
+        }
+      ]
+    },
+    {
+      "name": "FLEET_VIRT_SAVED_SEARCH",
+      "file": "src/constants/fleet-virt.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "saveButton",
+          "value": "Save search",
+          "selectorType": "text"
+        },
+        {
+          "name": "modal.nameInput",
+          "value": "[data-test-id=\"save-search-name\"]",
+          "selectorType": "css-data-test-id"
+        },
+        {
+          "name": "modal.descriptionInput",
+          "value": "[data-test-id=\"save-search-description\"]",
+          "selectorType": "css-data-test-id"
+        },
+        {
+          "name": "modal.submitButton",
+          "value": "[data-test=\"save-button\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "modal.cancelButton",
+          "value": "[data-test=\"cancel-button\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "dropdown.toggle",
+          "value": "Saved searches",
+          "selectorType": "text"
+        },
+        {
+          "name": "dropdown.list",
+          "value": "[data-test=\"saved-searches\"]",
+          "selectorType": "css-data-test"
+        },
+        {
+          "name": "dropdown.item(name)",
+          "value": "[data-test=\"saved-search-item-${name}\"]",
+          "selectorType": "css-data-test-dynamic"
+        },
+        {
+          "name": "dropdown.deleteItem(name)",
+          "value": "[data-test=\"delete-search-item-${name}\"]",
+          "selectorType": "css-data-test-dynamic"
+        },
+        {
+          "name": "dropdown.deleteAriaLabel",
+          "value": "Delete saved search",
+          "selectorType": "aria-label"
+        }
+      ]
+    },
+    {
+      "name": "RBAC_ROUTES",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "identities",
+          "value": "/multicloud/user-management/identities",
+          "selectorType": "route"
+        },
+        {
+          "name": "roles",
+          "value": "/multicloud/user-management/roles",
+          "selectorType": "route"
+        },
+        {
+          "name": "users",
+          "value": "/multicloud/user-management/identities/users",
+          "selectorType": "route"
+        },
+        {
+          "name": "userDetails(id)",
+          "value": "/multicloud/user-management/identities/users/${id}",
+          "selectorType": "route-dynamic"
+        },
+        {
+          "name": "userRoleAssignments(id)",
+          "value": "/multicloud/user-management/identities/users/${id}/role-assignments",
+          "selectorType": "route-dynamic"
+        },
+        {
+          "name": "roleDetails(id)",
+          "value": "/multicloud/user-management/roles/${id}",
+          "selectorType": "route-dynamic"
+        },
+        {
+          "name": "roleRoleAssignments(id)",
+          "value": "/multicloud/user-management/roles/${id}/role-assignments",
+          "selectorType": "route-dynamic"
+        },
+        {
+          "name": "clusterSetDetails(name)",
+          "value": "/multicloud/infrastructure/clusters/sets/details/${name}",
+          "selectorType": "route-dynamic"
+        },
+        {
+          "name": "clusterSetRoleAssignments(name)",
+          "value": "/multicloud/infrastructure/clusters/sets/details/${name}/role-assignments",
+          "selectorType": "route-dynamic"
+        },
+        {
+          "name": "clusterDetails(namespace, name)",
+          "value": "/multicloud/infrastructure/clusters/details/${namespace}/${name}",
+          "selectorType": "route-dynamic"
+        },
+        {
+          "name": "clusterRoleAssignments(namespace, name)",
+          "value": "/multicloud/infrastructure/clusters/details/${namespace}/${name}/role-assignments",
+          "selectorType": "route-dynamic"
+        }
+      ]
+    },
+    {
+      "name": "RBAC_USER_DETAIL",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "tabs.details",
+          "value": "Details",
+          "selectorType": "text"
+        },
+        {
+          "name": "tabs.yaml",
+          "value": "YAML",
+          "selectorType": "text"
+        },
+        {
+          "name": "tabs.roleAssignments",
+          "value": "Role assignments",
+          "selectorType": "text"
+        },
+        {
+          "name": "tabs.groups",
+          "value": "Groups",
+          "selectorType": "text"
+        },
+        {
+          "name": "navigation.backToUsers",
+          "value": "Back to users",
+          "selectorType": "text"
+        },
+        {
+          "name": "fields.generalInformation",
+          "value": "General information",
+          "selectorType": "text"
+        },
+        {
+          "name": "fields.fullName",
+          "value": "Full name",
+          "selectorType": "text"
+        },
+        {
+          "name": "fields.username",
+          "value": "Username",
+          "selectorType": "text"
+        },
+        {
+          "name": "fields.identityProvider",
+          "value": "Identity Provider",
+          "selectorType": "text"
+        },
+        {
+          "name": "emptyStates.groups.title",
+          "value": "No groups found",
+          "selectorType": "text"
+        },
+        {
+          "name": "emptyStates.groups.message",
+          "value": "This user is not a member of any groups yet.",
+          "selectorType": "text"
+        }
+      ]
+    },
+    {
+      "name": "RBAC_RA_TABLE",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "columns.role",
+          "value": "Role",
+          "selectorType": "text"
+        },
+        {
+          "name": "columns.subjectName",
+          "value": "Subject Name",
+          "selectorType": "text"
+        },
+        {
+          "name": "columns.type",
+          "value": "Type",
+          "selectorType": "text"
+        },
+        {
+          "name": "columns.clusterSets",
+          "value": "Cluster sets",
+          "selectorType": "text"
+        },
+        {
+          "name": "columns.clusters",
+          "value": "Clusters",
+          "selectorType": "text"
+        },
+        {
+          "name": "columns.namespaces",
+          "value": "Namespaces",
+          "selectorType": "text"
+        },
+        {
+          "name": "columns.status",
+          "value": "Status",
+          "selectorType": "text"
+        },
+        {
+          "name": "columns.created",
+          "value": "Created",
+          "selectorType": "text"
+        },
+        {
+          "name": "toolbar.createButtonId",
+          "value": "create-role-assignment",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "toolbar.createButtonLabel",
+          "value": "Create role assignment",
+          "selectorType": "text"
+        },
+        {
+          "name": "toolbar.bulkDeleteButtonId",
+          "value": "deleteRoleAssignments",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "toolbar.searchPlaceholder",
+          "value": "Search for role assignments...",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "rowActions.kebabAriaLabel",
+          "value": "Actions",
+          "selectorType": "aria-label"
+        },
+        {
+          "name": "rowActions.editId",
+          "value": "edit-role-assignment",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "rowActions.editLabel",
+          "value": "Edit role assignment",
+          "selectorType": "text"
+        },
+        {
+          "name": "rowActions.deleteId",
+          "value": "delete-role-assignment",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "rowActions.deleteLabel",
+          "value": "Delete role assignment",
+          "selectorType": "text"
+        },
+        {
+          "name": "filterIds.role",
+          "value": "role",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "filterIds.identity",
+          "value": "identity",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "filterIds.clusterSets",
+          "value": "clusterSets",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "filterIds.clusters",
+          "value": "clusters",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "filterIds.namespace",
+          "value": "namespace",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "filterIds.status",
+          "value": "status",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "emptyState.title",
+          "value": "No role assignment created yet",
+          "selectorType": "text"
+        },
+        {
+          "name": "emptyState.viewDocumentation",
+          "value": "View documentation",
+          "selectorType": "text"
+        },
+        {
+          "name": "defaults.allNamespaces",
+          "value": "All namespaces",
+          "selectorType": "text"
+        }
+      ]
+    },
+    {
+      "name": "RBAC_WIZARD",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "title",
+          "value": "Create role assignment",
+          "selectorType": "text"
+        },
+        {
+          "name": "description",
+          "value": "A role assignment specifies a distinct action users or groups can perform when associated with a particular role.",
+          "selectorType": "text"
+        },
+        {
+          "name": "learnMore",
+          "value": "Learn more about user management, including an example YAML file.",
+          "selectorType": "text"
+        },
+        {
+          "name": "scopeInfo.global",
+          "value": "all current and future resources in all clusters",
+          "selectorType": "text"
+        },
+        {
+          "name": "scopeInfo.clusterSets",
+          "value": "all current and future resources on the selected cluster set",
+          "selectorType": "text"
+        },
+        {
+          "name": "identities.tabs.users",
+          "value": "Users",
+          "selectorType": "text"
+        },
+        {
+          "name": "identities.tabs.groups",
+          "value": "Groups",
+          "selectorType": "text"
+        },
+        {
+          "name": "projects.searchPlaceholder",
+          "value": "Search projects",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "projects.createButtonId",
+          "value": "create-project",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "projects.enterProjectName",
+          "value": "Enter project name",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "projects.enterDisplayName",
+          "value": "Enter display name (optional)",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "projects.deselectTooltip",
+          "value": "Deselect projects to create a new common project",
+          "selectorType": "text"
+        },
+        {
+          "name": "preAuthorizedUser.identifierPlaceholder",
+          "value": "user@company.com or username",
+          "selectorType": "placeholder"
+        },
+        {
+          "name": "preAuthorizedUser.saveButton",
+          "value": "Save pre-authorized user",
+          "selectorType": "text"
+        },
+        {
+          "name": "preAuthorizedUser.cancelLink",
+          "value": "Cancel and search users instead",
+          "selectorType": "text"
+        },
+        {
+          "name": "preAuthorizedUser.createdNotification",
+          "value": "Pre-authorized user created",
+          "selectorType": "text"
+        },
+        {
+          "name": "viewExamples.link",
+          "value": "View examples",
+          "selectorType": "text"
+        },
+        {
+          "name": "viewExamples.drawerTitle",
+          "value": "Example scopes",
+          "selectorType": "text"
+        },
+        {
+          "name": "notifications.added",
+          "value": "Role assignment added",
+          "selectorType": "text"
+        },
+        {
+          "name": "notifications.updated",
+          "value": "Role assignment updated",
+          "selectorType": "text"
+        },
+        {
+          "name": "notifications.failed",
+          "value": "Role assignment creation failed",
+          "selectorType": "text"
+        },
+        {
+          "name": "notifications.duplicate",
+          "value": "This role assignment already exists. Please modify the selection to create a unique assignment.",
+          "selectorType": "text"
+        },
+        {
+          "name": "editMode.noChangesAlert",
+          "value": "No changes have been made. Please modify or cancel to exit.",
+          "selectorType": "text"
+        }
+      ]
+    },
+    {
+      "name": "WIZARD_STEP_IDS",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "scopeSelection",
+          "value": "scope-selection",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "clusterSetGranularity",
+          "value": "scope-cluster-set-granularity",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "clusterGranularity",
+          "value": "scope-cluster-granularity",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "identities",
+          "value": "identities",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "scope",
+          "value": "scope",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "role",
+          "value": "role",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "review",
+          "value": "review",
+          "selectorType": "element-id"
+        }
+      ]
+    },
+    {
+      "name": "WIZARD_SELECT_IDS",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "scopeType",
+          "value": "scope-type",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "clustersAccessLevel",
+          "value": "clusters-access-level",
+          "selectorType": "element-id"
+        },
+        {
+          "name": "clusterSetAccessLevel",
+          "value": "clusters-set-access-level",
+          "selectorType": "element-id"
+        }
+      ]
+    },
+    {
+      "name": "SCOPE_TYPES",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "global",
+          "value": "Global access",
+          "selectorType": "text"
+        },
+        {
+          "name": "clusterSets",
+          "value": "Select cluster sets",
+          "selectorType": "text"
+        },
+        {
+          "name": "clusters",
+          "value": "Select clusters",
+          "selectorType": "text"
+        }
+      ]
+    },
+    {
+      "name": "GRANULARITY_OPTIONS",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "clusterSetRoleAssignment",
+          "value": "Cluster set role assignment",
+          "selectorType": "text"
+        },
+        {
+          "name": "clusterRoleAssignment",
+          "value": "Cluster role assignment",
+          "selectorType": "text"
+        },
+        {
+          "name": "projectRoleAssignment",
+          "value": "Project role assignment",
+          "selectorType": "text"
+        }
+      ]
+    },
+    {
+      "name": "RBAC_ROLES",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "expected",
+          "value": [
+            "acm-vm-cluster-migration:view",
+            "acm-vm-extended:admin",
+            "acm-vm-extended:view",
+            "acm-vm-fleet:admin",
+            "acm-vm-fleet:view",
+            "kubevirt.io:admin",
+            "kubevirt.io:edit",
+            "kubevirt.io:view"
+          ],
+          "selectorType": "text-list"
+        },
+        {
+          "name": "permissions",
+          "value": "array of {name, keywords[]} with 8 role entries",
+          "selectorType": "data"
+        }
+      ]
+    },
+    {
+      "name": "MCRA_RESOURCE",
+      "file": "src/constants/fg-rbac.ts",
+      "type": "object",
+      "properties": [
+        {
+          "name": "apiVersion",
+          "value": "rbac.open-cluster-management.io/v1beta1",
+          "selectorType": "k8s-api"
+        },
+        {
+          "name": "kind",
+          "value": "MulticlusterRoleAssignment",
+          "selectorType": "k8s-api"
+        },
+        {
+          "name": "namespace",
+          "value": "open-cluster-management-global-set",
+          "selectorType": "k8s-api"
+        },
+        {
+          "name": "managedByLabel",
+          "value": "open-cluster-management.io/managed-by",
+          "selectorType": "k8s-label"
+        },
+        {
+          "name": "managedByValue",
+          "value": "console",
+          "selectorType": "k8s-label-value"
+        },
+        {
+          "name": "subjectNameLabel",
+          "value": "rbac.authorization.k8s.io/subject-name",
+          "selectorType": "k8s-label"
+        }
+      ]
+    },
+    {
+      "name": "PF_MODAL",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-modal-box",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "PF_MASTHEAD",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-masthead, .co-masthead",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "PF_SPINNER",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-spinner",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "PF_SKELETON",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-skeleton",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "PF_ALERT",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-alert",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "PF_SELECT",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-select",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "PF_DROPDOWN",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-dropdown",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "PF_TABLE",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": ".pf-v6-c-table",
+      "selectorType": "css-pf-class"
+    },
+    {
+      "name": "SELECTORS.common.searchInput",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": "[aria-label=\"Search input\"]",
+      "selectorType": "css-aria-label"
+    },
+    {
+      "name": "SELECTORS.common.userDropdown",
+      "file": "src/constants/selectors.ts",
+      "type": "string",
+      "value": "[data-test=\"user-dropdown-toggle\"], [data-test=\"user-dropdown\"]",
+      "selectorType": "css-data-test"
+    }
+  ],
+  "pageObjectLocators": [
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "class": "FleetVirtPage",
+      "locators": [
+        {
+          "property": "goto()",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}${FLEET_VIRT_ROUTES.vmList}",
+          "line": 27,
+          "usesConstant": "FLEET_VIRT_ROUTES.vmList"
+        },
+        {
+          "property": "shouldLoad()",
+          "strategy": "page.locator",
+          "value": "h1",
+          "line": 36,
+          "usesConstant": null
+        },
+        {
+          "property": "gotoVmTab()",
+          "strategy": "page.getByRole",
+          "value": "tab { name: 'Virtual machines' }",
+          "line": 45,
+          "usesConstant": null
+        },
+        {
+          "property": "openAdvancedSearch()",
+          "strategy": "page.locator",
+          "value": "FLEET_VIRT_ADVANCED_SEARCH.openButton",
+          "line": 51,
+          "usesConstant": "FLEET_VIRT_ADVANCED_SEARCH.openButton"
+        },
+        {
+          "property": "openAdvancedSearch() fallback",
+          "strategy": "page.locator",
+          "value": "FLEET_VIRT_SEARCH.searchInput",
+          "line": 55,
+          "usesConstant": "FLEET_VIRT_SEARCH.searchInput"
+        },
+        {
+          "property": "openAdvancedSearch() heading",
+          "strategy": "page.getByRole",
+          "value": "heading { name: 'Advanced search', level: 1 }",
+          "line": 60,
+          "usesConstant": null
+        },
+        {
+          "property": "getNoVMsEmptyState()",
+          "strategy": "page.getByText",
+          "value": "FLEET_VIRT_PAGE.emptyState.noVMs",
+          "line": 65,
+          "usesConstant": "FLEET_VIRT_PAGE.emptyState.noVMs"
+        },
+        {
+          "property": "getPageHeading()",
+          "strategy": "page.locator",
+          "value": "h1",
+          "line": 69,
+          "usesConstant": null
+        },
+        {
+          "property": "getFirstVmInfo() grid",
+          "strategy": "page.getByRole",
+          "value": "grid (last)",
+          "line": 78,
+          "usesConstant": null
+        },
+        {
+          "property": "getFirstVmInfo() row",
+          "strategy": "grid.getByRole",
+          "value": "row (first)",
+          "line": 79,
+          "usesConstant": null
+        },
+        {
+          "property": "getFirstVmInfo() nameCell",
+          "strategy": "firstRow.getByRole",
+          "value": "gridcell nth(1)",
+          "line": 82,
+          "usesConstant": null
+        },
+        {
+          "property": "getFirstVmInfo() nsCell",
+          "strategy": "firstRow.getByRole",
+          "value": "gridcell nth(3)",
+          "line": 86,
+          "usesConstant": null
+        },
+        {
+          "property": "gotoVmDetails()",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}/fleet-virtualization/kubevirt.io~v1~VirtualMachine/cluster/${cluster}/ns/${namespace}/${vmName}",
+          "line": 100,
+          "usesConstant": null
+        },
+        {
+          "property": "clearAllFilters()",
+          "strategy": "page.getByRole",
+          "value": "button { name: 'Clear all filters' }",
+          "line": 106,
+          "usesConstant": null
+        },
+        {
+          "property": "clickBackToVmList()",
+          "strategy": "page.getByRole",
+          "value": "button { name: 'Back to VirtualMachines list' }",
+          "line": 112,
+          "usesConstant": null
+        }
+      ]
+    },
+    {
+      "file": "src/pages/fleet-virt/VmDetailsPage.ts",
+      "class": "VmDetailsPage",
+      "locators": [
+        {
+          "property": "clickTab(tabName)",
+          "strategy": "page.getByRole",
+          "value": "link { name: tabName, exact: true }",
+          "line": 18,
+          "usesConstant": null
+        },
+        {
+          "property": "getPageHeading()",
+          "strategy": "page.getByRole",
+          "value": "heading { name: /^VM /, level: 1 }",
+          "line": 24,
+          "usesConstant": null
+        },
+        {
+          "property": "getActionsDropdown()",
+          "strategy": "page.getByRole",
+          "value": "button { name: 'Actions' }",
+          "line": 32,
+          "usesConstant": null
+        },
+        {
+          "property": "getActionsMenu()",
+          "strategy": "page.getByRole",
+          "value": "menu",
+          "line": 40,
+          "usesConstant": null
+        },
+        {
+          "property": "getActionMenuItem()",
+          "strategy": "page.getByRole",
+          "value": "menuitem { name: actionName }",
+          "line": 44,
+          "usesConstant": null
+        },
+        {
+          "property": "getVncConsoleDropdown()",
+          "strategy": "page.getByRole",
+          "value": "button { name: 'VNC console' }",
+          "line": 52,
+          "usesConstant": null
+        },
+        {
+          "property": "getGuestLoginCredentials()",
+          "strategy": "page.getByRole",
+          "value": "heading { name: 'Guest login credentials' }",
+          "line": 56,
+          "usesConstant": null
+        },
+        {
+          "property": "getEventsHeading()",
+          "strategy": "page.getByRole",
+          "value": "heading { name: 'Events', level: 2 }",
+          "line": 64,
+          "usesConstant": null
+        },
+        {
+          "property": "getSnapshotsHeading()",
+          "strategy": "page.getByRole",
+          "value": "heading { name: 'Snapshots', level: 1 }",
+          "line": 76,
+          "usesConstant": null
+        },
+        {
+          "property": "getConfigurationTab()",
+          "strategy": "page.getByRole",
+          "value": "link { name: 'Configuration' }",
+          "line": 84,
+          "usesConstant": null
+        }
+      ]
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleAssignmentWizardPage.ts",
+      "class": "RoleAssignmentWizardPage",
+      "locators": [
+        {
+          "property": "modal",
+          "strategy": "page.locator",
+          "value": "PF_MODAL (.pf-v6-c-modal-box)",
+          "line": 16,
+          "usesConstant": "PF_MODAL"
+        },
+        {
+          "property": "nextButton",
+          "strategy": "modal.getByRole",
+          "value": "button { name: 'Next', exact: true }",
+          "line": 17,
+          "usesConstant": null
+        },
+        {
+          "property": "cancelButton",
+          "strategy": "modal.getByRole",
+          "value": "button { name: 'Cancel' }",
+          "line": 18,
+          "usesConstant": null
+        },
+        {
+          "property": "createButton",
+          "strategy": "modal.getByRole",
+          "value": "button { name: 'Create' }",
+          "line": 19,
+          "usesConstant": null
+        },
+        {
+          "property": "getScopeTypeDropdown()",
+          "strategy": "modal.getByRole",
+          "value": "combobox",
+          "line": 27,
+          "usesConstant": null
+        },
+        {
+          "property": "selectScopeType()",
+          "strategy": "page.getByRole",
+          "value": "option { name: scopeType }",
+          "line": 30,
+          "usesConstant": null
+        },
+        {
+          "property": "getScopeInfoMessage()",
+          "strategy": "modal.getByText",
+          "value": "/This role assignment will apply to/",
+          "line": 36,
+          "usesConstant": null
+        },
+        {
+          "property": "getScopeOption()",
+          "strategy": "page.getByRole",
+          "value": "option { name: scopeType }",
+          "line": 40,
+          "usesConstant": null
+        },
+        {
+          "property": "checkTableRows()",
+          "strategy": "modal.getByRole",
+          "value": "row { name }.getByRole('checkbox')",
+          "line": 45,
+          "usesConstant": null
+        },
+        {
+          "property": "selectGranularity()",
+          "strategy": "modal.getByRole + page.getByRole",
+          "value": "combobox + option { name: option }",
+          "line": 57,
+          "usesConstant": null
+        },
+        {
+          "property": "selectProjects()",
+          "strategy": "modal.getByRole",
+          "value": "row { name }.getByRole('checkbox')",
+          "line": 63,
+          "usesConstant": null
+        },
+        {
+          "property": "selectRole()",
+          "strategy": "modal.getByRole",
+          "value": "radio { name: 'Select role ${roleName}' }",
+          "line": 68,
+          "usesConstant": null
+        },
+        {
+          "property": "searchRole()",
+          "strategy": "modal.locator",
+          "value": "[aria-label=\"Search input\"]",
+          "line": 72,
+          "usesConstant": null
+        },
+        {
+          "property": "getReviewSubject()",
+          "strategy": "modal.getByRole",
+          "value": "heading { name: 'User', level: 3 }.locator('..')",
+          "line": 78,
+          "usesConstant": null
+        },
+        {
+          "property": "getReviewScope()",
+          "strategy": "modal.getByRole",
+          "value": "heading { name: 'Scope', level: 3 }.locator('..')",
+          "line": 82,
+          "usesConstant": null
+        },
+        {
+          "property": "getReviewRole()",
+          "strategy": "modal.getByRole",
+          "value": "heading { name: 'Role', level: 3 }.locator('..')",
+          "line": 86,
+          "usesConstant": null
+        },
+        {
+          "property": "openViewExamples()",
+          "strategy": "modal.getByText",
+          "value": "RBAC_WIZARD.viewExamples.link ('View examples')",
+          "line": 90,
+          "usesConstant": "RBAC_WIZARD.viewExamples.link"
+        },
+        {
+          "property": "closeViewExamples()",
+          "strategy": "modal.getByRole",
+          "value": "button { name: 'Close drawer panel' }",
+          "line": 94,
+          "usesConstant": null
+        },
+        {
+          "property": "getExamplesDrawer()",
+          "strategy": "modal.getByText",
+          "value": "RBAC_WIZARD.viewExamples.drawerTitle ('Example scopes')",
+          "line": 98,
+          "usesConstant": "RBAC_WIZARD.viewExamples.drawerTitle"
+        },
+        {
+          "property": "getSuccessNotification()",
+          "strategy": "page.getByText",
+          "value": "RBAC_WIZARD.notifications.added ('Role assignment added')",
+          "line": 101,
+          "usesConstant": "RBAC_WIZARD.notifications.added"
+        },
+        {
+          "property": "getDuplicateError()",
+          "strategy": "page.getByText",
+          "value": "RBAC_WIZARD.notifications.duplicate",
+          "line": 102,
+          "usesConstant": "RBAC_WIZARD.notifications.duplicate"
+        },
+        {
+          "property": "selectIdentity() search",
+          "strategy": "modal.getByRole",
+          "value": "textbox { name: 'Search input' }",
+          "line": 104,
+          "usesConstant": null
+        },
+        {
+          "property": "selectIdentity() select",
+          "strategy": "modal.getByRole",
+          "value": "radio { name: 'Select ${username}' }",
+          "line": 107,
+          "usesConstant": null
+        },
+        {
+          "property": "getWizardTitle()",
+          "strategy": "modal.getByRole",
+          "value": "heading (first)",
+          "line": 110,
+          "usesConstant": null
+        }
+      ]
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "class": "RoleDetailsPage",
+      "locators": [
+        {
+          "property": "roleAssignmentsTab",
+          "strategy": "page.getByRole",
+          "value": "tab { name: RBAC_USER_DETAIL.tabs.roleAssignments }",
+          "line": 13,
+          "usesConstant": "RBAC_USER_DETAIL.tabs.roleAssignments"
+        },
+        {
+          "property": "goto()",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}${RBAC_ROUTES.roleDetails(roleId)}",
+          "line": 20,
+          "usesConstant": "RBAC_ROUTES.roleDetails"
+        },
+        {
+          "property": "getPageHeading()",
+          "strategy": "page.getByRole",
+          "value": "heading { level: 1 }",
+          "line": 25,
+          "usesConstant": null
+        },
+        {
+          "property": "getGeneralInfoSection()",
+          "strategy": "page.getByRole",
+          "value": "heading { name: RBAC_USER_DETAIL.fields.generalInformation, level: 3 }.locator('..')",
+          "line": 29,
+          "usesConstant": "RBAC_USER_DETAIL.fields.generalInformation"
+        },
+        {
+          "property": "getTab(name)",
+          "strategy": "page.getByRole",
+          "value": "tab { name }",
+          "line": 34,
+          "usesConstant": null
+        },
+        {
+          "property": "getRoleAssignmentsContent()",
+          "strategy": "page.getByRole + page.getByText",
+          "value": "button { name: RBAC_WIZARD.title } .or( getByText(RBAC_RA_TABLE.emptyState.title) )",
+          "line": 42,
+          "usesConstant": "RBAC_WIZARD.title, RBAC_RA_TABLE.emptyState.title"
+        },
+        {
+          "property": "openYamlTab()",
+          "strategy": "page.getByRole",
+          "value": "tab { name: 'YAML' }",
+          "line": 47,
+          "usesConstant": null
+        },
+        {
+          "property": "getYamlEditor()",
+          "strategy": "page.locator",
+          "value": ".monaco-editor (first)",
+          "line": 51,
+          "usesConstant": null
+        }
+      ]
+    },
+    {
+      "file": "src/pages/fg-rbac/RolesListPage.ts",
+      "class": "RolesListPage",
+      "locators": [
+        {
+          "property": "goto()",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}${RBAC_ROUTES.roles}",
+          "line": 16,
+          "usesConstant": "RBAC_ROUTES.roles"
+        },
+        {
+          "property": "getRoleLink(name)",
+          "strategy": "page.getByRole",
+          "value": "link { name, exact: true }",
+          "line": 20,
+          "usesConstant": null
+        },
+        {
+          "property": "getPermissionsCell()",
+          "strategy": "page.getByRole",
+          "value": "row .filter({ has: link { name: roleName, exact: true } }) .getByRole('gridcell').nth(1)",
+          "line": 24,
+          "usesConstant": null
+        }
+      ]
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "class": "UserDetailsPage",
+      "locators": [
+        {
+          "property": "roleAssignmentsTab",
+          "strategy": "page.getByRole",
+          "value": "tab { name: RBAC_USER_DETAIL.tabs.roleAssignments }",
+          "line": 25,
+          "usesConstant": "RBAC_USER_DETAIL.tabs.roleAssignments"
+        },
+        {
+          "property": "getPageHeading()",
+          "strategy": "page.getByRole",
+          "value": "heading { level: 1 }",
+          "line": 29,
+          "usesConstant": null
+        },
+        {
+          "property": "getGeneralInfoSection()",
+          "strategy": "page.getByRole",
+          "value": "heading { name: RBAC_USER_DETAIL.fields.generalInformation, level: 3 }.locator('..')",
+          "line": 33,
+          "usesConstant": "RBAC_USER_DETAIL.fields.generalInformation"
+        },
+        {
+          "property": "goto(userId)",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}${RBAC_ROUTES.userDetails(userId)}",
+          "line": 43,
+          "usesConstant": "RBAC_ROUTES.userDetails"
+        },
+        {
+          "property": "gotoRoleAssignments(userId)",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}${RBAC_ROUTES.userRoleAssignments(userId)}",
+          "line": 49,
+          "usesConstant": "RBAC_ROUTES.userRoleAssignments"
+        }
+      ]
+    },
+    {
+      "file": "src/pages/infrastructure/ClusterDetailsPage.ts",
+      "class": "ClusterDetailsPage",
+      "locators": [
+        {
+          "property": "gotoRoleAssignments()",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}${RBAC_ROUTES.clusterRoleAssignments(namespace, clusterName)}",
+          "line": 17,
+          "usesConstant": "RBAC_ROUTES.clusterRoleAssignments"
+        }
+      ]
+    },
+    {
+      "file": "src/pages/infrastructure/ClusterSetDetailsPage.ts",
+      "class": "ClusterSetDetailsPage",
+      "locators": [
+        {
+          "property": "gotoRoleAssignments()",
+          "strategy": "page.goto",
+          "value": "${consoleUrl}${RBAC_ROUTES.clusterSetRoleAssignments(clusterSetName)}",
+          "line": 17,
+          "usesConstant": "RBAC_ROUTES.clusterSetRoleAssignments"
+        }
+      ]
+    }
+  ],
+  "componentLocators": [
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "class": "AdvancedSearchModal",
+      "locators": [
+        {
+          "property": "getClusterCombobox()",
+          "strategy": "page.locator",
+          "value": "input[placeholder=\"All clusters\"], input[placeholder=\"Select cluster\"]",
+          "line": 16,
+          "usesConstant": null
+        },
+        {
+          "property": "getProjectCombobox()",
+          "strategy": "page.locator",
+          "value": "input[placeholder=\"All projects\"], input[placeholder=\"Select project\"]",
+          "line": 22,
+          "usesConstant": null
+        },
+        {
+          "property": "getHeading()",
+          "strategy": "page.getByRole",
+          "value": "heading { name: 'Advanced search', level: 1 }",
+          "line": 26,
+          "usesConstant": null
+        },
+        {
+          "property": "selectCluster()",
+          "strategy": "page.getByRole",
+          "value": "option { name: clusterName }",
+          "line": 31,
+          "usesConstant": null
+        },
+        {
+          "property": "selectProject() toggle",
+          "strategy": "combobox.locator",
+          "value": "xpath=following::button[@aria-label=\"Multi select Typeahead menu toggle\"][1]",
+          "line": 42,
+          "usesConstant": null
+        },
+        {
+          "property": "selectProject()",
+          "strategy": "page.getByRole",
+          "value": "option { name: projectName, exact: true }",
+          "line": 45,
+          "usesConstant": null
+        },
+        {
+          "property": "clickSearch()",
+          "strategy": "page.getByRole",
+          "value": "button { name: 'Search', exact: true }",
+          "line": 51,
+          "usesConstant": null
+        }
+      ]
+    },
+    {
+      "file": "src/components/fleet-virt/SavedSearches.ts",
+      "class": "SavedSearches",
+      "locators": [
+        {
+          "property": "saveSearch() button",
+          "strategy": "page.getByRole",
+          "value": "button { name: FLEET_VIRT_SAVED_SEARCH.saveButton }",
+          "line": 8,
+          "usesConstant": "FLEET_VIRT_SAVED_SEARCH.saveButton"
+        },
+        {
+          "property": "saveSearch() heading",
+          "strategy": "page.getByRole",
+          "value": "heading { name: 'Save search' }",
+          "line": 11,
+          "usesConstant": null
+        },
+        {
+          "property": "saveSearch() nameInput",
+          "strategy": "page.locator",
+          "value": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput",
+          "line": 15,
+          "usesConstant": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput"
+        },
+        {
+          "property": "saveSearch() descInput",
+          "strategy": "page.locator",
+          "value": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput",
+          "line": 18,
+          "usesConstant": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput"
+        },
+        {
+          "property": "saveSearch() saveButton",
+          "strategy": "page.getByRole",
+          "value": "button { name: 'Save', exact: true }",
+          "line": 20,
+          "usesConstant": null
+        },
+        {
+          "property": "openSavedSearches()",
+          "strategy": "page.getByRole",
+          "value": "button { name: FLEET_VIRT_SAVED_SEARCH.dropdown.toggle }",
+          "line": 28,
+          "usesConstant": "FLEET_VIRT_SAVED_SEARCH.dropdown.toggle"
+        },
+        {
+          "property": "removeSavedSearch() item",
+          "strategy": "page.getByRole",
+          "value": "menuitem { name }",
+          "line": 35,
+          "usesConstant": null
+        },
+        {
+          "property": "removeSavedSearch() delete",
+          "strategy": "page.locator",
+          "value": "FLEET_VIRT_SAVED_SEARCH.dropdown.deleteItem(name)",
+          "line": 37,
+          "usesConstant": "FLEET_VIRT_SAVED_SEARCH.dropdown.deleteItem"
+        },
+        {
+          "property": "getSavedSearchItem(name)",
+          "strategy": "page.getByRole",
+          "value": "menuitem { name }",
+          "line": 42,
+          "usesConstant": null
+        },
+        {
+          "property": "getSavedSearchesToggle()",
+          "strategy": "page.getByRole",
+          "value": "button { name: FLEET_VIRT_SAVED_SEARCH.dropdown.toggle }",
+          "line": 46,
+          "usesConstant": "FLEET_VIRT_SAVED_SEARCH.dropdown.toggle"
+        }
+      ]
+    },
+    {
+      "file": "src/components/fg-rbac/RoleAssignmentsTable.ts",
+      "class": "RoleAssignmentsTable",
+      "locators": [
+        {
+          "property": "getRowByRole(roleName)",
+          "strategy": "page.getByRole",
+          "value": "row .filter({ has: link { name: roleName, exact: true } })",
+          "line": 11,
+          "usesConstant": null
+        }
+      ]
+    }
+  ],
+  "libLocators": [
+    {
+      "file": "src/lib/fg-rbac/role-assignment-actions.ts",
+      "function": "openCreateRoleAssignment",
+      "locators": [
+        {
+          "property": "createButton",
+          "strategy": "page.getByRole",
+          "value": "button { name: RBAC_RA_TABLE.toolbar.createButtonLabel }",
+          "line": 8,
+          "usesConstant": "RBAC_RA_TABLE.toolbar.createButtonLabel"
+        }
+      ]
+    },
+    {
+      "file": "src/lib/openshift-login.ts",
+      "function": "openshiftLogin",
+      "locators": [
+        {
+          "property": "idpLink",
+          "strategy": "page.getByRole",
+          "value": "link { name: options.idp }",
+          "line": 17,
+          "usesConstant": null
+        },
+        {
+          "property": "usernameInput",
+          "strategy": "page.getByRole",
+          "value": "textbox { name: 'Username' }",
+          "line": 18,
+          "usesConstant": null
+        },
+        {
+          "property": "passwordInput",
+          "strategy": "page.getByRole",
+          "value": "textbox { name: 'Password' }",
+          "line": 19,
+          "usesConstant": null
+        },
+        {
+          "property": "submitButton",
+          "strategy": "page.getByRole",
+          "value": "button { name: /log in/i }",
+          "line": 20,
+          "usesConstant": null
+        },
+        {
+          "property": "errorAlert",
+          "strategy": "page.locator",
+          "value": ".pf-v6-c-alert, .alert-danger",
+          "line": 41,
+          "usesConstant": null
+        }
+      ]
+    }
+  ],
+  "inlineLocators": [
+    {
+      "file": "src/tests/fg-rbac/role-assignment-global-access.spec.ts",
+      "line": 67,
+      "strategy": "getByText",
+      "value": "'global'",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-global-access.spec.ts",
+      "line": 72,
+      "strategy": "getByText",
+      "value": "'Active'",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-global-access.spec.ts",
+      "line": 79,
+      "strategy": "getByRole",
+      "value": "link { name: ROLE }",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-global-access.spec.ts",
+      "line": 81,
+      "strategy": "getByRole",
+      "value": "link { name: 'global' }",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-global-access.spec.ts",
+      "line": 83,
+      "strategy": "locator",
+      "value": "a[href*=\"/clusters/details/\"]",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-cluster.spec.ts",
+      "line": 82,
+      "strategy": "getByText",
+      "value": "spoke (dynamic)",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-cluster.spec.ts",
+      "line": 120,
+      "strategy": "locator",
+      "value": "#${RBAC_WIZARD.projects.createButtonId}",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-clusterset.spec.ts",
+      "line": 91,
+      "strategy": "getByText",
+      "value": "CLUSTER_SET (dynamic)",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-clusterset.spec.ts",
+      "line": 289,
+      "strategy": "locator",
+      "value": "#${RBAC_WIZARD.projects.createButtonId}",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-entry-points.spec.ts",
+      "line": 85,
+      "strategy": "getByText",
+      "value": "clusterSet (dynamic)",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-entry-points.spec.ts",
+      "line": 210,
+      "strategy": "getByText",
+      "value": "spoke (dynamic)",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 90,
+      "strategy": "getByText",
+      "value": "emptyCSName (dynamic)",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 105,
+      "strategy": "getByText",
+      "value": "'Active'",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 156,
+      "strategy": "getByText",
+      "value": "'default'",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/cross-page-integration.spec.ts",
+      "line": 33,
+      "strategy": "getByText",
+      "value": "RBAC_USER_DETAIL.fields.username",
+      "type": "INLINE_LOCATOR"
+    },
+    {
+      "file": "src/tests/fg-rbac/cross-page-integration.spec.ts",
+      "line": 34,
+      "strategy": "getByText",
+      "value": "RBAC_USER_DETAIL.fields.identityProvider",
+      "type": "INLINE_LOCATOR"
+    }
+  ],
+  "absenceAssertions": [
+    {
+      "file": "src/tests/fleet-virt/advanced-search.spec.ts",
+      "line": 83,
+      "assertion": "expect(fleetVirtPage.getNoVMsEmptyState()).toBeHidden()",
+      "targetUI": "No VirtualMachines found"
+    },
+    {
+      "file": "src/tests/fleet-virt/advanced-search.spec.ts",
+      "line": 111,
+      "assertion": "expect(fleetVirtPage.getNoVMsEmptyState()).toBeHidden()",
+      "targetUI": "No VirtualMachines found"
+    },
+    {
+      "file": "src/tests/fleet-virt/advanced-search.spec.ts",
+      "line": 115,
+      "assertion": "expect(fleetVirtPage.getNoVMsEmptyState()).toBeHidden()",
+      "targetUI": "No VirtualMachines found"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-global-access.spec.ts",
+      "line": 61,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-cluster.spec.ts",
+      "line": 72,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-cluster.spec.ts",
+      "line": 143,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-cluster.spec.ts",
+      "line": 217,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-cluster.spec.ts",
+      "line": 306,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/managed-admin-full-access.spec.ts",
+      "line": 148,
+      "assertion": "expect(fleetVirtPage.getNoVMsEmptyState()).toBeHidden()",
+      "targetUI": "No VirtualMachines found"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-clusterset.spec.ts",
+      "line": 79,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-clusterset.spec.ts",
+      "line": 164,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-clusterset.spec.ts",
+      "line": 230,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-clusterset.spec.ts",
+      "line": 312,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-entry-points.spec.ts",
+      "line": 73,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-entry-points.spec.ts",
+      "line": 133,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-entry-points.spec.ts",
+      "line": 198,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 78,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 125,
+      "assertion": "toBeHidden()",
+      "targetUI": "element"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 149,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 190,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    },
+    {
+      "file": "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts",
+      "line": 251,
+      "assertion": "expect(roleAssignmentWizardPage.getModal()).toBeHidden()",
+      "targetUI": ".pf-v6-c-modal-box"
+    }
+  ],
+  "routes": {
+    "fleetVirt": [
+      {
+        "name": "FLEET_VIRT_ROUTES.vmList",
+        "value": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/all-clusters/all-namespaces",
+        "usedBy": [
+          "FleetVirtPage.goto()"
+        ]
+      },
+      {
+        "name": "FleetVirtPage.gotoVmDetails (hardcoded)",
+        "value": "/fleet-virtualization/kubevirt.io~v1~VirtualMachine/cluster/${cluster}/ns/${namespace}/${vmName}",
+        "usedBy": [
+          "FleetVirtPage.gotoVmDetails()"
+        ]
+      }
+    ],
+    "fgRbac": [
+      {
+        "name": "RBAC_ROUTES.identities",
+        "value": "/multicloud/user-management/identities",
+        "usedBy": []
+      },
+      {
+        "name": "RBAC_ROUTES.roles",
+        "value": "/multicloud/user-management/roles",
+        "usedBy": [
+          "RolesListPage.goto()"
+        ]
+      },
+      {
+        "name": "RBAC_ROUTES.users",
+        "value": "/multicloud/user-management/identities/users",
+        "usedBy": []
+      },
+      {
+        "name": "RBAC_ROUTES.userDetails(id)",
+        "value": "/multicloud/user-management/identities/users/${id}",
+        "usedBy": [
+          "UserDetailsPage.goto()"
+        ]
+      },
+      {
+        "name": "RBAC_ROUTES.userRoleAssignments(id)",
+        "value": "/multicloud/user-management/identities/users/${id}/role-assignments",
+        "usedBy": [
+          "UserDetailsPage.gotoRoleAssignments()"
+        ]
+      },
+      {
+        "name": "RBAC_ROUTES.roleDetails(id)",
+        "value": "/multicloud/user-management/roles/${id}",
+        "usedBy": [
+          "RoleDetailsPage.goto()"
+        ]
+      },
+      {
+        "name": "RBAC_ROUTES.roleRoleAssignments(id)",
+        "value": "/multicloud/user-management/roles/${id}/role-assignments",
+        "usedBy": []
+      },
+      {
+        "name": "RBAC_ROUTES.clusterSetRoleAssignments(name)",
+        "value": "/multicloud/infrastructure/clusters/sets/details/${name}/role-assignments",
+        "usedBy": [
+          "ClusterSetDetailsPage.gotoRoleAssignments()"
+        ]
+      },
+      {
+        "name": "RBAC_ROUTES.clusterRoleAssignments(ns, name)",
+        "value": "/multicloud/infrastructure/clusters/details/${namespace}/${name}/role-assignments",
+        "usedBy": [
+          "ClusterDetailsPage.gotoRoleAssignments()"
+        ]
+      }
+    ]
+  },
+  "pfVersion": {
+    "primary": "pf-v6-c",
+    "declaration": "src/constants/selectors.ts:13 -- const PF = 'pf-v6-c'",
+    "usagesInVirtScope": [
+      {
+        "file": "src/constants/fleet-virt.ts",
+        "line": 73,
+        "value": ".pf-v6-c-menu__content"
+      },
+      {
+        "file": "src/constants/selectors.ts",
+        "line": 13,
+        "value": "const PF = 'pf-v6-c'"
+      },
+      {
+        "file": "src/lib/openshift-login.ts",
+        "line": 41,
+        "value": ".pf-v6-c-alert, .alert-danger"
+      }
+    ],
+    "note": "All virt/rbac constants and page objects use pf-v6-c exclusively (PF6). No pf-v5 references in virt scope."
+  },
+  "dependencyGraph": {
+    "specToPageObjects": {
+      "src/tests/fleet-virt/advanced-search.spec.ts": {
+        "fixture": "fleet-virt-test",
+        "pageObjects": [
+          "FleetVirtPage",
+          "AdvancedSearchModal",
+          "SavedSearches"
+        ],
+        "directImports": [
+          "OcCliService"
+        ]
+      },
+      "src/tests/fg-rbac/role-assignment-global-access.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage"
+        ],
+        "directImports": []
+      },
+      "src/tests/fg-rbac/role-assignment-cluster.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage"
+        ],
+        "directImports": []
+      },
+      "src/tests/fg-rbac/role-assignment-clusterset.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage"
+        ],
+        "directImports": [
+          "path"
+        ]
+      },
+      "src/tests/fg-rbac/role-assignment-entry-points.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage"
+        ],
+        "directImports": []
+      },
+      "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage"
+        ],
+        "directImports": [
+          "path"
+        ]
+      },
+      "src/tests/fg-rbac/roles-page-validation.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage"
+        ],
+        "directImports": []
+      },
+      "src/tests/fg-rbac/managed-admin-full-access.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage",
+          "VmDetailsPage",
+          "FleetVirtPage"
+        ],
+        "directImports": [
+          "OcCliService"
+        ]
+      },
+      "src/tests/fg-rbac/cross-page-integration.spec.ts": {
+        "fixture": "fg-rbac-test",
+        "pageObjects": [
+          "UserDetailsPage",
+          "RolesListPage",
+          "RoleDetailsPage",
+          "RoleAssignmentWizardPage",
+          "ClusterSetDetailsPage",
+          "ClusterDetailsPage"
+        ],
+        "directImports": []
+      }
+    },
+    "specToDirectConstants": {
+      "src/tests/fg-rbac/role-assignment-global-access.spec.ts": [
+        "RBAC_WIZARD",
+        "MCRA_RESOURCE",
+        "SCOPE_TYPES"
+      ],
+      "src/tests/fg-rbac/role-assignment-cluster.spec.ts": [
+        "RBAC_WIZARD",
+        "GRANULARITY_OPTIONS"
+      ],
+      "src/tests/fg-rbac/role-assignment-clusterset.spec.ts": [
+        "RBAC_WIZARD",
+        "MCRA_RESOURCE",
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS"
+      ],
+      "src/tests/fg-rbac/role-assignment-entry-points.spec.ts": [
+        "RBAC_WIZARD",
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS"
+      ],
+      "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts": [
+        "RBAC_WIZARD",
+        "SCOPE_TYPES",
+        "GRANULARITY_OPTIONS"
+      ],
+      "src/tests/fg-rbac/roles-page-validation.spec.ts": [
+        "RBAC_ROLES"
+      ],
+      "src/tests/fg-rbac/cross-page-integration.spec.ts": [
+        "RBAC_USER_DETAIL"
+      ],
+      "src/tests/fleet-virt/advanced-search.spec.ts": [],
+      "src/tests/fg-rbac/managed-admin-full-access.spec.ts": []
+    },
+    "specToPolarionIds": {
+      "src/tests/fleet-virt/advanced-search.spec.ts": [
+        "RHACM4K-60770"
+      ],
+      "src/tests/fg-rbac/role-assignment-global-access.spec.ts": [
+        "RHACM4K-61726"
+      ],
+      "src/tests/fg-rbac/role-assignment-cluster.spec.ts": [
+        "RHACM4K-61731",
+        "RHACM4K-61732",
+        "RHACM4K-61733",
+        "RHACM4K-61734"
+      ],
+      "src/tests/fg-rbac/role-assignment-clusterset.spec.ts": [
+        "RHACM4K-61727",
+        "RHACM4K-61728",
+        "RHACM4K-61729",
+        "RHACM4K-61730"
+      ],
+      "src/tests/fg-rbac/role-assignment-entry-points.spec.ts": [
+        "RHACM4K-61863",
+        "RHACM4K-61856",
+        "RHACM4K-61862"
+      ],
+      "src/tests/fg-rbac/role-assignment-edge-cases.spec.ts": [
+        "RHACM4K-61735",
+        "RHACM4K-61864"
+      ],
+      "src/tests/fg-rbac/roles-page-validation.spec.ts": [
+        "RHACM4K-61779"
+      ],
+      "src/tests/fg-rbac/managed-admin-full-access.spec.ts": [
+        "RHACM4K-60468"
+      ],
+      "src/tests/fg-rbac/cross-page-integration.spec.ts": [
+        "RHACM4K-60254"
+      ]
+    },
+    "pageObjectToConstants": {
+      "FleetVirtPage": [
+        "FLEET_VIRT_ROUTES",
+        "FLEET_VIRT_PAGE",
+        "FLEET_VIRT_SEARCH",
+        "FLEET_VIRT_ADVANCED_SEARCH"
+      ],
+      "VmDetailsPage": [],
+      "RoleAssignmentWizardPage": [
+        "PF_MODAL",
+        "SCOPE_TYPES",
+        "RBAC_WIZARD"
+      ],
+      "RoleDetailsPage": [
+        "RBAC_ROUTES",
+        "RBAC_USER_DETAIL",
+        "RBAC_RA_TABLE",
+        "RBAC_WIZARD"
+      ],
+      "RolesListPage": [
+        "RBAC_ROUTES"
+      ],
+      "UserDetailsPage": [
+        "RBAC_ROUTES",
+        "RBAC_USER_DETAIL"
+      ],
+      "ClusterDetailsPage": [
+        "RBAC_ROUTES"
+      ],
+      "ClusterSetDetailsPage": [
+        "RBAC_ROUTES"
+      ],
+      "AdvancedSearchModal": [],
+      "SavedSearches": [
+        "FLEET_VIRT_SAVED_SEARCH"
+      ],
+      "RoleAssignmentsTable": []
+    },
+    "pageObjectToLibImports": {
+      "UserDetailsPage": [
+        "@lib/fg-rbac/role-assignment-actions (openCreateRoleAssignment)"
+      ],
+      "RoleDetailsPage": [
+        "@lib/fg-rbac/role-assignment-actions (openCreateRoleAssignment)"
+      ],
+      "ClusterDetailsPage": [
+        "@lib/fg-rbac/role-assignment-actions (openCreateRoleAssignment)"
+      ],
+      "ClusterSetDetailsPage": [
+        "@lib/fg-rbac/role-assignment-actions (openCreateRoleAssignment)"
+      ]
+    },
+    "libToConstants": {
+      "role-assignment-actions.ts": [
+        "RBAC_RA_TABLE"
+      ],
+      "openshift-login.ts": []
+    },
+    "fixtureChain": {
+      "fleet-virt-test": {
+        "extends": "@playwright/test",
+        "provides": [
+          "oc (OcCliService)",
+          "virtConfig (VirtConfig)",
+          "fleetVirtPage (FleetVirtPage)",
+          "advancedSearchModal (AdvancedSearchModal)",
+          "savedSearches (SavedSearches)"
+        ]
+      },
+      "fg-rbac-test": {
+        "extends": "rbac-test",
+        "provides": [
+          "rbacConfig (RbacConfig)",
+          "userDetailsPage (UserDetailsPage)",
+          "rolesListPage (RolesListPage)",
+          "roleDetailsPage (RoleDetailsPage)",
+          "roleAssignmentWizardPage (RoleAssignmentWizardPage)",
+          "clusterSetDetailsPage (ClusterSetDetailsPage)",
+          "clusterDetailsPage (ClusterDetailsPage)"
+        ]
+      },
+      "rbac-test": {
+        "extends": "@playwright/test",
+        "provides": [
+          "oc (OcCliService)",
+          "asUser (role => UserSession)"
+        ]
+      }
+    }
+  },
+  "orphans": {
+    "unusedConstants": [
+      {
+        "name": "WIZARD_STEP_IDS",
+        "file": "src/constants/fg-rbac.ts",
+        "reason": "Exported but never referenced in any page object, component, lib, fixture, or spec file"
+      },
+      {
+        "name": "WIZARD_SELECT_IDS",
+        "file": "src/constants/fg-rbac.ts",
+        "reason": "Exported but never referenced in any page object, component, lib, fixture, or spec file"
+      },
+      {
+        "name": "RBAC_ROUTES.identities",
+        "file": "src/constants/fg-rbac.ts",
+        "reason": "Route defined but not used in any page object goto()"
+      },
+      {
+        "name": "RBAC_ROUTES.users",
+        "file": "src/constants/fg-rbac.ts",
+        "reason": "Route defined but not used in any page object goto()"
+      },
+      {
+        "name": "RBAC_ROUTES.roleRoleAssignments",
+        "file": "src/constants/fg-rbac.ts",
+        "reason": "Route defined but not used in any page object goto()"
+      },
+      {
+        "name": "RBAC_ROUTES.clusterSetDetails",
+        "file": "src/constants/fg-rbac.ts",
+        "reason": "Route defined but not used in any page object goto()"
+      },
+      {
+        "name": "RBAC_ROUTES.clusterDetails",
+        "file": "src/constants/fg-rbac.ts",
+        "reason": "Route defined but not used in any page object goto() -- only clusterRoleAssignments variant is used"
+      },
+      {
+        "name": "FLEET_VIRT_SEARCH.searchResults",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced in any page object or component"
+      },
+      {
+        "name": "FLEET_VIRT_SEARCH.resetButton",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced in any page object or component"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.detailsContainer",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced in any page object or component"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.nameInput",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced in any page object or component"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.cluster.wrapper",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced -- AdvancedSearchModal uses placeholder strings instead"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.project.wrapper",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced -- AdvancedSearchModal uses placeholder strings instead"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.menuContent",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced in any page object or component"
+      },
+      {
+        "name": "FLEET_VIRT_ADVANCED_SEARCH.footer.*",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but AdvancedSearchModal uses getByRole for Search button instead"
+      },
+      {
+        "name": "FLEET_VIRT_SAVED_SEARCH.modal.submitButton",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but SavedSearches uses getByRole('button', { name: 'Save', exact: true }) instead"
+      },
+      {
+        "name": "FLEET_VIRT_SAVED_SEARCH.modal.cancelButton",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced"
+      },
+      {
+        "name": "FLEET_VIRT_SAVED_SEARCH.dropdown.list",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced"
+      },
+      {
+        "name": "FLEET_VIRT_SAVED_SEARCH.dropdown.deleteAriaLabel",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced"
+      },
+      {
+        "name": "FLEET_VIRT_PAGE.perspectiveSwitcher",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced in any page object"
+      },
+      {
+        "name": "FLEET_VIRT_PAGE.fleetManagementLabel",
+        "file": "src/constants/fleet-virt.ts",
+        "reason": "Defined but not referenced in any page object"
+      }
+    ],
+    "unusedPageObjects": [],
+    "note": "extended-view-access.spec.ts exists in local checkout but NOT in main branch clone -- it is not yet upstream"
+  },
+  "summary": {
+    "specFiles": {
+      "fleetVirt": 1,
+      "fgRbac": 8,
+      "total": 9
+    },
+    "polarionTestCases": {
+      "fleetVirt": [
+        "RHACM4K-60770"
+      ],
+      "fgRbac": [
+        "RHACM4K-61726",
+        "RHACM4K-61727",
+        "RHACM4K-61728",
+        "RHACM4K-61729",
+        "RHACM4K-61730",
+        "RHACM4K-61731",
+        "RHACM4K-61732",
+        "RHACM4K-61733",
+        "RHACM4K-61734",
+        "RHACM4K-61735",
+        "RHACM4K-61779",
+        "RHACM4K-60468",
+        "RHACM4K-60254",
+        "RHACM4K-61863",
+        "RHACM4K-61856",
+        "RHACM4K-61862",
+        "RHACM4K-61864"
+      ],
+      "total": 18
+    },
+    "pageObjects": {
+      "fleetVirt": [
+        "FleetVirtPage",
+        "VmDetailsPage"
+      ],
+      "fgRbac": [
+        "RoleAssignmentWizardPage",
+        "RoleDetailsPage",
+        "RolesListPage",
+        "UserDetailsPage"
+      ],
+      "infrastructure": [
+        "ClusterDetailsPage",
+        "ClusterSetDetailsPage"
+      ],
+      "total": 8
+    },
+    "components": {
+      "fleetVirt": [
+        "AdvancedSearchModal",
+        "SavedSearches"
+      ],
+      "fgRbac": [
+        "RoleAssignmentsTable"
+      ],
+      "total": 3
+    },
+    "libFunctions": {
+      "fgRbac": [
+        "openCreateRoleAssignment"
+      ],
+      "shared": [
+        "openshiftLogin"
+      ],
+      "total": 2
+    },
+    "constantFiles": {
+      "primary": [
+        "fleet-virt.ts",
+        "fg-rbac.ts",
+        "selectors.ts"
+      ],
+      "secondary": [
+        "app.ts"
+      ]
+    },
+    "totalConstants": 22,
+    "totalLocators": {
+      "pageObject": 60,
+      "component": 18,
+      "lib": 6,
+      "inline": 16,
+      "total": 100
+    },
+    "totalAbsenceAssertions": 21,
+    "totalOrphanConstants": 21,
+    "pfVersionUsed": "pf-v6-c (PF6 exclusively)",
+    "fixtureChainDepth": "spec \u2192 fg-rbac-test \u2192 rbac-test \u2192 @playwright/test"
+  }
+}

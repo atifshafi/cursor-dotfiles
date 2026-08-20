@@ -1,0 +1,154 @@
+---
+description: ACM Source MCP server reference - version management, tools, workflows, selectors for stolostron/console and kubevirt-plugin. Use when working with ACM Console UI, Fleet Virtualization, selectors, test IDs, or source code discovery.
+alwaysApply: false
+---
+
+# ACM Source MCP - Source Code Discovery
+
+**MCP Server Name**: `user-acm-source`
+
+**Repositories Covered:**
+
+| Key | Repository | Description |
+|-----|------------|-------------|
+| `acm` | `stolostron/console` | ACM Console source code |
+| `kubevirt` | `kubevirt-ui/kubevirt-plugin` | Fleet Virtualization UI source code |
+| `acm-e2e` | `stolostron/clc-ui-e2e` | Cluster Lifecycle + RBAC selectors (ACM 2.15+) |
+| `search-e2e` | `stolostron/search-e2e-test` | Search component selectors |
+| `app-e2e` | `stolostron/application-ui-test` | Applications (ALC) selectors |
+| `grc-e2e` | `stolostron/acmqe-grc-test` | Governance (GRC) selectors |
+
+**QE repos use `main` branch.** All tools work with them:
+```python
+search_code("policy", repo="grc-e2e")
+get_component_source("tests/cypress/views/search.js", repo="search-e2e")
+find_test_ids("tests/cypress/views/application.js", repo="app-e2e")
+```
+
+**Other ACM Repos (not in MCP):**
+- **Foundation**: `stolostron/acmqe-foundation-test` (backend-focused)
+- **Observability**: `stolostron/multicluster-observability-operator`
+- **Install**: `stolostron/acmqe-autotest`
+
+---
+
+## Version Management (CRITICAL)
+
+ACM and CNV versions are **INDEPENDENT**. Always set the correct version before searching:
+
+| Version Type | Sets Branch For | Command |
+|--------------|-----------------|---------|
+| ACM Version | `stolostron/console` | `set_acm_version('2.16')` |
+| CNV Version | `kubevirt-ui/kubevirt-plugin` | `set_cnv_version('4.20')` |
+
+**Supported ACM Versions:**
+
+| Version | Branch | Notes |
+|---------|--------|-------|
+| 2.11-2.18 | `release-2.XX` | GA releases |
+| 2.19 | `main` | Development (next unreleased) |
+| `latest` | -> 2.18 | Current GA (ACM 5.0 = 2.18) |
+
+**Supported CNV Versions:**
+
+| Version | Branch | Notes |
+|---------|--------|-------|
+| 4.14-4.22 | `release-4.XX` | GA releases (match OCP version) |
+| 4.23 | `main` | Development (next release) |
+| `latest` | -> 4.22 | Current GA (ships with ACM 5.0 / OCP 4.18) |
+
+---
+
+## Available Tools
+
+| Tool | Purpose | Example |
+|------|---------|---------|
+| `list_repos()` | Show current version status | Shows ACM and CNV versions |
+| `list_versions()` | Show ALL supported versions | Lists 2.11-2.17 and 4.14-4.22 |
+| `set_acm_version(version)` | Set ACM Console version | `set_acm_version('2.16')` |
+| `set_cnv_version(version)` | Set Fleet Virt UI version | `set_cnv_version('4.20')` |
+| `detect_cnv_version()` | Auto-detect CNV from cluster | Sets kubevirt branch from cluster |
+| `search_code(query, repo, scope)` | Search code. scope="all" (GitHub search, default) or "components" (directory walk) | `search_code("VMActionModal", repo="acm")` |
+| `get_component_source(path, repo)` | Get file source | `get_component_source("path/to/file.tsx", repo="acm")` |
+| `find_test_ids(path, repo)` | Extract test IDs | `find_test_ids("component.tsx", repo="kubevirt")` |
+| `get_fleet_virt_selectors()` | Get Cypress selectors | Returns selectors from kubevirt |
+| `search_translations(query, exact)` | Find UI text/labels (partial match default) | `search_translations("Create role")` |
+| `get_acm_selectors(source, component)` | Get ACM Console selectors | `get_acm_selectors('catalog', 'grc')` |
+| `get_component_types(path, repo)` | Extract TS types/interfaces | `get_component_types("types.ts", repo="acm")` |
+| `get_wizard_steps(path, repo)` | Analyze wizard structure | `get_wizard_steps("WizardModal.tsx", repo="acm")` |
+| `get_routes()` | Get all navigation paths | Returns 112+ ACM routes |
+| `get_patternfly_selectors(component)` | PatternFly CSS selectors | `get_patternfly_selectors('wizard')` |
+
+**Removed tools:**
+- `set_version` -- use `set_acm_version` or `set_cnv_version` instead
+- `search_component` -- use `search_code(query, repo, scope="components")` instead
+
+---
+
+## Gotchas
+
+- **MUST set version BEFORE any search/get** -- results depend on which branch is active. Without it, you get whatever was last configured.
+- **QE repos always use `main`** regardless of version setting (`acm-e2e`, `search-e2e`, `app-e2e`, `grc-e2e`).
+- **Fleet Virt needs BOTH versions** -- `set_acm_version` AND `set_cnv_version` are independent settings.
+- **`search_translations` is partial match by default** -- set `exact=true` for exact matching.
+- **`search_code` returns file PATHS, not content** -- limited to ~30 results. Use `get_component_source()` to read files.
+- **`get_routes()` returns 112+ routes** -- filter by section in the output, don't try to read all at once.
+
+---
+
+## Mandatory Workflow
+
+```
+Step 1: Set correct versions FIRST
+set_acm_version('2.18')      # For ACM Console work (ACM 5.0 = 2.18)
+set_cnv_version('4.22')      # For Fleet Virt work (match spoke CNV)
+
+Step 2: Verify versions
+list_repos()
+
+Step 3: Search/retrieve code
+search_code("VirtualMachines", repo="acm")
+get_fleet_virt_selectors()
+```
+
+---
+
+## Key File Paths
+
+**ACM Console (`stolostron/console`):**
+- `frontend/src/routes/` - Page components
+- `frontend/src/ui-components/` - Reusable components
+- `frontend/src/components/` - Common components
+
+**KubeVirt Plugin (`kubevirt-ui/kubevirt-plugin`):**
+- `src/views/virtualmachines/` - VM list, tree view
+- `src/views/search/` - Fleet Virt search
+- `src/multicluster/components/` - CCLM modal
+- `cypress/views/` - Test selectors
+
+**Complementary tool**: Use alongside the `playwright` MCP (`user-playwright`) for live-page validation. The `acm-source` MCP discovers selectors and components from source code; the `playwright` MCP verifies them against the actual running ACM console (accessibility tree snapshots, locator generation, element verification). Together they provide both code-level and runtime-level UI discovery.
+
+**Priority**: This is the PREFERRED method for all ACM UI code discovery. Use this MCP instead of direct GitHub browsing, `gh api` calls, or web search.
+
+---
+
+## Related MCP Gotchas (Quick Reference)
+
+### JIRA MCP (`jira`)
+- `get_issue` does NOT return issue links. Use `search_issues` with JQL for linked tickets.
+- Comments are inline in get_issue response -- read ALL of them for implementation decisions.
+- JQL is case-sensitive: `fixVersion` not `fix_version`. String values must be quoted.
+- Component mapping: Governance="Governance", RBAC/Virt="Virtualization", Clusters="Cluster Lifecycle", Search="Search", Apps="Application Lifecycle"
+
+### Polarion MCP (`polarion`)
+- Project ID is ALWAYS `RHACM4K` for ACM test cases.
+- Query syntax is Lucene, NOT JQL: `type:testcase AND title:"feature"` (not `type = testcase`)
+- `get_polarion_work_item_text` sometimes returns empty. Use `get_polarion_work_item(fields="@all")` as fallback.
+- VPN required for Polarion access.
+- Plan IDs use underscores: `ACM_2_16`, `MCE_2_8` (not dots or spaces).
+
+### Neo4j RHACM MCP (`neo4j-rhacm`)
+- ~370 components, 7 subsystems, 541 relationships.
+- Requires Podman with neo4j-rhacm container running.
+- All queries are read-only (--read-only flag).
+- If unavailable, skip dependency analysis (graceful degradation).

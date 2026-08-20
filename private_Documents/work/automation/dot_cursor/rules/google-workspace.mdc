@@ -1,0 +1,147 @@
+---
+description: Google Workspace MCP server - Gmail, Drive, Calendar, Docs integration via OAuth 2.0. Use when working with emails, shared documents, calendar events, meetings, or Google Drive files.
+alwaysApply: false
+---
+
+# Google Workspace MCP Integration
+
+**MCP Server Name**: `google-workspace`
+**Source**: [taylorwilsdon/google_workspace_mcp](https://github.com/taylorwilsdon/google_workspace_mcp)
+**Tool tier**: `core` (Gmail, Drive, Calendar, Docs)
+
+## CRITICAL: Write Permission Enforcement
+
+**NEVER write to Google services without explicit user permission.**
+
+This means: NEVER send emails, create/update/delete calendar events, upload/delete Drive files, create/edit Docs, or modify labels/filters. These are EXTERNAL services -- actions reach REAL people and systems and are often IRREVERSIBLE. Always show what you plan to do, ask "Should I proceed?", and WAIT for explicit "yes".
+
+**Read operations (no permission needed):**
+- Searching emails, listing calendar events, listing Drive files
+- Reading email content, event details, file metadata
+
+**Write operations (ALWAYS ask permission first -- NEVER proceed without explicit "yes"):**
+- Sending emails, creating drafts
+- Creating/updating/deleting calendar events
+- Uploading/deleting Drive files
+- Creating/editing Google Docs
+- Modifying labels, creating filters
+
+## Key Tools (Core Tier)
+
+### Gmail
+- `search_workspace_emails` -- Search with Gmail query syntax (from:, to:, subject:, has:attachment, etc.)
+- `send_workspace_email` -- Send email (REQUIRES PERMISSION)
+- `manage_workspace_draft` -- Create/update drafts (REQUIRES PERMISSION)
+- `manage_workspace_label` -- Create/manage labels (REQUIRES PERMISSION)
+
+### Calendar
+- `list_workspace_calendar_events` -- List events for a time range
+- `get_workspace_calendar_event` -- Get event details
+- `create_workspace_calendar_event` -- Create events (REQUIRES PERMISSION)
+- `manage_workspace_calendar_event` -- Update/respond to events (REQUIRES PERMISSION)
+
+### Drive
+- `list_drive_files` -- List files with filtering
+- `search_drive_files` -- Full-text search across Drive
+- `download_drive_file` -- Download files
+- `upload_drive_file` -- Upload files (REQUIRES PERMISSION)
+- `create_drive_folder` -- Create folders (REQUIRES PERMISSION)
+
+### Docs
+**Reading:**
+- `get_doc_content` -- Read full document content by document ID
+- `get_doc_as_markdown` -- Read document as markdown (preferred for understanding content)
+- `search_docs` -- Search for documents by name/content
+- `list_docs_in_folder` -- List documents in a Drive folder
+
+**Editing existing docs (like StrReplace for Google Docs):**
+- `find_and_replace_doc` -- Find text and replace it in an existing doc. This is the primary tool for editing existing Google Docs. Works like StrReplace: provide `find_text` and `replace_text`. (REQUIRES PERMISSION)
+- `modify_doc_text` -- Insert, replace, or format text at specific character positions (REQUIRES PERMISSION)
+- `insert_doc_elements` -- Insert headings, lists, tables at specific positions (REQUIRES PERMISSION)
+- `update_paragraph_style` -- Change heading levels, alignment, etc. (REQUIRES PERMISSION)
+
+**Creating new docs:**
+- `create_doc` -- Create a new empty Google Doc (REQUIRES PERMISSION)
+- `import_to_google_doc` -- Import Markdown/HTML/TXT/DOCX content into a new Google Doc with auto-formatting (REQUIRES PERMISSION)
+
+**Export:**
+- `export_doc_to_pdf` -- Export document to PDF
+
+**When user shares a Google Doc URL**, extract the document ID from the URL (the long string between `/d/` and `/edit`).
+
+**Workflow for editing existing Google Docs:**
+1. Read the doc: `get_doc_as_markdown` (returns markdown, easy to understand structure)
+2. Edit content: `find_and_replace_doc` (find old text, replace with new -- same workflow as local StrReplace)
+3. Insert new content: `insert_doc_elements` for structured elements, or `modify_doc_text` for plain text
+4. Fix formatting: after `find_and_replace_doc`, verify with `get_doc_as_markdown` and correct with `modify_doc_text` if needed
+
+**For writing full documentation to a new Google Doc**, prefer `import_to_google_doc` with Markdown content -- it auto-converts headings, bold, lists, tables, and code blocks to native Google Docs formatting.
+
+## Google Docs Formatting: Pitfalls and Corrections
+
+### `find_and_replace_doc` inherits source formatting
+
+`find_and_replace_doc` replaces text but **inherits the formatting of the matched text**. If the matched text is bold, italic, or has any other style, the replacement text will have the same style. This is a Google Docs API behavior, not a bug.
+
+**Common problem:** Inserting description text after a bold label (e.g., `**RWO VMs cannot CCLM:**`) using `find_and_replace_doc` causes the entire inserted text to be bold because it inherits the label's formatting.
+
+**Prevention:** After every `find_and_replace_doc` near formatted text, follow up with `modify_doc_text` to explicitly set `bold: false` (or correct formatting) on the inserted range. Always verify with `get_doc_as_markdown` after edits.
+
+### `modify_doc_text` position calculation
+
+`modify_doc_text` requires character positions (`start_index`, `end_index`). These positions correspond to the Google Docs API body content indices, NOT the plain text offsets from `get_doc_content`.
+
+**The problem:** Documents with tables have structural overhead. Each table, row, and cell consumes index space that isn't represented in plain text. Plain text offsets from `get_doc_content` will be LOWER than actual API indices for any text appearing after a table.
+
+**Calibration technique (required for docs with tables):**
+1. Compute the plain text offset of a known unique string near your target using `get_doc_content`
+2. Apply a visible test formatting (e.g., `italic: true`) at that plain text offset using `modify_doc_text`
+3. Check `get_doc_as_markdown` to see which text was affected
+4. From the affected text, compute the delta: `delta = test_position - actual_plain_text_offset_of_affected_text`
+5. Apply delta to all subsequent position calculations: `doc_position = plain_text_offset + delta`
+6. Undo the test formatting (e.g., `italic: false` at the same range)
+
+**Adding hyperlinks:** Use `modify_doc_text` with `link_url` parameter on the exact character range of the link text. Verify ranges with `get_doc_as_markdown` (linked text shows as `[text](url)` in markdown).
+
+## Cross-MCP Workflow Patterns
+
+### Gmail + JIRA
+When user mentions a bug ticket in email context:
+1. Search Gmail for the ticket ID or related discussion
+2. Use JIRA `get_issue` to pull the full ticket details
+3. Correlate email context with JIRA status
+
+### Gmail + Jenkins
+When user asks about build failures:
+1. Search Gmail for Jenkins notification emails
+2. Use Jenkins `analyze_pipeline` on the failing build URL
+
+### Drive + Polarion
+When user references shared test documents:
+1. Search Drive for the document
+2. Use Polarion tools to create/update test cases based on the content
+
+### Calendar + JIRA Sprint
+When user asks about schedule/availability:
+1. List calendar events for the relevant period
+2. Cross-reference with JIRA sprint tasks via `search_issues`
+
+## Authentication
+
+**CRITICAL: The `user_google_email` parameter for ALL Google Workspace MCP tool calls MUST be `ashafi@redhat.com` — NOT `atshafi@redhat.com` or any other variation.**
+
+OAuth 2.0 Desktop Application flow. Tokens stored at `~/.google_workspace_mcp/credentials/ashafi@redhat.com.json` and auto-refresh.
+OAuth callback server runs on port 9000 (`WORKSPACE_MCP_PORT=9000`) to avoid conflicts with the default port 8000.
+Client secret: `automation/workspace/secrets/google/`
+
+If authentication expires or fails:
+1. The MCP server will prompt a re-authentication flow
+2. Complete the browser-based OAuth flow (callback handled automatically on port 9000)
+
+## Tool Tier
+
+Current tier: `extended` (set in `~/.cursor/mcp.json`)
+
+- `core` -- Basic Gmail, Drive, Calendar, Docs (read + create)
+- `extended` -- Adds find_and_replace_doc, get_doc_as_markdown, insert_doc_elements, search_docs, export_doc_to_pdf, Sheets, Slides (CURRENT)
+- `complete` -- Adds inspect_doc_structure, batch_update_doc, comments, Forms, Chat, Apps Script

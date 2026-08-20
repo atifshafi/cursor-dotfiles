@@ -1,0 +1,54 @@
+{
+  "$schema": "Virt UI Drift Detector Baseline Snapshot",
+  "$version": "3.0",
+  "$description": "Captured upstream state. Keys use constant-path names (e.g. FLEET_VIRT_SEARCH.searchInput) matching test code constants. Selector entries include sourceFile and attributeType for co-occurrence detection and attribute normalization.",
+
+  "baselineDate": "YYYY-MM-DD",
+  "acmVersion": "{ACM_VERSION}",
+  "cnvVersion": "{CNV_VERSION}",
+  "acmBranch": "{ACM_BRANCH}",
+  "cnvBranch": "{CNV_BRANCH}",
+
+  "selectors": {
+    "fleetVirt": {
+      "<CONSTANT_PATH>": {
+        "value": "<selector string>",
+        "sourceFile": "<upstream file path where found>",
+        "attributeType": "data-test | data-testid"
+      }
+    },
+    "rbac": {
+      "<CONSTANT_PATH>": {
+        "value": "<selector string>",
+        "sourceFile": "<upstream file path where found>",
+        "attributeType": "data-test | data-testid"
+      }
+    },
+    "infrastructure": {
+      "<CONSTANT_PATH>": {
+        "value": "<selector string>",
+        "sourceFile": "<upstream file path where found>",
+        "attributeType": "data-test | data-testid"
+      }
+    }
+  },
+
+  "translations": {
+    "<shortKey>": "<translation value>"
+  },
+
+  "routes": {
+    "<CONSTANT_PATH>": "<route path>"
+  },
+
+  "testCodeHealth": {
+    "totalLocators": 0,
+    "avgFragility": 0,
+    "highRiskCount": 0,
+    "inlineLocators": 0,
+    "absenceAssertions": 0,
+    "dominantStrategy": ""
+  },
+
+  "pfVersion": "pf-v6-c"
+}

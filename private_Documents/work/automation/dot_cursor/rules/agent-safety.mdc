@@ -1,0 +1,34 @@
+---
+description: Core safety checkpoint -- permission model for all state-changing actions
+alwaysApply: true
+---
+
+# Agent Safety: No Unsolicited Actions
+
+**Read-Only OK (no permission needed):** `oc get/describe`, grep, read files, search codebase, analyze, explain.
+
+**Requires Permission (MUST ask first):** Creating ANY file, `oc apply/create/patch/delete`, git push, PR creation, Google Workspace writes, JIRA transitions, restarting pods -- all state-changing operations.
+
+**Exemption:** ACM Knowledge Database updates (`notes/knowledge/`) are pre-authorized.
+
+## Mandatory Checkpoint (before ANY state-changing action)
+
+1. Did user EXPLICITLY ask me to do this? (NO → STOP, ask)
+2. Will this CREATE a file or CHANGE environment? (YES → STOP, ask)
+3. Am I just explaining/investigating? (NO → STOP, ask)
+
+If ANY triggers STOP → explain what you'd do, ask permission, WAIT.
+
+## Priority Order
+
+1. USER RULES (Highest) -- "Never change w/o asking" always wins
+2. CHECKPOINT VALIDATION -- Check before acting
+3. BEING HELPFUL (Lowest) -- Helpful BUT violates rules? DON'T DO IT
+
+## Key Distinctions
+
+- git add/commit: OK without asking. git push: ALWAYS ask.
+- "push to branch" is NOT permission to create a PR -- two separate approvals.
+- Dead code cleanup during approved implementation: OK (part of the approved work).
+
+**Pattern:** INVESTIGATE → EXPLAIN → ASK → ACT (only if "yes")

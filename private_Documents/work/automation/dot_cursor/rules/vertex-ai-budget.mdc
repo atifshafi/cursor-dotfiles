@@ -1,0 +1,57 @@
+---
+description: Check Vertex AI budget, quota, spending, and remaining balance. Trigger on "vertex budget", "how much left", "quota check", "AI spending", "token usage", "vertex cost", "billing check".
+alwaysApply: false
+---
+
+# Vertex AI Budget Check
+
+## Project Details
+
+- **GCP Project:** `itpc-ca-ef54c167b7`
+- **Billing Account:** `011321-BD1E69-4C7748` ("IT Gemini")
+- **Monthly Budget:** $500.00
+- **Region:** global
+- **Enterprise Discount:** ~26% off list pricing (Red Hat negotiated)
+
+## How to Check (run these steps)
+
+### 1. Pull real-time token usage from Cloud Monitoring API
+
+```bash
+curl -s -H "Authorization: Bearer $(gcloud auth print-access-token)" \
+  -H "x-goog-user-project: itpc-ca-ef54c167b7" \
+  "https://monitoring.googleapis.com/v3/projects/itpc-ca-ef54c167b7/timeSeries?filter=metric.type%3D%22aiplatform.googleapis.com/publisher/online_serving/token_count%22&interval.endTime=$(date -u +%Y-%m-%dT%H:%M:%SZ)&interval.startTime=$(date -u +%Y-%m-01T00:00:00Z)&aggregation.alignmentPeriod=2592000s&aggregation.perSeriesAligner=ALIGN_SUM&aggregation.crossSeriesReducer=REDUCE_SUM&aggregation.groupByFields=resource.labels.model_user_id&aggregation.groupByFields=metric.labels.type&pageSize=100" 2>&1
+```
+
+Parse with python3: model is in `resource.labels.model_user_id`, token type in `metric.labels.type`, count in `points[0].value.int64Value`.
+
+### 2. Calculate cost using Vertex AI Global pricing (per MTok)
+
+| Model | Input | Output | 5m Cache Write | Cache Read |
+|---|---|---|---|---|
+| claude-opus-4-8 | $5.00 | $25.00 | $6.25 | $0.50 |
+| claude-opus-4-6 | $5.00 | $25.00 | $6.25 | $0.50 |
+| claude-sonnet-5 | $2.00 | $10.00 | $2.50 | $0.20 |
+| claude-sonnet-4-6 | $3.00 | $15.00 | $3.75 | $0.30 |
+| claude-haiku-4-5 | $1.00 | $5.00 | $1.25 | $0.10 |
+
+Token type mapping: `input` = Input, `output` = Output, `cache_write_input` = 5m Cache Write, `cache_read_input` = Cache Read.
+
+### 3. Apply enterprise discount
+
+Multiply total list-price cost by **0.74** (26% discount) to get estimated actual spend. Then subtract from $500 for remaining balance.
+
+### Data freshness
+
+- **Cloud Monitoring API** (what you pull): near real-time (minutes)
+- **GCP Billing Reports** (browser): 12-24 hour lag
+- **Budget alert emails**: threshold-based notifications
+
+## Browser fallback
+
+GCP Console > Billing > Reports (billing account "IT Gemini") > filter by project `itpc-ca-ef54c167b7`.
+
+## Support channels
+
+- `#help-vertex-ai-migration-support` (Slack) for quota/access issues
+- `#help-it-cloud-publiccloud` (Slack) for general IT Public Cloud

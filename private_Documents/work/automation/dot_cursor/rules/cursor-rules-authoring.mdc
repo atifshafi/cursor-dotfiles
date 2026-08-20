@@ -1,0 +1,20 @@
+---
+description: Enforce create-rule skill when authoring Cursor rules or .cursorrules
+globs: "**/.cursor/rules/**/*.mdc, **/.cursorrules"
+alwaysApply: false
+---
+
+# Cursor Rules Authoring - Mandatory Skill
+
+When creating or modifying Cursor rule files (`.mdc` or `.cursorrules`):
+
+1. **ALWAYS read and follow** the skill at `~/.cursor/skills-cursor/create-rule/SKILL.md` BEFORE:
+   - Creating new `.mdc` rule files
+   - Modifying existing rules
+   - Setting up glob patterns or alwaysApply behavior
+
+2. **Follow `.mdc` format**: YAML frontmatter with `description`, `globs`, `alwaysApply` fields.
+
+3. **Keep rules concise**: Under 50 lines per rule, one concern per rule.
+
+4. **Use correct glob patterns**: Patterns must match intended files accurately.

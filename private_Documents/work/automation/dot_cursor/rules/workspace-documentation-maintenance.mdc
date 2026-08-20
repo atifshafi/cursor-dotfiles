@@ -1,0 +1,52 @@
+---
+description: >-
+  After moving/adding/removing workspace dirs or changing documented paths under
+  ai/ or automation/, update README + AGENTS + Cursor rules. Use when reorganizing
+  tools/, mcp/, documentation/, investigations, or cross-root layout; when user
+  asks how to keep docs from going stale; or for CI / pre-commit doc-drift patterns.
+alwaysApply: false
+---
+
+# Workspace documentation maintenance
+
+## Relationship to “ask before creating files”
+
+- **Bundled deliverable:** If the user **already approved** a task that changes layout (reorganize `ai/tools/`, move scripts, change MCP paths), **README / AGENTS / rule updates are part of that same task** — update them in the same change set without a second permission round.
+- **Unsolicited docs:** Investigation-only tasks, ad-hoc reports, or “nice to have” write-ups still require **explicit permission** per `agent-safety.mdc`.
+
+## Before marking a layout-affecting task complete
+
+| Scope | Update |
+|-------|--------|
+| **Leaf directory** | `README.md` in that directory (purpose, contents, how to run). |
+| **`~/Documents/work/ai/tools/`** | `~/Documents/work/ai/tools/README.md` |
+| **AI workspace contract** | `~/Documents/work/ai/README.md`, `~/Documents/work/ai/AGENTS.md` |
+| **Automation `tools/` story** | `~/Documents/work/automation/tools/README.md` when MCP or tooling paths changed |
+| **Agent behavior / paths in rules** | `~/Documents/work/automation/.cursor/rules/*.mdc` (e.g. `mcp-maintenance.mdc`, `jenkins-tools.mdc`) |
+| **Protected monorepo** | `~/Documents/work/ai/ai_systems/AGENTS.md` or app `README` only when that repo’s layout or onboarding actually changed |
+
+If unsure which README to touch: walk **up** the tree until you hit a README that describes the parent; update the **deepest** README first, then parents.
+
+## There is no fully automatic fix
+
+LLMs will still miss updates unless **process + tooling** back them up. Common industry patterns:
+
+1. **CI doc-drift checks (PR time)** — Tools such as [DocDrift](https://github.com/marketplace/actions/docdrift) or [doc-drift](https://github.com/jbrockSTL/doc-drift) compare diffs to docs and flag stale sections (often LLM-assisted). Use when the repo has GitHub Actions and you want merge-time enforcement.
+2. **Single source of truth** — Maintain one `README.src.md` or scripted generator and **fail CI** if generated `README.md` does not match (`npm run docs:check` pattern). Stops hand-edited drift; costs setup.
+3. **Pre-commit** — Block commit if certain paths changed without `README.md` in the same commit (simple shell or [pre-commit](https://pre-commit.com/) hook). Coarse but cheap.
+4. **Periodic human review** — Calendar review of `AGENTS.md` + top READMEs each release.
+
+Pick **(1) or (3)** for “robust enough” without rewriting all docs as templates.
+
+## Stale `AGENTS.md` / README symptoms
+
+- Paths point at removed directories (`jenkins-tools/` vs `integrations/jenkins/`).
+- `tools/` table omits new siblings (`cluster/`, `integrations/`).
+- Rules reference scripts that moved.
+- Monorepo onboarding docs still describe rsync when policy changed.
+
+When you notice drift during unrelated work: **fix the doc in the same PR/session** if you are already editing that area; otherwise leave a short **issue note** for the user.
+
+## Optional: automation documentation index
+
+Large investigations belong under `automation/documentation/investigations/<topic>-<date>/` per placement rules — link from `documentation/README.md` when a new series is added.

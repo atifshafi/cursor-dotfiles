@@ -1,0 +1,20 @@
+---
+description: Git push strategy -- amend for drafts, new commits for open PRs
+alwaysApply: true
+---
+# Git Push Strategy: Draft vs Open PRs
+
+## Rule
+
+- **Draft PR**: Use `git commit --amend --no-edit` + `git push --force-with-lease` to keep a single clean commit. This rewrites history and is acceptable while the PR is still a draft.
+- **Open PR** (no longer draft): Use normal `git commit` + `git push` (NO amend, NO force). Preserve the commit history so reviewers can see incremental changes.
+
+## How to Determine PR State
+
+- If the PR was explicitly created as a draft, or GitHub shows "Draft" status, treat it as a draft.
+- Once a PR is marked "Ready for review" or was never a draft, treat it as open.
+- If unsure, ask the user.
+
+## Override
+
+Only use amend/force-push on an open PR if the user **explicitly** requests it (e.g., "squash it", "amend the commit", "force push").

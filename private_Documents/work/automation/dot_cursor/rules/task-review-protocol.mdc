@@ -1,0 +1,43 @@
+---
+description: Protocol for reviewing the user's work status across GitHub, JIRA, email, and calendar. Trigger on "review my tasks", "status check", "what am I working on", "any updates", "pending work", "anything I need to do".
+alwaysApply: false
+---
+
+# Task Review Protocol
+
+When the user asks for a review of their work/tasks/status, execute ALL of the following in parallel:
+
+## 1. GitHub PRs
+
+- Search all open PRs authored by `atifshafi`
+- For each open PR, fetch: inline review comments, formal reviews, issue comments, commit history
+- **Verify feedback was addressed:** compare each reviewer comment against the actual code diff in the follow-up commit -- do not just trust commit messages
+- **Determine ball ownership:** if the user's last action (commit push, reply) came after the reviewer's last comment/question, ball is on reviewer. Only report if ball is on the user.
+
+## 2. JIRA Tickets
+
+- Search assigned tickets not in Closed/Done
+- For each ticket with comments, **read the comment content** and determine if the user's response fully resolved the ask (don't just check "a reply exists")
+- Cross-reference tickets found in email mentions (JIRA notification emails)
+- Only report tickets where the user has a pending action
+
+## 3. Email
+
+- Search with multiple queries: `is:unread from:redhat.com`, `from:atlassian`, `from:github.com`, `(mentioned OR assigned OR commented) from:redhat`
+- Fetch actual message content (not just IDs)
+- For JIRA email notifications ("X mentioned you on ACM-YYYY"), go back to JIRA via `get_issue` and verify whether the user already responded and whether the response was complete
+- Filter out promotional, newsletters, company-wide announcements
+- Only report items requiring user action
+
+## 4. Calendar & Meeting Prep
+
+- Fetch calendar events for the current and next 5 days with `detailed: true, include_attachments: true`
+- For meetings with attached Google Docs (agendas, notes, transcripts): **read the doc content**
+- Analyze: what the user is likely expected to discuss, any open action items assigned to them from previous sessions, what they should prepare
+- Surface prep actions for each meeting
+
+## Reporting Standards
+
+- **Do not report items where the user already took the last action** -- only flag items where the ball is on the user
+- When reporting "no action needed", briefly state why (e.g., "you replied May 20, waiting for reviewer")
+- Group by: (1) items needing user action, (2) items waiting on others, (3) meeting prep

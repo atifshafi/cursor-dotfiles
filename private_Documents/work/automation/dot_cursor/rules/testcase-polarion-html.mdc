@@ -1,0 +1,37 @@
+---
+description: Enforce write-testcase-console skill for Polarion test case work. Skill uses subagent pipeline with deep feature investigation, code change analysis, live validation, and quality review.
+globs: **/test-cases/**/*.md
+alwaysApply: false
+---
+
+# Polarion Test Case Writing - Mandatory Skill
+
+When working with test case files (creating, editing, or generating HTML for Polarion):
+
+1. **ALWAYS read and follow** the skill at `~/.cursor/skills/write-testcase-console/SKILL.md` BEFORE:
+   - Writing or updating any test case markdown file
+   - Generating Setup section HTML for Polarion
+   - Generating Test Steps HTML for Polarion
+   - Converting markdown test cases to Polarion HTML format
+   - Investigating a JIRA ticket to plan test cases
+
+2. **Follow the subagent pipeline** defined in SKILL.md. 5 Cursor Subagents are available in `~/.cursor/agents/`:
+   - `feature-investigator` -- Phase 1: Deep JIRA investigation (comments, linked tickets, acceptance criteria)
+   - `code-change-analyzer` -- Phase 1: PR diff analysis, UI element impact, backend changes
+   - `ui-discovery` -- Phase 1: acm-source MCP for selectors, routes, translations (shared with automation skill)
+   - `live-validator` -- Phase 3: Browser MCP + oc CLI live verification of feature behavior
+   - `testcase-reviewer` -- Phase 4.5: Quality review (metadata, discovered vs assumed, format, consistency)
+
+3. **Use supporting reference files:**
+   - `test-case-conventions.md` -- format, naming patterns, section structure from 85 existing test cases
+   - `polarion-html-templates.md` -- fixed Polarion HTML templates (do not improvise HTML structure)
+
+4. **Use ACM Source MCP** (`user-acm-ui`) to discover UI components, selectors, and strings before writing test steps. Never assume UI behavior.
+
+5. **Use Browser MCP** (`cursor-ide-browser`) for live-page verification when a cluster is available.
+
+6. **Use ACM Search MCP** (`acm-search`) for live cluster resource queries -- verify test prerequisites exist on the cluster and check resource state across managed clusters. **Use ACM Kubectl MCP** (`acm-kubectl`) for multicluster kubectl and managed cluster listing.
+
+7. **Set correct ACM/CNV version** via MCP before any source code lookups.
+
+7. The `polarion-html-templates.md` file contains the authoritative Polarion HTML format. Use it exactly as specified.

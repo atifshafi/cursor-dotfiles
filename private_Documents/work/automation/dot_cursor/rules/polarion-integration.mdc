@@ -1,0 +1,225 @@
+---
+description: Polarion MCP server integration - tools, query syntax, field mappings, permissions, limitations. Use when working with Polarion test cases (RHACM4K-*), work items, test runs, or test plans.
+alwaysApply: false
+---
+
+# Polarion Integration - Test Case Management
+
+**MCP Server Name**: `user-polarion`
+
+**User's Primary Project**: `RHACM4K`
+
+**SSL Note**: Uses wrapper at `/Users/ashafi/Documents/work/ai/tools/mcp/polarion/polarion-mcp-wrapper.py`
+
+## Available Tools (25 total: 14 base + 11 enhanced)
+
+**Read Tools:**
+`check_polarion_status`, `get_polarion_project`, `get_polarion_work_items`, `get_polarion_work_item`, `get_polarion_work_items_details`, `get_polarion_work_item_revisions`, `get_polarion_test_steps`, `get_polarion_test_case_summary`, `get_polarion_setup_html`, `list_polarion_test_runs`, `get_polarion_test_run_info`, `list_polarion_plans`
+
+**Write Tools:**
+`update_polarion_work_item`, `update_polarion_setup`, `update_polarion_test_steps`, `create_polarion_test_run`, `upload_polarion_test_results`
+
+**Write Tool Notes:**
+- `update_polarion_test_steps`: If no steps exist, POST. If exist, PATCH in-place (1-indexed). Step count must match.
+- `create_polarion_test_run`: Two-step (POST + PATCH for plan via `plannedin`).
+- All enhanced tools have 30s timeout (vs base 8s)
+
+**Tools with Issues:**
+- `get_polarion_projects`: 403 Forbidden (normal - use specific project ID)
+- `get_polarion_work_item_text`: Returns empty for some items (use `fields="@all"` instead)
+
+**Authentication:** JWT PAT, expires Jan 31, 2027, subject: `ashafi`
+
+## Permission Model
+
+- Can read+write on RHACM4K (view, search, update, create test runs, upload results)
+- Cannot: list all projects (403), delete work items/test runs/steps (403), POST steps when exist (400)
+
+## Query Syntax (Lucene)
+
+**Verified Fields:** `type`, `status`, `caselevel`, `casecomponent`, `testtype`, `subtype1`, `caseposneg`, `caseimportance`, `caseautomation`, `author.id`, `title`, `description`, `product`
+
+**Broken Fields:** `subcomponent`, `tags`
+
+**Default Search Context:**
+- `author.id`: `ashafi`
+- `casecomponent`: `virtualization` OR `Cluster Lifecycle`
+- `type`: `testcase`
+
+**Query Examples:**
+```lucene
+type:testcase AND author.id:ashafi AND casecomponent:virtualization AND status:proposed
+type:testcase AND title:"[FG-RBAC-2.16]"
+type:testcase AND product:rhacm2-16
+```
+
+## Batch Lookup
+
+`work_item_ids` must be a **comma-separated string**, NOT an array:
+```python
+get_polarion_work_items_details(project_id="RHACM4K", work_item_ids="RHACM4K-61726,RHACM4K-61727")
+```
+
+## Limitations & Workarounds
+
+| Limitation | Workaround |
+|------------|------------|
+| No Project Discovery (403) | Always use `project_id="RHACM4K"` |
+| Can't DELETE test steps (403) | PATCH in-place; step count must match |
+| Can't POST steps when exist (400) | Use PATCH on individual steps (1-indexed) |
+| Text Extraction Bug | Use `fields="@all"` instead of `get_polarion_work_item_text` |
+
+**Token Refresh:** `check_polarion_status` -> `set_polarion_token(token="NEW")` -> `get_polarion_project(project_id="RHACM4K")`
+
+## Creating Test Cases (Complete Procedure)
+
+**CRITICAL: The correct work_item_type is `testcase` (all lowercase). Using `testCase` (camelCase) creates a broken item without test steps schema.**
+
+**Write passcode:** `adminATOMS` (hardcoded in base package, not configurable)
+
+**Strategy:** Get everything right in the initial POST -- our PAT cannot PATCH work items (403). Two calls total:
+1. `create_polarion_work_item` -- creates the item with description, setup, and all custom fields
+2. `update_polarion_test_steps` -- POSTs test steps (only works when item has 0 existing steps)
+
+### Step-by-step procedure:
+
+```
+# 1. Create the test case with ALL fields in one shot
+create_polarion_work_item(
+  passcode="adminATOMS",
+  project_id="RHACM4K",
+  work_item_type="testcase",           # MUST be lowercase
+  title="[Area-Version] Area - Test Name",
+  description="<HTML description>",     # Polarion HTML format
+  status="draft",
+  additional_fields='{
+    "setup": {"type": "text/html", "value": "<HTML setup content>"},
+    "caseimportance": "high",
+    "caselevel": "system",
+    "testtype": "functional",
+    "caseposneg": "positive",
+    "caseautomation": "notautomated",
+    "casecomponent": "Console",
+    "tags": "ui"
+  }'
+)
+
+# 2. POST test steps (separate endpoint, only works on empty item)
+update_polarion_test_steps(
+  project_id="RHACM4K",
+  work_item_id="RHACM4K-XXXXX",
+  steps_json='[
+    {"step_html": "<HTML step content>", "expected_result_html": "<HTML expected>"},
+    ...
+  ]'
+)
+```
+
+### Key rules:
+- `work_item_type` MUST be `testcase` (lowercase) -- camelCase creates a broken item
+- `setup` goes in `additional_fields` as rich text: `{"type": "text/html", "value": "..."}`
+- Custom fields go directly in `additional_fields` as flat key-value
+- Description uses the `description` parameter (plain HTML string)
+- Test steps are a SEPARATE POST after creation (the teststeps endpoint)
+- NEVER rely on PATCH -- our PAT gets 403 on all PATCH operations
+- If you need to fix a test case, you must create a new one (no updates possible)
+
+### Valid custom field values:
+- `caseimportance`: `critical`, `high`, `medium`, `low`
+- `caselevel`: `system`, `integration`, `component`
+- `testtype`: `functional`, `nonfunctional`
+- `caseposneg`: `positive`, `negative`
+- `caseautomation`: `notautomated`, `automated`, `manualonly`
+- `casecomponent`: `Console` (default -- always use unless user explicitly specifies otherwise)
+- `tags`: `ui` (minimum -- add more space-separated tags as relevant, e.g., `ui clusters markdown preview`)
+
+### HTML format for steps:
+Each step object needs `step_html` (actions) and `expected_result_html` (expected results). Use the Polarion HTML style: `<span style="font-size:11pt;font-family:Arial,Helvetica,sans-serif;color:#000000;line-height:1.5;">` wrapper, `<span style="font-weight:bold;">` for titles, `&bull;` for bullets, `<br>` for line breaks, `<span style="font-family:Consolas,Monaco,monospace;font-size:10pt">` for code.
+
+### Title patterns by area:
+- Clusters: `[Clusters-5.0] Clusters - Test Name`
+- Governance: `[GRC-5.0] Governance - Test Name`
+- RBAC: `[FG-RBAC-5.0] RBAC - Test Name`
+- Virtualization: `[FG-RBAC-5.0] Fleet Virtualization - Test Name`
+- Search: `[FG-RBAC-5.0] Search - Test Name`
+- Applications: `[Apps-5.0] Applications - Test Name`
+
+---
+
+## Creating Test Runs (Complete Procedure)
+
+**Naming convention:** `console-{component}-acm{version}-sprint{NN}-{JIRA-ID}`
+
+Examples:
+- `console-clusters-acm217-sprint03-ACM-32280`
+- `console-alc-acm217-sprint02-ACM-32876`
+- `console-search-acm217-sprint02-ACM-24962`
+
+**Component values:** `clusters`, `alc`, `search`, `grc`, `credentials`, `virt`, `rbac`
+
+**One test run per dev story** (not per epic or per test case).
+
+### Step-by-step procedure:
+
+```
+# 1. Find the correct plan ID
+list_polarion_plans(project_id="RHACM4K", query="name:2.17", status="open")
+# Look for: ACM_2_17_Sprint_3 (or whichever sprint)
+
+# 2. Create the test run WITH plan_id
+create_polarion_test_run(
+  project_id="RHACM4K",
+  test_run_id="console-{component}-acm217-sprint{NN}-ACM-{ID}",
+  title="Console {Component} - {Feature Title}",
+  plan_id="ACM_2_17_Sprint_3",
+  custom_fields_json='{"type": "featureVerification", "jiraid": "ACM-{ID}"}'
+)
+
+# 3. Upload test results (adds test cases to the run)
+upload_polarion_test_results(
+  project_id="RHACM4K",
+  test_run_id="console-{component}-acm217-sprint{NN}-ACM-{ID}",
+  results_json='[{"test_case_id": "RHACM4K-XXXXX", "result": "passed", "comment": "..."}]'
+)
+```
+
+### Fields set via MCP:
+- `test_run_id` (naming convention)
+- `title`
+- `plan_id` → sets "Planned In" (MUST pass at creation time)
+- `type` → "featureVerification"
+- `jiraid` → the dev story (e.g., "ACM-32280")
+- Test case results (passed/failed/blocked with comments)
+
+### Fields that MUST be set manually in Polarion UI:
+- **Squad** → "Console" (no MCP field for this)
+- **Planned In** (if not passed at creation via plan_id -- can't be updated after)
+
+### Limitations:
+- No `update_test_run` tool exists -- plan_id MUST be passed at creation time
+- Squad field cannot be set via MCP custom_fields_json (Polarion rejects it)
+- If plan_id is missed at creation, user must set "Planned In" manually in Properties tab
+- ALWAYS pass `plan_id` at creation to avoid manual step
+
+## After Creating a Test Run: Update the QE JIRA Ticket
+
+Every dev story has a QE tracking ticket (e.g., `[QE] --- ACM-32282: ...`). After creating a test run, update the QE ticket's description to mark completion and add the Polarion link.
+
+**QE ticket description template (JIRA wiki markup):**
+```
+Note: If analysis and review is done and no QE effort is required, the task can be closed.
+
+Completion checklist
+[X] - Test cases created in Polarion and referenced [here|https://polarion.engineering.redhat.com/polarion/#/project/RHACM4K/workitem?id=RHACM4K-XXXXX]
+[ ] - Test cases are reviewed and approved
+[X] - Test runs executed in Polarion and referenced [here|https://polarion.engineering.redhat.com/polarion/#/project/RHACM4K/testrun?id=console-{component}-acm217-sprint{NN}-ACM-{ID}]
+```
+
+**Rules:**
+- Replace `[ ]` with `[X]` for completed items
+- The `[here|URL]` syntax is JIRA wiki markup for a hyperlink
+- Test case link points to the Polarion work item (RHACM4K-XXXXX)
+- Test run link points to the Polarion test run (the ID you just created)
+- Use `update_issue(issue_key, description=...)` to update the QE ticket
+- Find the QE ticket via: `search_issues(jql="summary ~ '[QE]' AND summary ~ 'ACM-{story-id}'")`
+- ALWAYS verify the link is correct (single URL, no duplicates) before updating

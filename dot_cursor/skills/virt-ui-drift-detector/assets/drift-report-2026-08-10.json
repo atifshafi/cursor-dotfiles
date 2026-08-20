@@ -1,0 +1,235 @@
+{
+  "analysisTimestamp": "2026-08-10T18:30:00.000Z",
+  "baselineDate": "2026-08-10",
+  "versionMismatch": {
+    "liveCluster": "ACM 5.0",
+    "scanTarget": "ACM 5.1 (2.19/main)",
+    "warning": "Live DOM findings tagged [INFERRED: version mismatch]"
+  },
+
+  "summary": {
+    "breaking": 0,
+    "warning": 4,
+    "info": 1,
+    "total": 5
+  },
+
+  "driftItems": [
+    {
+      "id": "drift-001",
+      "category": "selector",
+      "severity": "WARNING",
+      "description": "Attribute type mismatch: save-search-name. Upstream uses data-test, test code uses data-test-id. CHRONICALLY UNSTABLE (5th occurrence).",
+      "upstream": {
+        "key": "save-search-name",
+        "value": "save-search-name",
+        "source": "src/views/search/components/SaveSearchModal.tsx",
+        "attributeType": "data-test"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput",
+        "currentValue": "[data-test-id=\"save-search-name\"]",
+        "locatorStrategy": "locator",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "baseline": { "value": "[data-test-id=\"save-search-name\"]" },
+      "liveDom": { "found": "N/A [INFERRED: version mismatch]" },
+      "impactChain": {
+        "constant": "FLEET_VIRT_SAVED_SEARCH.modal.nameInput",
+        "constantFile": "src/constants/fleet-virt.ts",
+        "pageObjects": [],
+        "components": ["src/components/fleet-virt/SavedSearches.ts"],
+        "specFiles": ["src/tests/fleet-virt/advanced-search.spec.ts", "src/tests/fleet-virt/saved-search-basic.spec.ts"],
+        "polarionIds": ["RHACM4K-60770", "RHACM4K-60769"]
+      },
+      "recommendedFix": "Change [data-test-id=\"save-search-name\"] to [data-test=\"save-search-name\"] in fleet-virt.ts",
+      "occurrence": 5,
+      "chronicallyUnstable": true
+    },
+    {
+      "id": "drift-002",
+      "category": "selector",
+      "severity": "WARNING",
+      "description": "Attribute type mismatch: save-search-description. Upstream uses data-test, test code uses data-test-id. CHRONICALLY UNSTABLE (5th occurrence).",
+      "upstream": {
+        "key": "save-search-description",
+        "value": "save-search-description",
+        "source": "src/views/search/components/SaveSearchModal.tsx",
+        "attributeType": "data-test"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput",
+        "currentValue": "[data-test-id=\"save-search-description\"]",
+        "locatorStrategy": "locator",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "baseline": { "value": "[data-test-id=\"save-search-description\"]" },
+      "liveDom": { "found": "N/A [INFERRED: version mismatch]" },
+      "impactChain": {
+        "constant": "FLEET_VIRT_SAVED_SEARCH.modal.descriptionInput",
+        "constantFile": "src/constants/fleet-virt.ts",
+        "pageObjects": [],
+        "components": ["src/components/fleet-virt/SavedSearches.ts"],
+        "specFiles": ["src/tests/fleet-virt/advanced-search.spec.ts", "src/tests/fleet-virt/saved-search-basic.spec.ts"],
+        "polarionIds": ["RHACM4K-60770", "RHACM4K-60769"]
+      },
+      "recommendedFix": "Change [data-test-id=\"save-search-description\"] to [data-test=\"save-search-description\"] in fleet-virt.ts",
+      "occurrence": 5,
+      "chronicallyUnstable": true
+    },
+    {
+      "id": "drift-003",
+      "category": "selector",
+      "severity": "WARNING",
+      "description": "Attribute type mismatch: virtual-machine-overview-details-status. Upstream uses data-test, test code uses data-test-id (2nd occurrence).",
+      "upstream": {
+        "key": "virtual-machine-overview-details-status",
+        "value": "virtual-machine-overview-details-status",
+        "source": "src/views/topology/components/vm/VMDetailsPanel/components/VMDetailsPanelRightColumn/components/VMStatusDetailsItem.tsx",
+        "attributeType": "data-test"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_VM_ACTIONS.statusLabel",
+        "currentValue": "[data-test-id=\"virtual-machine-overview-details-status\"]",
+        "locatorStrategy": "locator",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "baseline": { "value": "[data-test-id=\"virtual-machine-overview-details-status\"]" },
+      "liveDom": { "found": "N/A [INFERRED: version mismatch]" },
+      "impactChain": {
+        "constant": "FLEET_VIRT_VM_ACTIONS.statusLabel",
+        "constantFile": "src/constants/fleet-virt.ts",
+        "pageObjects": ["src/pages/fleet-virt/VmDetailsPage.ts"],
+        "components": [],
+        "specFiles": ["src/tests/fleet-virt/vm-actions.spec.ts"],
+        "polarionIds": ["RHACM4K-60771"]
+      },
+      "recommendedFix": "Change [data-test-id=\"virtual-machine-overview-details-status\"] to [data-test=\"virtual-machine-overview-details-status\"] in fleet-virt.ts",
+      "occurrence": 2,
+      "chronicallyUnstable": false
+    },
+    {
+      "id": "drift-004",
+      "category": "data-mismatch",
+      "severity": "WARNING",
+      "description": "RBAC_ROLES.expected contains 8 roles but live cluster shows 11 (3 new migrations.kubevirt.io roles). Assertion will fail (2nd occurrence).",
+      "upstream": {
+        "key": "Roles page",
+        "value": "11 roles: acm-vm-cluster-migration:view, acm-vm-extended:admin, acm-vm-extended:view, acm-vm-fleet:admin, acm-vm-fleet:view, kubevirt.io:admin, kubevirt.io:edit, kubevirt.io:view, migrations.kubevirt.io:storagemigrate, migrations.kubevirt.io:storagemigrate-multins, migrations.kubevirt.io:view",
+        "source": "Live DOM / Roles page"
+      },
+      "testCode": {
+        "file": "src/constants/fg-rbac.ts",
+        "constantName": "RBAC_ROLES.expected",
+        "currentValue": ["acm-vm-cluster-migration:view", "acm-vm-extended:admin", "acm-vm-extended:view", "acm-vm-fleet:admin", "acm-vm-fleet:view", "kubevirt.io:admin", "kubevirt.io:edit", "kubevirt.io:view"],
+        "locatorStrategy": "direct-assertion",
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "baseline": { "value": "8 roles" },
+      "liveDom": {
+        "found": true,
+        "actualValue": "11 roles [INFERRED: version mismatch — live is ACM 5.0]"
+      },
+      "impactChain": {
+        "constant": "RBAC_ROLES.expected",
+        "constantFile": "src/constants/fg-rbac.ts",
+        "pageObjects": [],
+        "components": [],
+        "specFiles": ["src/tests/fg-rbac/roles-page-validation.spec.ts"],
+        "polarionIds": ["RHACM4K-61779"]
+      },
+      "recommendedFix": "Add 3 new roles to RBAC_ROLES.expected array: 'migrations.kubevirt.io:storagemigrate', 'migrations.kubevirt.io:storagemigrate-multins', 'migrations.kubevirt.io:view'",
+      "occurrence": 2,
+      "chronicallyUnstable": false
+    },
+    {
+      "id": "drift-005",
+      "category": "translation",
+      "severity": "INFO",
+      "description": "Fleet Management case mismatch: test code has 'Fleet Management', upstream has 'Fleet management' (lowercase 'm'). Orphaned constant — not referenced by any page object or spec (3rd occurrence).",
+      "upstream": {
+        "key": "Fleet management",
+        "value": "Fleet management",
+        "source": "ACM Console translations"
+      },
+      "testCode": {
+        "file": "src/constants/fleet-virt.ts",
+        "constantName": "FLEET_VIRT_PAGE.fleetManagementLabel",
+        "currentValue": "Fleet Management",
+        "locatorStrategy": null,
+        "locatorRole": null
+      },
+      "confidence": "HIGH",
+      "baseline": { "value": "Fleet Management" },
+      "liveDom": { "found": true, "actualValue": "Fleet management [INFERRED: version mismatch]" },
+      "impactChain": {
+        "constant": "FLEET_VIRT_PAGE.fleetManagementLabel",
+        "constantFile": "src/constants/fleet-virt.ts",
+        "pageObjects": [],
+        "components": [],
+        "specFiles": [],
+        "polarionIds": [],
+        "note": "Orphaned property — never referenced outside constants file. Zero test impact."
+      },
+      "recommendedFix": "Change 'Fleet Management' to 'Fleet management' in fleet-virt.ts (optional — orphaned constant with no test impact)",
+      "occurrence": 3,
+      "chronicallyUnstable": true
+    }
+  ],
+
+  "orphanReport": {
+    "unusedConstants": [
+      {"scope": "full-object", "name": "WIZARD_STEP_IDS", "file": "fg-rbac.ts", "reason": "Exported but never imported outside constants"},
+      {"scope": "full-object", "name": "WIZARD_SELECT_IDS", "file": "fg-rbac.ts", "reason": "Exported but never imported outside constants"},
+      {"scope": "full-object", "name": "PF_ALERT", "file": "selectors.ts", "reason": "Exported scalar but never imported outside constants"},
+      {"scope": "full-object", "name": "PF_SELECT", "file": "selectors.ts", "reason": "Exported scalar but never imported outside constants"},
+      {"scope": "full-object", "name": "PF_DROPDOWN", "file": "selectors.ts", "reason": "Exported scalar but never imported outside constants"},
+      {"scope": "full-object", "name": "PF_TABLE", "file": "selectors.ts", "reason": "Exported scalar but never imported outside constants"},
+      {"scope": "property-group", "name": "FLEET_VIRT_ADVANCED_SEARCH.cluster", "file": "fleet-virt.ts", "childCount": 5},
+      {"scope": "property-group", "name": "FLEET_VIRT_ADVANCED_SEARCH.project", "file": "fleet-virt.ts", "childCount": 5},
+      {"scope": "property-group", "name": "FLEET_VIRT_ADVANCED_SEARCH.footer", "file": "fleet-virt.ts", "childCount": 2},
+      {"scope": "property-group", "name": "RBAC_RA_TABLE.columns", "file": "fg-rbac.ts", "childCount": 8},
+      {"scope": "property-group", "name": "RBAC_RA_TABLE.filterIds", "file": "fg-rbac.ts", "childCount": 6},
+      {"scope": "property-group", "name": "RBAC_USER_DETAIL.emptyStates.groups", "file": "fg-rbac.ts", "childCount": 2},
+      {"scope": "property-group", "name": "RBAC_WIZARD.identities.tabs", "file": "fg-rbac.ts", "childCount": 2}
+    ],
+    "unusedPageObjects": [],
+    "note": "49 total orphans (6 full-object, 7 property-group, 36 property). Passed through from Test Code Analyzer (grep-verified)."
+  },
+
+  "scanMetrics": {
+    "sourceScanner": {
+      "fleetVirtSelectors": 161,
+      "rbacSelectors": 13,
+      "infrastructureSelectors": 6,
+      "translations": 106,
+      "routes": 54,
+      "testIds": 95,
+      "pfVersion": "pf-v6-c"
+    },
+    "testCodeAnalyzer": {
+      "totalConstants": 144,
+      "pageObjectLocators": 65,
+      "componentLocators": 28,
+      "libLocators": 6,
+      "inlineLocators": 5,
+      "specs": 33,
+      "polarionIds": 42,
+      "orphanConstants": 49
+    },
+    "liveValidator": {
+      "pagesVisited": 4,
+      "perspectives": 3,
+      "rolesCount": 11,
+      "serviceAccountsTabPresent": false,
+      "pfVersion": "pf-v6-c"
+    }
+  }
+}

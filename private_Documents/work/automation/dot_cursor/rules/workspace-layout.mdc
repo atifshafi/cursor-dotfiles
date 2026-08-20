@@ -1,0 +1,79 @@
+---
+description: File placement schema -- where to put new files, workspace structure, mandatory placement rules
+alwaysApply: false
+---
+
+# Workspace Structure & File Placement
+
+## Decision Flow
+
+```
+New file or folder needed
+  ├─ AI development (AI app, MCP, AI tool)? → ai/
+  ├─ ACM/QE work (test cases, automation, clusters, JIRA)? → automation/
+  ├─ Cross-cutting reference (both AI and QE)? → notes/
+  └─ Temp download or unknown? → downloads/ (sort later)
+```
+
+## Root Summaries
+
+| Root | Purpose | Key Paths |
+|------|---------|-----------|
+| `automation/` | ACM QE: test automation, cluster ops, documentation | `documentation/`, `qe-automation-repos/`, `dev-team-repos/`, `tools/` |
+| `ai/` | AI apps, MCP servers, AI tooling | `ai_systems/` (monorepo), `tools/mcp/` |
+| `notes/` | Cross-cutting notes, knowledge DB mirror | `notes.md`, `reference/`, `knowledge/` (read-only mirror) |
+| `downloads/` | Temp landing zone (ephemeral) | Never reference as canonical |
+
+## Mandatory Placement Rules
+
+```
+RULE 1: NEVER create files at workspace root level
+RULE 2: Secrets → automation/tools/automation-workspace/secrets/<type>/
+RULE 3: Investigation reports → <root>/documentation/investigations/<topic>-<date>/
+RULE 3b: Screenshots/snaps → automation/documentation/investigations/snaps/
+         Name: <jira-key>-<description>.png
+RULE 4: Git clones: QE → qe-automation-repos/, Dev → dev-team-repos/, AI → ai/
+RULE 5: New MCP servers → ai/tools/mcp/<name>/ (MUST update README.md)
+RULE 6: Temp files → automation/tools/automation-workspace/tmp/
+RULE 7: Cluster configs → automation/tools/automation-workspace/configs/<cluster>/
+RULE 8: Test cases → automation/documentation/acm-components/<area>/test-cases/<version>/
+RULE 9: If unsure → ASK the user
+```
+
+## Naming Conventions
+
+- Investigation dirs: `<topic>-<monYYYY>` (e.g., `bm11b-sep2025`)
+- Test case dirs: by ACM version (`2.16/`, `2.17/`)
+- Git clone dirs: match upstream repo name
+- No loose files at root -- everything in a subdirectory
+
+## automation/ Structure
+
+```
+automation/
+  .cursor/rules/          # Context-triggered rules (.mdc)
+  documentation/          # ALL written docs
+    guides/               # Human index, Google Doc mirrors
+    processes/            # Workflow docs, DOCUMENTATION-INDEX.md
+    acm-components/       # Per-component docs + test-cases/
+    architecture/         # Architecture docs, rhacm-docs clone
+    investigations/       # Time-boxed reports + snaps/
+    archive/              # Cold storage
+  qe-automation-repos/    # QE test repos (clc-ui, console-e2e, etc.)
+  dev-team-repos/         # Upstream repos (console, etc.)
+  tools/                  # Scripts, installers, configs (see tools/README.md)
+```
+
+## ai/ Structure
+
+```
+ai/
+  ai_systems/          # stolostron/acm-ai-qe monorepo clone
+  tools/mcp/              # MCP server installations (Cursor uses these)
+  additional-apps/        # Standalone AI side projects
+  documentation/          # AI workspace docs
+```
+
+## Documentation Maintenance
+
+If a task changes directory layout or documented paths: update the nearest `README.md`, root `README.md` when placement rules change, and any `.cursor/rules/*.mdc` that encode those paths. Full checklist: `workspace-documentation-maintenance.mdc`.

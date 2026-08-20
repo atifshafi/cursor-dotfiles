@@ -1,0 +1,134 @@
+{
+  "summary": {
+    "totalLocators": 137,
+    "avgFragility": 21.3,
+    "highRiskCount": 7,
+    "fileCount": 12
+  },
+  "strategyDistribution": {
+    "getByRole+name": 65,
+    "unknown": 21,
+    "getByRole-noName": 18,
+    "getByText": 10,
+    "constant-ref": 10,
+    "tag-selector": 4,
+    "css-class": 3,
+    "template-id": 3,
+    "data-test-attr": 1,
+    "getByPlaceholder": 1,
+    "role-attr": 1
+  },
+  "highRiskLocators": [
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "line": 37,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "const h1 = this.page.locator('h1');"
+    },
+    {
+      "file": "src/pages/fleet-virt/FleetVirtPage.ts",
+      "line": 58,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "const siblingButton = searchInput.locator('xpath=following::button[1]');"
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "line": 51,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "const search = this.page.locator('input[placeholder=\"Search\"]').first();"
+    },
+    {
+      "file": "src/components/fleet-virt/AdvancedSearchModal.ts",
+      "line": 50,
+      "score": 75,
+      "strategy": "tag-selector",
+      "code": "const toggle = combobox.locator('xpath=following::button[@aria-label=\"Multi select Typeahead menu toggle\"][1]');"
+    },
+    {
+      "file": "src/pages/fg-rbac/UserDetailsPage.ts",
+      "line": 38,
+      "score": 70,
+      "strategy": "css-class",
+      "code": "}).locator('..');"
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "line": 31,
+      "score": 70,
+      "strategy": "css-class",
+      "code": "}).locator('..');"
+    },
+    {
+      "file": "src/pages/fg-rbac/RoleDetailsPage.ts",
+      "line": 58,
+      "score": 70,
+      "strategy": "css-class",
+      "code": "return this.page.locator('.monaco-editor').first();"
+    }
+  ],
+  "perFile": {
+    "src/pages/fg-rbac/RoleDetailsPage.ts": {
+      "count": 9,
+      "avgScore": 35.6,
+      "worstScore": 70
+    },
+    "src/components/fleet-virt/TreeView.ts": {
+      "count": 6,
+      "avgScore": 33.3,
+      "worstScore": 50
+    },
+    "src/pages/fg-rbac/UserDetailsPage.ts": {
+      "count": 8,
+      "avgScore": 30.6,
+      "worstScore": 75
+    },
+    "src/pages/fg-rbac/RolesListPage.ts": {
+      "count": 4,
+      "avgScore": 30.0,
+      "worstScore": 50
+    },
+    "src/components/fg-rbac/RoleAssignmentsTable.ts": {
+      "count": 8,
+      "avgScore": 29.4,
+      "worstScore": 50
+    },
+    "src/components/fleet-virt/AdvancedSearchModal.ts": {
+      "count": 7,
+      "avgScore": 25.0,
+      "worstScore": 75
+    },
+    "src/pages/fleet-virt/FleetVirtPage.ts": {
+      "count": 18,
+      "avgScore": 23.9,
+      "worstScore": 75
+    },
+    "src/pages/fg-rbac/RoleAssignmentWizardPage.ts": {
+      "count": 31,
+      "avgScore": 19.5,
+      "worstScore": 50
+    },
+    "src/components/fleet-virt/SavedSearches.ts": {
+      "count": 13,
+      "avgScore": 19.2,
+      "worstScore": 50
+    },
+    "src/pages/fleet-virt/VmDetailsPage.ts": {
+      "count": 25,
+      "avgScore": 12.0,
+      "worstScore": 50
+    },
+    "src/components/fleet-virt/VmCloneModal.ts": {
+      "count": 4,
+      "avgScore": 8.8,
+      "worstScore": 35
+    },
+    "src/components/fleet-virt/StatusFilter.ts": {
+      "count": 4,
+      "avgScore": 0.0,
+      "worstScore": 0
+    }
+  }
+}
