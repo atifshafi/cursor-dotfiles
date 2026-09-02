@@ -19,7 +19,7 @@
 |-----------|------|-------------|
 | `PLATFORM` | Choice | `aws`, `azure`, `gcp`, `vsphere`, `eks`, `aks`, `gke` |
 | `OCP_CLUSTER_NAME` | String | **InfraID** (NOT cluster name). Comma-separated for multiple. Example: `ashafi-aws-test-zzh78` |
-| `REGION` | String | Cloud region. Leave blank for defaults (AWS=us-east-1, Azure=eastus, GCP=us-east1). Must specify for non-default regions. |
+| `REGION` | String | Cloud region. **MANDATORY for Azure** (e.g., `eastus`). For AWS, specify if non-default — verify actual region from deploy logs or `oc get machines`. Leave blank ONLY for AWS us-east-1. |
 | `CI_GIT_BRANCH` | String | Default: `main` |
 
 ## How to Trigger

@@ -98,6 +98,20 @@ For each field in a new interface, ask: "Where else in the codebase is this valu
 
 ### 3. Anti-Pattern Detection
 
+**3a. Assertion Integrity (CHECK FIRST -- highest priority, BLOCKING)**
+
+These are the most common reviewer-caught violations. Check them BEFORE the rest of the anti-pattern table.
+
+| Anti-Pattern | Grep Command | What Constitutes a Violation | Severity |
+|---|---|---|---|
+| **Defensive assertion bypass** | `rg "\.catch\(\(\)" src/tests/ src/pages/ src/components/` | `.isVisible().catch(() => false)` or `.isVisible().catch(() => {})` followed by `if (visible)` that gates an assertion. The assertion must run unconditionally (`expect().toBeVisible()`) or the step must skip entirely (`if (!condition) { return; }` at the top). | **BLOCKING** |
+| **Contradictory `.or()` assertion** | `rg "\.or\(" src/tests/` | `expect(successLocator.or(errorLocator)).toBeVisible()` where the two locators represent contradictory outcomes (success vs error, present vs absent). Validates neither outcome. Each assertion must test ONE expected state. | **BLOCKING** |
+| **Empty verification step** | Manual: read each `test.step('Verify ...', ...)` body | A `test.step` named "Verify X" that contains zero `expect()` calls. The step passes without testing anything. | **BLOCKING** |
+
+**If ANY of the above are found, the review verdict is NEEDS_FIXES regardless of all other checks.**
+
+**3b. General Anti-Patterns**
+
 | Anti-Pattern | Check | Severity |
 |-------------|-------|----------|
 | `page.waitForTimeout(N)` | Grep for `waitForTimeout(` | BLOCKING |

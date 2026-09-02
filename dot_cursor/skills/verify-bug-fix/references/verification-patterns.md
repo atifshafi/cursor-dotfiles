@@ -98,3 +98,69 @@ After verification, if resources were created with approval:
 - [ ] Remove temporary files (`/tmp/*auth.json`, kubeconfig copies if created)
 
 Document what was cleaned in JIRA draft comment if relevant.
+
+---
+
+## UI State Mapping Patterns (Phase 2d reference)
+
+When Phase 2c determines `ui_applicable = true`, use these patterns to build the verification matrix.
+
+### Pattern: Checkbox/Toggle with conditional enablement
+
+| State | Precondition | Expected UI | Expected Output |
+|-------|-------------|-------------|-----------------|
+| Disabled + forced value | Dependency not met (e.g., no additional network) | Grayed out, non-clickable | Field absent or forced default in YAML |
+| Enabled + checked | Dependency met | Active checkbox, clickable | `fieldName: true` in output |
+| Enabled + unchecked | Dependency met + user unchecked | Empty checkbox, clickable | `fieldName: false` in output |
+
+### Pattern: Dropdown/Select with dynamic options
+
+| State | Precondition | Expected UI | Expected Output |
+|-------|-------------|-------------|-----------------|
+| Default selection | Page loaded | Default option shown | Default value in output |
+| Custom selection | User picks option B | Option B displayed | Value B in output |
+| Empty/placeholder | Required field not yet selected | Placeholder text | Validation error if submitted |
+
+### Pattern: Text field rename (i18n / label fix)
+
+| State | Precondition | Expected UI | Expected Output |
+|-------|-------------|-------------|-----------------|
+| Field visible | Navigate to page | Correct label text shown | N/A (visual only) |
+| Tooltip/help text | Hover or click help icon | Correct help text | N/A (visual only) |
+
+### Pattern: Route/navigation fix
+
+| State | Precondition | Expected UI | Expected Output |
+|-------|-------------|-------------|-----------------|
+| Route accessible | Navigate to URL path | Page renders (not 404) | Content visible |
+| Nav item present | Open sidebar/menu | Link exists in navigation | Clicking navigates correctly |
+
+### Pattern: Multi-element form interaction
+
+| State | Precondition | Expected UI | Expected Output |
+|-------|-------------|-------------|-----------------|
+| Element A in state X | Setup A | A shows X | Output reflects A=X |
+| Element B depends on A | A is in state X | B is enabled/visible | B value in output |
+| Element B when A changes | A moves to state Y | B disabled/hidden | B absent from output |
+
+### Screenshot naming conventions
+
+| Screenshot type | Naming pattern | Example |
+|---|---|---|
+| UI element state | `{NN}-{element}-{state}.png` | `01-checkbox-enabled-checked.png` |
+| YAML output | `{NN}-yaml-{field}-{value}.png` | `02-yaml-attachDefaultNetwork-false.png` |
+| Error state | `{NN}-{element}-error-{type}.png` | `03-dropdown-error-required.png` |
+| Navigation | `{NN}-route-{page}.png` | `01-route-cluster-create.png` |
+
+### JIRA attachment protocol
+
+When posting the verification comment with screenshots:
+
+1. Save all screenshots to `~/Documents/work/downloads/<jira-key>-verification/`
+2. Use `add_comment` with these parameters:
+   - `issue_key`: the JIRA key
+   - `comment`: the full comment text (WITHOUT `!filename|thumbnail!` lines — the tool adds them)
+   - `attachment_paths`: list of ALL screenshot file paths in display order
+3. The MCP tool auto-appends `!filename|thumbnail!` wiki markup for each attachment
+4. Reference screenshots in comment text by describing what each shows (the inline images follow the text)
+5. Load `jira-integration.mdc` workspace rule before Phase 4 for full behavioral constraints

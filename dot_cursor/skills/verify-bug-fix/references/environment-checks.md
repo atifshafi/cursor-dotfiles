@@ -104,3 +104,115 @@ Run / infer as appropriate:
 ## 9. Neo4j prerequisite hints
 
 Use `neo4j-rhacm` MCP to map component → dependencies (operators, subsystems). Then map each dependency to section 6 checks. Cypher patterns live in `.cursor/rules/neo4j-rhacm.mdc` (project automation repo).
+
+---
+
+## 10. Version Compatibility Gate (Phase 0.5 Check 1)
+
+**Purpose**: Catch ACM/OCP version mismatches before any verification work.
+
+### Procedure
+
+1. Get OCP version:
+   ```bash
+   oc get clusterversion version -o jsonpath='{.status.desired.version}'
+   ```
+
+2. Get ACM version (one of):
+   - From JIRA `fix_versions` field (already fetched in Phase 0)
+   - From cluster: `oc get csv -n <acm-ns> --no-headers | grep advanced-cluster-management`
+   - For MCE-only: `oc get csv -n multicluster-engine --no-headers | grep multicluster-engine`
+
+3. Read the version matrix:
+   - Primary source: `~/Documents/work/notes/knowledge/versions/version-matrix.md` → "OCP Version Requirements" table
+   - Fallback (if file missing): use the ranges below
+
+4. Compare OCP version against the supported range for the ACM/MCE version:
+
+   | ACM Version | MCE Version | OCP Minimum | OCP Maximum |
+   |---|---|---|---|
+   | 2.13 | 2.8 | 4.16 | 4.19 |
+   | 2.14 | 2.9 | 4.17 | 4.20 |
+   | 2.15 | 2.10 | 4.18 | 4.21 |
+   | 2.16 | 2.11 | 4.19 | 4.21 |
+   | 5.0 | 5.0 | 4.20 | 4.22+ |
+
+5. **If OCP is below minimum or above maximum**: Emit INFEASIBLE.
+
+### Evidence format (for INFEASIBLE verdict)
+
+```
+Environment: OCP {ocp_version} / ACM {acm_version}
+Supported OCP range for ACM {acm_version}: {min} - {max}
+Status: OCP {ocp_version} is BELOW/ABOVE the supported range.
+Impact: ACM console dynamic plugins and UI routes will not function.
+```
+
+---
+
+## 11. Feature-Area Infrastructure Requirements (Phase 0.5 Check 2)
+
+**Purpose**: Identify bugs that require **architecturally impossible** infrastructure for the current environment.
+
+### Classification Table
+
+Scan the JIRA `summary` and `components` fields for keywords. Match the FIRST applicable row:
+
+| Feature Area | Keywords | Hard Requirement | Cannot be added when... |
+|---|---|---|---|
+| KubeVirt HCP | "kubevirt", "KubeVirt", "attachDefaultNetwork", "HCP.*virt", "NodePool.*virt" | CNV + bare-metal/nested-virt workers | Workers are standard cloud VMs |
+| Fleet Virtualization | "fleet virt", "virtual machine", "VM migration", "CCLM", "cross-cluster live migration" | CNV on spoke + bare-metal spoke workers | Spoke workers are cloud VMs |
+| Submariner | "submariner", "service discovery", "globalnet", "clusterset.*network" | 2+ clusters with L3 connectivity | Only local-cluster exists |
+| Disconnected | "disconnected", "air-gap", "mirror registry", "ICSP", "imageContentSourcePolicy" | Network isolation + mirror registry | Cluster is connected |
+| Bare-metal provisioning | "bare metal", "BMC", "Metal3", "assisted installer", "infraenv" (without "kubevirt") | Metal3 + BMC + physical hosts | Platform is cloud |
+| Other / Unknown | *(no keyword match)* | **No hard gate** | N/A — proceed |
+
+### Hard vs Soft distinction
+
+**Hard prerequisites (Phase 0.5 gates on these)**:
+- Physical hardware requirements (bare-metal, BMC access)
+- Network topology requirements (disconnected, multi-cluster connectivity)
+- Multiple-cluster requirements (Submariner needs 2+ clusters)
+
+**Soft prerequisites (Phase 2.5 handles these)**:
+- Installable operators (Observability, GitOps, Ansible, Global Hub, Hive)
+- Configurable credentials (cloud provider, pull secrets)
+- Feature flags (MCH components, FG-RBAC)
+- Managed cluster addons (search, policy, app-manager)
+
+Rule: If a missing prerequisite can be resolved with `oc apply` or operator install (without hardware changes), it belongs in Phase 2.5, not Phase 0.5.
+
+---
+
+## 12. Platform Capability Assessment (Phase 0.5 Check 3)
+
+**Purpose**: Given a hard requirement from Check 2, determine if the current cluster CAN satisfy it.
+
+### Assessment Methods
+
+| Hard Requirement | How to Check | NOT POSSIBLE verdict |
+|---|---|---|
+| Bare-metal / nested-virt workers | `oc get nodes -o jsonpath='{.items[*].metadata.labels.node\.kubernetes\.io/instance-type}'` | All instance types are standard VMs (m5.xlarge, Standard_D4s_v3, e2-standard-4, etc.) |
+| Multiple managed clusters | `oc get managedclusters --no-headers | wc -l` | Count = 1 (only local-cluster) AND no ClusterDeployments pending |
+| Network isolation | `curl -s -o /dev/null -w "%{http_code}" https://quay.io` (from a pod) | Returns 200 (cluster is connected — cannot be made disconnected) |
+| Physical hosts / BMC | `oc get infrastructure cluster -o jsonpath='{.status.platformStatus.type}'` | Type is AWS, Azure, GCP, or other cloud |
+
+### Instance Type Reference (common cloud types that are NOT metal)
+
+| Cloud | Standard (NOT metal) | Metal (supports CNV) |
+|---|---|---|
+| AWS | m5.xlarge, m5.2xlarge, c5.xlarge, r5.xlarge | m5.metal, c5.metal, i3.metal, m5zn.metal |
+| Azure | Standard_D4s_v3, Standard_D8s_v3, Standard_E4s_v3 | Standard_D*_v5 with nested virt (limited) |
+| GCP | e2-standard-4, n2-standard-8 | c2-standard-60 (bare-metal equivalent) |
+
+### Output Format
+
+Produce for each hard requirement:
+
+```
+Requirement: {requirement}
+Assessment: {POSSIBLE | NOT POSSIBLE | POSSIBLE WITH ADDITIONAL SETUP}
+Evidence: {command output or reasoning}
+```
+
+If ANY requirement is NOT POSSIBLE → the overall gate verdict is INFEASIBLE (subject to Tier C viability criteria in SKILL.md Phase 0.5).

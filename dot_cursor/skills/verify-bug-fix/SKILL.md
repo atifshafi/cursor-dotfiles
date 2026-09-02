@@ -47,7 +47,7 @@ Keep Level 2 scannable; open `references/verification-patterns.md` and `referenc
 4. **JIRA transitions**: Never transition to Closed without user approval of the drafted comment and verdict.
 5. **Kubeconfig isolation**: Use a session-specific `KUBECONFIG` path; verify with `oc whoami --show-server` before hub/spoke work.
 
-On skill start, create a **TodoWrite** covering: Phase 0 intake (+ env discovery + scope + Engram recall) → Phase 1 parallel agents → Phase 2 merge → Phase 2b code review → Phase 2.5 prereqs → Phase 2.75 health gate → Phase 3 verify (A: backend, B: UI) → Phase 4 verdict/JIRA → Phase 4.5 learning → cleanup.
+On skill start, create a **TodoWrite** covering: Phase 0 intake (+ env discovery + scope + JIRA fetch + Engram recall) → Phase 0.5 feasibility gate → Phase 1 parallel agents → Phase 2 merge → Phase 2b code review → Phase 2c UI applicability → Phase 2d UI state mapping (if applicable) → Phase 2.5 prereqs → Phase 2.75 health gate → Phase 3 verify (B: UI-first if applicable, A: backend) → Phase 4 verdict/JIRA → Phase 4.5 learning → cleanup.
 
 ---
 
@@ -68,7 +68,7 @@ On skill start, create a **TodoWrite** covering: Phase 0 intake (+ env discovery
 
 | Use case | Trigger | Result |
 |----------|---------|--------|
-| Single-bug verification | User gives ACM-* key + env | Verdict table (FIXED / NOT FIXED / BLOCKED) with DOWNSTREAM tag and evidence |
+| Single-bug verification | User gives ACM-* key + env | Verdict table (FIXED / NOT FIXED / BLOCKED / INFEASIBLE) with DOWNSTREAM tag and evidence |
 | Cherry-pick readiness | User asks if fix is in 2.YY nightly | Branch analysis + optional Tier C code check before any UI work |
 | Prereq-only assessment | User asks if env can reproduce bug X | Phase 2.5 gap table without Phase 3 |
 
@@ -123,6 +123,9 @@ Bring failing chat excerpts back into the skill text (tighten gates, add trouble
 | Empty policy list | Wrong context | Wrong namespace or hub vs spoke kubeconfig | Recheck kubeconfig; not a verdict issue |
 | Pool UI empty but CR exists | UI filter / permissions | Refresh; check console filter; confirm user can `get clusterpools` | May be Trap 2 (environment issue) |
 | Eval fetch CORS / network | Cross-origin path | Use same-origin path; mirror URL from working Network tab call | Falls back to backend-only for API checks |
+| ACM/OCP version mismatch | Env was provisioned with incompatible versions (OCP below minimum for ACM) | Phase 0.5 Check 1 catches this. If missed: `oc get clusterversion` + check matrix | INFEASIBLE (version-mismatch); do not debug UI — it will not work |
+| ACM UI routes blank / plugins not rendering | MCE plugin webpack chunks 404 or "Unsatisfied version" warnings | Almost always a version mismatch (OCP too old for MCE). Verify via Phase 0.5 Check 1 | INFEASIBLE; do not investigate webpack — fix the environment |
+| KubeVirt/CNV option not available in UI | Missing CNV operator; cluster lacks bare-metal workers | Phase 0.5 Check 2-3 classifies this. Confirm worker instance types | INFEASIBLE (infrastructure) if workers are cloud VMs |
 | Jira MCP unavailable | Token expired | Re-authenticate; check env vars | Cannot start — STOP |
 | acm-source unavailable | Not configured | Skip source cross-validation | Loses 1 Tier 1 evidence point |
 | acm-search unavailable | Not connected | Use direct `oc` commands (slower) | No verdict impact (equivalent path exists) |
@@ -180,8 +183,8 @@ Bundled references (Level 3): `references/environment-checks.md` and `references
 
 1. Parse **JIRA key** and **environment** from user message.
 2. **Determine scope** (from user input or natural language):
-   - **Full** (default): All phases through Phase 3 + verdict. Produces FIXED/NOT FIXED/BLOCKED with any qualifier.
-   - **Presence-only** ("is the fix in the build?", "cherry-pick check"): Phases 0-2b only. Maximum verdict = FIXED (code-only). Skips Phases 2.5, 2.75, and 3. JIRA template includes: "Fix presence confirmed. Full verification pending." Skill MUST NOT offer to transition ticket to Closed. Creates TodoWrite reminder to return for full verification.
+   - **Full** (default): All phases through Phase 3 + verdict. Produces FIXED/NOT FIXED/BLOCKED/INFEASIBLE with any qualifier.
+   - **Presence-only** ("is the fix in the build?", "cherry-pick check"): Phases 0-0.5-2b only. Maximum verdict = FIXED (code-only). Skips Phases 2.5, 2.75, and 3. Phase 0.5 still runs (version gate applies regardless). JIRA template includes: "Fix presence confirmed. Full verification pending." Skill MUST NOT offer to transition ticket to Closed. Creates TodoWrite reminder to return for full verification.
    - **Prereq-only** ("can this env reproduce the bug?"): Phases 0-2.5 only. Output = gap table. No verdict issued.
 3. If environment missing:
    - Extract ACM version from JIRA `fix_versions` (e.g. "ACM 2.17.0" → search for `2.17`).
@@ -201,7 +204,115 @@ Bundled references (Level 3): `references/environment-checks.md` and `references
    - If relevant component patterns found: incorporate into Phase 2.5 prereq planning.
    - If Engram unavailable or returns nothing: proceed normally. This is additive context, not a hard dependency.
 
-6. Schedule **three parallel subagents** (Cursor **Task** tool with `subagent_type: generalPurpose` or `explore`, readonly for Phase 1):
+6. **Lightweight JIRA fetch** (unconditional, enables Phase 0.5):
+
+   Call `jira` → `get_issue(key)` and extract:
+   - `summary` (for keyword-based feature area classification in Phase 0.5)
+   - `description` (first 500 chars, for infrastructure keyword scanning)
+   - `components` (JIRA component field → maps to ACM subsystem)
+   - `fix_versions` (confirms target ACM version)
+
+   **Cost**: ~1 second (single MCP call). Does NOT duplicate Phase 1 JIRA Analyzer — that subagent does deep analysis (steps to reproduce, all comments, linked tickets, attachments, bug type classification).
+
+   **If JIRA MCP unavailable**: Log warning "Feature area gate will be skipped — JIRA unavailable." Proceed to Phase 0.5 Check 1 only (version check does not need JIRA data).
+
+7. **Proceed to Phase 0.5** (Environment Feasibility Gate — see below).
+
+---
+
+## Phase 0.5 — Environment Feasibility Gate
+
+**Purpose**: Catch fundamentally incompatible environments BEFORE the expensive Phase 1 parallel subagents run. This is a HARD gate — if it fails, the skill stops immediately with a documented conclusion or offers a degraded path (Tier C code-only).
+
+**Cost**: ~6-8 seconds total (negligible vs 45-60 min total verification time). Zero subagent spawns.
+
+### Check 1: Version Compatibility Matrix
+
+1. Get OCP version: `oc get clusterversion version -o jsonpath='{.status.desired.version}'`
+2. Get ACM version: from JIRA `fix_versions` (step 6) OR `oc get csv -n <ns> | grep advanced-cluster-management`
+3. Read matrix from `~/Documents/work/notes/knowledge/versions/version-matrix.md` (the "OCP Version Requirements" table)
+4. Compare: Is the environment's OCP version within the ACM version's [minimum, maximum] range?
+5. **If OUT OF RANGE** → emit **INFEASIBLE (version mismatch)** with evidence:
+   - Exact versions found (OCP X.Y.Z, ACM A.B.C)
+   - Supported OCP range for this ACM version
+   - Impact: "ACM console UI and dynamic plugins will not function correctly"
+   - Options: (a) Provision correct environment, (b) Tier C code-only (if viable per Tier C criteria below)
+
+**If version check passes** → proceed to Check 2.
+
+### Check 2: Bug Feature Area → Hard Infrastructure Requirements
+
+From the JIRA summary + component (fetched in Phase 0 step 6), classify the feature area using keyword matching. ONLY gate on **architecturally impossible** requirements — things that CANNOT be added to the current environment.
+
+| Feature Area | Keywords (summary/component) | Hard Requirement |
+|---|---|---|
+| KubeVirt HCP | "kubevirt", "KubeVirt", "attachDefaultNetwork", "HCP.*virt" | CNV operator + bare-metal/nested-virt workers |
+| Fleet Virtualization | "fleet virt", "virtual machine", "VM migration", "CCLM" | CNV on spoke + bare-metal spoke workers |
+| Submariner | "submariner", "service discovery", "globalnet" | 2+ managed clusters with L3 connectivity |
+| Disconnected / Air-gapped | "disconnected", "air-gap", "mirror registry" | Network isolation + mirror registry |
+| Bare-metal provisioning | "bare metal", "BMC", "Metal3", "assisted installer" | Metal3 + BMC access + physical hosts |
+| **Other / Unknown** | *(no match)* | **No hard gate** — proceed to Phase 1 |
+
+**Soft prerequisites** (NOT Phase 0.5 — handled in Phase 2.5):
+- Cloud provider credentials, Observability operator, GitOps operator, Ansible AAP, Global Hub operator, Hive operator, MCH feature flags, managed cluster addons, Policy/GRC CRDs
+
+**If feature area has no hard requirement** (match = "Other") → gate PASSES, proceed to Phase 1.
+**If feature area has a hard requirement** → proceed to Check 3.
+
+### Check 3: Platform Capability Assessment
+
+For each hard requirement identified in Check 2, determine if the environment CAN support it:
+
+| Hard Requirement | Assessment Method | NOT POSSIBLE when... |
+|---|---|---|
+| CNV + bare-metal workers | `oc get nodes -o jsonpath='{.items[*].metadata.labels.node\.kubernetes\.io/instance-type}'` | All workers are standard cloud VMs (m5.xlarge, Standard_D4s_v3, etc.) — not metal |
+| 2+ managed clusters | `oc get managedclusters` | Only `local-cluster` exists and no Hive ClusterDeployments pending |
+| Network isolation | Check cluster connectivity (can reach external registries) | Cluster is connected — cannot be made disconnected |
+| Physical hosts / BMC | Check platform type from infrastructure CR | Platform is cloud (AWS/Azure/GCP) — no physical hosts |
+
+Produce a **feasibility verdict**: POSSIBLE / NOT POSSIBLE / POSSIBLE WITH ADDITIONAL SETUP
+
+### Output (gate conclusion)
+
+**If all checks PASS**: Proceed to Phase 1 (parallel subagents). Log: "Phase 0.5: Environment feasibility confirmed."
+
+**If Check 1 fails (version)**: Emit INFEASIBLE — version mismatch is absolute.
+
+**If Check 3 produces NOT POSSIBLE**: Apply Tier C Viability Criteria (below) to determine degraded path.
+
+### Tier C Viability Criteria (when gate fails with infrastructure infeasibility)
+
+When the gate fails, determine if code-level verification (Tier C) is a valid degraded path based on the bug's nature:
+
+| Bug Indicator (from JIRA summary) | Tier C Viable? | Rationale |
+|---|---|---|
+| Backend logic, API error, server-side crash | YES | Can grep for fix pattern in pod (`oc exec`) |
+| UI functional (JS logic, event handler, data flow, field name) | YES | Can grep compiled JS bundle in console pod |
+| UI layout / CSS / visual rendering only | NO | No code-level indicator for visual correctness |
+| RBAC / permission error | YES | Can grep for permission string changes |
+| Data / CRD / status field | YES | Can inspect CRD schemas and controller logic |
+| Performance / timing / probe latency | NO | Requires runtime measurement, not code grep |
+| Cannot classify from summary alone | YES (default) | Attempt Tier C; worst case inconclusive |
+
+**Decision rule:**
+- If Tier C viable → offer user the choice: (a) INFEASIBLE (stop entirely), (b) Proceed with Tier C code-only verification
+- If Tier C NOT viable → emit INFEASIBLE directly (no degraded path available)
+
+### Error Handling / Degraded Mode
+
+| Failure | Behavior |
+|---|---|
+| JIRA MCP unavailable in Phase 0 | Skip Checks 2 & 3. Check 1 (version) still runs. Log: "Feature area gate skipped — JIRA unavailable." |
+| `oc` unreachable (cluster down) | Entire skill blocked. Emit BLOCKED (environment unreachable). |
+| Version matrix file missing/outdated | Proceed with best-effort using known ranges in this skill text. Note: "Version matrix may be stale." |
+| MCE-only install (no ACM CSV) | Use MCE version for matrix lookup (matrix includes MCE→OCP mapping). |
+| ACM on unsupported OCP (user pipeline error) | Check 1 catches this regardless of cause. Emit INFEASIBLE. |
+
+---
+
+## Phase 1 — Parallel Context Gathering
+
+Schedule **three parallel subagents** (Cursor **Task** tool with `subagent_type: generalPurpose` or `explore`, readonly):
 
 ### Subagent 1 — JIRA Analyzer
 
@@ -297,6 +408,67 @@ If the code review reveals the fix is **clearly wrong** (e.g. addresses wrong co
 
 ---
 
+## Phase 2c — UI Applicability Assessment
+
+**Purpose**: Determine whether the fix produces UI-observable behavior that can be verified with screenshots. Uses data already collected (JIRA profile + PR diff from Phase 1/2b) — zero additional I/O cost.
+
+**Scope guard**: Skip this phase entirely in "presence-only" mode. Only applies to full verification scope.
+
+### Decision matrix (from PR diff + bug type)
+
+| PR touches... | UI Applicable? | Verification approach |
+|---|---|---|
+| Template/form/wizard code (HBS, TSX, control data) | YES | Navigate to the UI element, test all states |
+| CSS/layout/styling | YES | Screenshot at different states/viewports |
+| API response handling rendered in UI | YES | Trigger the API flow, verify UI reflects correct data |
+| Translation/i18n files (en.json, locales/) | YES | Navigate to page showing the changed string, verify text renders |
+| Route definitions / navigation config | YES | Verify route exists and navigates correctly |
+| Backend-only (server.js, middleware, probe logic) | NO | Backend verification only |
+| CRD/operator/controller logic | NO | Backend verification only |
+| Test files only | NO | Code review sufficient |
+| **Other / Unknown** | **MAYBE** | Check if changed function/module is imported by a UI component (`search_code` for imports in TSX/HBS). If yes → YES. If no UI consumer → NO. |
+
+### Output
+
+Set `ui_applicable` = true/false and draft a `ui_verification_plan` listing which UI elements to test and which states to capture.
+
+When `ui_applicable = true`, proceed to Phase 2d. When `ui_applicable = false`, skip Phase 2d and proceed to Phase 2.5.
+
+---
+
+## Phase 2d — UI State Mapping (when `ui_applicable = true`)
+
+**Purpose**: Systematically map ALL observable UI states the fix produces, so Phase 3B captures comprehensive evidence. This is the "understand the code implementation → plan what to screenshot" step.
+
+**Scope guard**: Only runs when Phase 2c sets `ui_applicable = true` AND scope is "full".
+
+### Process (from PR diff analysis in Phase 2b)
+
+1. **Identify UI element(s) changed** (checkbox, dropdown, text field, toggle, wizard step, table row, modal)
+2. **List all valid states** for each element (enabled/disabled, checked/unchecked, visible/hidden, value options, empty/populated)
+3. **Identify dependencies between states** (e.g., "checkbox only enabled when field X has a value", "dropdown appears after selecting option Y")
+4. **Map each state to its expected output** (YAML field value, API payload, visual rendering, error message)
+5. **Produce a verification matrix**:
+
+| State | Precondition | Expected UI | Expected Output (YAML/API) | Screenshot |
+|-------|-------------|-------------|---------------------------|------------|
+| Element in state A | Setup steps... | Visual description | Field: value | YES |
+| Element in state B | Different setup... | Visual description | Field: value | YES |
+| Element disabled | Missing dependency | Grayed out | N/A | YES |
+
+### Multi-element fixes
+
+When the PR changes multiple UI elements:
+- Produce a matrix row for EACH element × EACH relevant state
+- Identify cross-element interactions (changing element A affects element B's state)
+- Prioritize: test the PRIMARY fix element first, then secondary/dependent elements
+
+### Cost
+
+Zero I/O — pure analysis of already-collected PR diff data. Produces the test plan that Phase 3B executes.
+
+---
+
 ## Phase 2.5 — Prerequisite analysis (neo4j + cluster)
 
 **Purpose**: Ensure the environment can exercise the repro **before** spending time in UI.
@@ -373,41 +545,97 @@ If `acm-live-investigator` skill is not available or times out: proceed with a w
 
 ## Phase 3 — Execute verification
 
-**Primary goal**: Confirm the fix is working. Two paths run in sequence; Path B is conditional.
+**Primary goal**: Confirm the fix is working. **UI verification is prioritized** when Phase 2c determined the fix is UI-applicable. Backend evidence supplements UI findings.
 
-### Phase 3A — Backend Verification (ALWAYS runs)
+### Phase 3 — Priority routing
 
-1. **Resource state**: `oc get/describe` resources affected by the bug.
-2. **Tier C evidence** (if not already done in Phase 2): `oc exec deploy/<component> -- grep "<fix-indicator>" <path>`.
-3. **Source cross-validation** (if acm-source MCP available): `search_code(query="<distinctive string from fix PR>", repo="<component repo>")`. If the fix pattern is found in source at the deployed version → Tier 1 evidence. If NOT found → red flag even when Tier A passed (possible merge conflict dropped the change); warn user and suggest Tier C before proceeding.
-4. **API behavior checks**: `oc exec` or `browser_evaluate` fetch with CSRF for console proxy endpoints.
-5. **Log inspection**: `oc logs deploy/<component> --tail=100` — check for error patterns from the JIRA.
+```
+IF ui_applicable = true AND Phase 0.5 gate passed (environment renders UI):
+  → Run Phase 3B FIRST (UI verification with screenshot protocol)
+  → Then Phase 3A as SUPPLEMENTARY (backend grep confirms what UI shows)
+  → Verdict qualifier: "(full)"
 
-### Phase 3B — UI Verification (conditional on credentials + Playwright)
+ELSE IF ui_applicable = true BUT Phase 0.5 failed on infrastructure (not version):
+  → Run Phase 3A as PRIMARY (Tier C code grep)
+  → Skip Phase 3B — document: "UI applicable but environment lacks infrastructure"
+  → Verdict qualifier: "(backend-only)"
 
-**Skip conditions** (any one → skip to Phase 3B-Skip):
-- No console credentials available → qualifier = "code-only"
+ELSE (ui_applicable = false):
+  → Run Phase 3A as PRIMARY (full backend depth)
+  → Skip Phase 3B (not applicable for this bug type)
+  → Verdict qualifier: "(code-only)"
+```
+
+**"Environment supports it" check**: Phase 0.5 Check 1 passed (version compatible) AND Playwright `browser_navigate` to the relevant ACM route renders content (not blank/login loop). If navigate shows blank → fall back to Phase 3A with qualifier "(backend-only, UI render failed)".
+
+---
+
+### Phase 3B — UI Verification (PRIORITIZED when `ui_applicable = true`)
+
+**Skip conditions** (any one → fall back to Phase 3A as primary):
+- No console credentials available → qualifier = "backend-only"
 - Playwright MCP unavailable → qualifier = "backend-only"
+- Phase 0.5 version gate failed → qualifier = "backend-only"
+- `browser_navigate` to relevant page shows blank/unreachable → qualifier = "backend-only, UI render failed"
 
-If skipping: set verdict qualifier and proceed to Phase 4 with Phase 3A evidence only.
-
-**If proceeding:**
+**If proceeding (UI-first path):**
 
 1. **Login**: always **user-playwright** MCP.
    - Standard: `browser_fill_form` on kubeadmin/htpasswd fields.
    - OIDC/Keycloak: follow env-specific flow; prefer stable selectors; snapshot on failure.
    - FG-RBAC: use the **affected** user from user input.
 
-2. **By bug type** — follow `references/verification-patterns.md`:
+2. **Execute verification matrix** (from Phase 2d) — Systematic Screenshot Protocol:
+
+   For EACH row in the verification matrix:
+
+   ```
+   Step 1: browser_navigate(url="<console URL>/<path to wizard/page>")
+   Step 2: browser_snapshot() — get element refs for interaction
+   Step 3: Set up state using:
+     - browser_click(target=<ref from snapshot>)
+     - browser_fill_form(fields=[{name, target, type, value}])
+     - browser_select_option(target=<ref>, values=[...])
+   Step 4: Verify state reached:
+     - browser_verify_element_visible(role=..., accessibleName=...)
+     - OR browser_wait_for(text="<expected text after state change>")
+   Step 5: Capture UI state:
+     - browser_take_screenshot() — full viewport
+     - Save returned image path for JIRA attachment
+   Step 6: YAML/output verification (when applicable):
+     a. browser_click(target=<YAML toggle ref>) to open YAML view
+     b. browser_find(text="<field name>") to locate the relevant field
+     c. browser_take_screenshot() — capture YAML showing field value
+   ```
+
+   **Scrolling to off-screen elements:**
+   ```
+   browser_evaluate(function="() => {
+     document.querySelector('<selector>').scrollIntoView({block: 'center'});
+   }")
+   ```
+
+3. **Screenshot naming and storage:**
+   - Save directory: `~/Documents/work/downloads/<jira-key>-verification/`
+   - Filename pattern: `{NN}-{state-description}.png`
+     - NN = zero-padded row number (01, 02, 03...)
+     - state-description = kebab-case (e.g., "checkbox-enabled-checked", "yaml-false")
+   - For YAML companion shots: append `-yaml` (e.g., `03-yaml-attachDefaultNetwork-false.png`)
+
+4. **Evidence quality rules:**
+   - Every state transition in the verification matrix gets its own screenshot
+   - YAML editor screenshots MUST show the relevant line visible (use `browser_find`)
+   - If a field has enabled/disabled states, capture BOTH
+   - If a toggle produces different output values, capture the output for EACH value
+
+5. **By bug type** — additional patterns from `references/verification-patterns.md`:
    - UI layout: multiple viewports + zoom if in repro.
-   - UI functional: step-through with snapshots on ambiguity.
-   - Backend: `browser_evaluate` async `fetch` with CSRF header; capture status + body.
+   - UI functional: step-through with snapshots per state (verification matrix).
+   - Backend rendered in UI: `browser_evaluate` async `fetch` with CSRF header; capture response.
    - RBAC: repeat flows under limited user.
    - Data: CLI + UI table alignment.
 
-3. **Spokes**: if repro needs spoke, confirm `ManagedCluster` is **Available** and which kubeconfig/context to use (`acm-kubectl` if configured).
-
-4. **Save screenshots** to `/tmp/screenshots/verify-<JIRA-KEY>-<step>.png` for use in Phase 4 JIRA comment.
+6. **Spokes**: if repro needs spoke, confirm `ManagedCluster` is **Available** and which kubeconfig/context to use (`acm-kubectl` if configured).
 
 ### Playwright Recovery Protocol (Phase 3B)
 
@@ -420,6 +648,21 @@ On Playwright failure mid-verification:
    - Set verdict qualifier = "backend-only, UI blocked by Playwright failure"
    - Include the Playwright error in the evidence bundle (user may want to investigate separately)
    - Do NOT declare NOT_FIXED based on Playwright failure alone — the fix may work, the browser tooling just couldn't confirm it.
+
+---
+
+### Phase 3A — Backend Verification (supplementary when UI runs, primary otherwise)
+
+When `ui_applicable = true` and Phase 3B succeeded: run as **supplementary evidence** (confirms what UI shows).
+When `ui_applicable = false` OR Phase 3B was skipped: run as **primary verification** (full depth).
+
+1. **Resource state**: `oc get/describe` resources affected by the bug.
+2. **Tier C evidence** (if not already done in Phase 2): `oc exec deploy/<component> -- grep "<fix-indicator>" <path>`.
+3. **Source cross-validation** (if acm-source MCP available): `search_code(query="<distinctive string from fix PR>", repo="<component repo>")`. If the fix pattern is found in source at the deployed version → Tier 1 evidence. If NOT found → red flag even when Tier A passed (possible merge conflict dropped the change); warn user and suggest Tier C before proceeding.
+4. **API behavior checks**: `oc exec` or `browser_evaluate` fetch with CSRF for console proxy endpoints.
+5. **Log inspection**: `oc logs deploy/<component> --tail=100` — check for error patterns from the JIRA.
+
+---
 
 ### Step 2 — Regression spot-checks (informed by Phase 2b)
 
@@ -461,8 +704,8 @@ If `acm-knowledge` MCP is unavailable, scan the relevant failure-signatures file
 | Field | Value |
 |-------|--------|
 | JIRA | ACM-XXXXX |
-| Verdict | FIXED / NOT FIXED / BLOCKED |
-| Qualifier | (full) / (code-only) / (backend-only) / (code review) / (cherry-pick) / (pipeline lag) / (environment) |
+| Verdict | FIXED / NOT FIXED / BLOCKED / INFEASIBLE |
+| Qualifier | (full) / (code-only) / (backend-only) / (code review) / (cherry-pick) / (pipeline lag) / (environment) / (version-mismatch) / (infrastructure) |
 | Confidence | HIGH / MEDIUM / LOW (from evidence tier weights) |
 | DOWNSTREAM tag | full string |
 | Fix PR(s) | #numbers + branches |
@@ -548,12 +791,37 @@ They complement each other; do not merge workflows.
 
 ## Quick reference — verdict meanings
 
-- **FIXED (full)**: Code present in build + UI verification passes + backend clean.
-- **FIXED (code-only)**: Code present + code review positive, but UI verification not possible (no credentials).
-- **FIXED (backend-only)**: Backend verification passes, Playwright unavailable or failed.
+- **FIXED (full)**: UI verification across all states (screenshots) + backend grep confirmation. **Preferred qualifier for UI bugs.** Screenshots attached to JIRA using `add_comment` with `attachment_paths`.
+- **FIXED (code-only)**: Backend grep only — UI not applicable for this bug type (backend-only fix per Phase 2c matrix). Acceptable and complete for non-UI bugs.
+- **FIXED (backend-only)**: UI was applicable but environment/tooling prevented it (Phase 0.5 infra failure, Playwright unavailable, UI render failed). Backend Tier C evidence used instead.
 - **NOT FIXED (standard)**: Code present + defect still reproduced (regression or insufficient fix).
 - **NOT FIXED (code review)**: Code present but fix is clearly incorrect (wrong component, introduces new defect).
 - **BLOCKED (cherry-pick)**: Code absent from target branch — needs cherry-pick.
+- **INFEASIBLE (version-mismatch)**: Environment's OCP version is outside the supported range for the ACM version. UI and dynamic plugins will not function. Issued by Phase 0.5 Check 1.
+- **INFEASIBLE (infrastructure)**: Bug requires infrastructure that cannot be added to the current environment (e.g., bare-metal for CNV, multiple clusters for Submariner). Issued by Phase 0.5 Checks 2-3.
+
+### INFEASIBLE JIRA comment template
+
+When the verdict is INFEASIBLE, do NOT post a verification comment to JIRA. Instead, inform the user with the following format (for their reference, not for JIRA):
+
+```
+Phase 0.5 Feasibility Gate: INFEASIBLE
+
+Environment: OCP {ocp_version} / ACM {acm_version} ({env_name})
+Gate failure: {Check 1: version mismatch | Check 3: infrastructure impossible}
+
+Evidence:
+- {Specific evidence from the check that failed}
+
+Required environment:
+- {What is needed for successful verification}
+
+Recommended actions:
+1. {Action — e.g., provision OCP 4.18+ cluster}
+2. {Alternative — e.g., proceed with code-level Tier C if viable}
+```
+
+INFEASIBLE is NOT posted to JIRA — it is an internal skill conclusion indicating the environment is unsuitable, not that the bug is unfixed.
 - **BLOCKED (pipeline lag)**: Code merged to branch but build predates the merge — needs newer build.
 - **BLOCKED (environment)**: Cluster unhealthy or infrastructure issue preventing valid verification.
 
@@ -752,6 +1020,58 @@ Need cherry-pick to release-2.YY before QE verification.
 ```text
 Verification blocked: <missing prereq>.
 QE can resume after <user action / cluster setup>.
+```
+
+---
+
+### Detailed verification comment format (narrative style)
+
+Use this format when the user explicitly requests a detailed narrative comment (e.g., "make a comment like the 2.17 one," "full data," "similar to what we posted before"). This is the full-evidence style used for bugs requiring code-level or multi-phase verification.
+
+**Formatting rules (MANDATORY):**
+
+1. **Environment identification** — State the ACM/MCE version and source only. Use the format: `ACM X.Y.Z / MCE X.Y.Z (latest-X.Y konflux, channel release-X.Y)`. Do NOT include the hub cluster name, server URL, or `oc whoami --show-server` output. The image tag confirms the build; the hub name is irrelevant to readers.
+
+2. **No tool/method disclosure** — NEVER mention Playwright, browser_evaluate, MCP servers, AI tools, or any other tooling used to collect data. The comment presents verified evidence, not methodology. Example: say "Extracted from compiled bundle" NOT "Used Playwright browser_evaluate to fetch the bundle."
+
+3. **PR code review section** — Keep it to a brief 1-2 sentence summary of what the fix does. Do NOT list individual test files or snapshot updates (reviewers can see those in the PR). Only mention source files that are relevant to understanding the fix logic.
+
+4. **Conceptual "WHY" before each verification step** — Before presenting evidence (e.g., grep output), explain WHY this specific verification is being performed. What does this step prove about the fix? Why is it relevant? The reader should understand the testing rationale before seeing the data. Example: "The bug was about incorrect YAML field generation. To confirm the template now produces the correct field, we extract the Handlebars template from the compiled bundle — this is the exact code that renders the NodePool YAML when a user submits the creation form:"
+
+5. **No @mentions** — Do NOT include JIRA @mentions (`[~accountid:...]`) in the drafted comment. The user will add reviewer mentions manually after posting.
+
+6. **Image tag retrieval** — Always fetch the actual ACM image tag from the environment. Preferred methods (in order):
+   - `oc get multiclusterhub -n <ns> -o jsonpath='{.status.currentVersion}'` for the ACM version
+   - `oc get catalogsource -A` for the catalog image tag (confirms source: konflux/production)
+   - `oc get csv -n <ns>` for the CSV version and `createdAt` timestamp
+   - Do NOT hardcode or guess the tag; always fetch live.
+
+7. **Evidence blocks** — Use JIRA `{noformat}` blocks for terminal output. Show the exact commands and output. Truncate irrelevant noise but preserve the meaningful portions.
+
+8. **Verdict** — End with a clear verdict paragraph summarizing what was confirmed and why the bug is resolved.
+
+**Template structure:**
+
+```text
+Verified on *ACM X.Y.Z / MCE X.Y.Z* ({{latest-X.Y}} konflux, channel {{release-X.Y}}):
+
+Fix PR [#XXXX|https://github.com/stolostron/<repo>/pull/XXXX] <1-sentence fix summary>.
+
+h3. Bug Summary
+<2-3 sentences explaining what was broken and why>
+
+h3. <Verification Section Title>
+<WHY paragraph — explain what this proves about the fix>
+
+{noformat}<evidence>{noformat}
+
+*Result:* <interpretation>
+
+h3. Branch Analysis
+<How the fix reached this build>
+
+h3. Verdict
+<Clear statement of what was confirmed>
 ```
 
 ---

@@ -187,6 +187,17 @@ Read the `FAILURE_OUTPUT` and classify into one of these categories:
 4. Search recent PRs: `gh pr list --repo stolostron/console --search "component"`
 5. This is NOT an automation bug -- report the product issue
 
+## ASSERTION INTEGRITY CONSTRAINT (NON-NEGOTIABLE)
+
+When proposing a fix for an `automation_bug`, the fix MUST NOT weaken assertions. Specifically:
+
+1. **NEVER replace `expect(locator).toBeVisible()` with `.isVisible().catch(() => false); if (!visible) return;`** -- this silently passes without verifying. If the element should be visible, assert it unconditionally. If the step is optional, use `if (!condition) { return; }` at the TOP of the step before any assertions.
+2. **NEVER use `.or()` to combine contradictory outcomes** (e.g., `expect(success.or(error)).toBeVisible()`). Each assertion must test ONE expected state. If the UI can be in multiple valid states, handle them with branching at the step boundary, not by accepting both as valid in a single assertion.
+3. **NEVER remove an assertion to make the test pass.** If an assertion fails, investigate WHY. If the expected state is wrong, change the expected value to the correct one -- do not delete the assertion.
+4. **Every `test.step('Verify X', ...)` MUST contain at least one `expect()` call.** A verification step without an assertion is dead code.
+
+If the fix would violate any of these rules, classify the failure as `environment_issue` or `product_bug` and report it to the user instead of weakening the test.
+
 ## Step 3: Return Diagnosis
 
 ```
@@ -209,6 +220,7 @@ Fix (if automation_bug):
   Line: [N]
   Change: [old] → [new]
   Reason: [why this fixes the issue]
+  Assertion integrity: [CONFIRMED -- no assertions weakened or removed]
 
 Action (if environment_issue):
   [what the user needs to fix on the cluster]

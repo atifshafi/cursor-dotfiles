@@ -92,7 +92,13 @@
 |-----------|---------|---------|
 | PLATFORM | (required) | `aws`, `azure`, `gcp`, `vsphere`, `eks`, `aks`, `gke` |
 | OCP_CLUSTER_NAME | (required) | **InfraID** of the cluster (comma-separated for multiple) |
-| REGION | (platform default) | Cloud region |
+| REGION | (platform default) | Cloud region. **MUST be specified explicitly for Azure** (e.g., `eastus`). For AWS, specify if non-default (check deploy job logs for actual region). |
+
+### CRITICAL: Region parameter for Azure
+
+The destroy pipeline **FAILS SILENTLY** if `REGION` is empty for Azure clusters. The error is: `Error: clusterNames and region parameters cannot be empty.` Always pass `REGION=eastus` (or the actual region) when destroying Azure clusters.
+
+For AWS: check the deploy job's region — clusters deployed with `ocp_deploy_and_acm_install` may use `us-east-2` (not the default `us-east-1`). Verify from the cluster: `oc get machines -n openshift-machine-api -o jsonpath='{.items[0].spec.providerSpec.value.placement.region}'`.
 
 ### How to Find InfraID
 From the deploy job's archived `ocp_credentials/output.json`, or from `oc get infrastructure cluster -o jsonpath='{.status.infrastructureName}'`.

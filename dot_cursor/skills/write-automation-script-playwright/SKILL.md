@@ -16,7 +16,11 @@ Write or update Playwright E2E automation scripts for any ACM Console UI feature
 ## Core Philosophy
 
 1. **Discover, don't assume** -- use `acm-source` MCP for source code selectors, browser MCP for live page validation. ACM Console spans many areas (Clusters, Applications, Governance, Search, Credentials, Fleet Virt, RBAC, Observability, etc.) -- each has different UI patterns, resources, and behaviors. Always investigate the specific area.
-2. **Assertions are sacred -- never compromise them.** Every `test.step()` that says "Verify X" MUST assert X or fail trying. Never use defensive patterns (`.catch(() => false)`, `try/catch` swallowing errors, `if (visible)` guards) that allow a verification step to pass without actually verifying anything. If a step is named "Verify tree view loads" and the tree doesn't load, the step MUST FAIL -- not silently pass. If the entire test cannot run in the environment, use `test.skip(condition, 'reason')` at the TOP of the test body. If a single optional step cannot run (e.g., "skip if only 1 cluster"), use `if (!condition) { return; }` inside the step -- NOT `test.skip()`, which would mark the entire test as skipped even after prior steps passed. A test that passes without asserting is worse than a test that fails -- it creates false confidence.
+2. **Assertions are sacred -- never compromise them. This is the HIGHEST-PRIORITY rule in this skill.** Every `test.step()` that says "Verify X" MUST assert X or fail trying. Never use defensive patterns (`.catch(() => false)`, `try/catch` swallowing errors, `if (visible)` guards) that allow a verification step to pass without actually verifying anything. If a step is named "Verify tree view loads" and the tree doesn't load, the step MUST FAIL -- not silently pass. If the entire test cannot run in the environment, use `test.skip(condition, 'reason')` at the TOP of the test body. If a single optional step cannot run (e.g., "skip if only 1 cluster"), use `if (!condition) { return; }` inside the step -- NOT `test.skip()`, which would mark the entire test as skipped even after prior steps passed. A test that passes without asserting is worse than a test that fails -- it creates false confidence.
+   **Prohibited patterns (memorize -- these apply at EVERY phase, not just Phase 3.5):**
+   - `locator.isVisible().catch(() => false); if (!visible) return;` -- NEVER. Use `expect(locator).toBeVisible()`.
+   - `expect(successLocator.or(errorLocator)).toBeVisible()` -- NEVER. Assert ONE expected outcome.
+   - A `test.step('Verify X', ...)` body with zero `expect()` calls -- NEVER. Every verification step must assert.
 3. **Tests are self-contained** -- every test creates its own prerequisites (`beforeAll`) and cleans up (`afterAll`). Never assume the cluster has VMs, namespaces, policies, applications, or any resource. Analyze Polarion steps to identify what must exist, then create it via `OcCliService`. Each test case is different.
 4. **Reuse before creating** -- before creating ANY new function, interface, config getter, service method, or fixture property, answer: "Does something that already exists return this data or perform this action?" If yes, use it. If it covers 50% or more of what you need, extend it or compose it with a small addition rather than creating a parallel abstraction. Only create entirely new code when nothing existing covers the need. This applies to every layer: config, services, page objects, fixtures, constants. Two functions with different names and return types can still be semantic duplicates if they draw from the same underlying data -- that is a defect, not a design choice.
 5. **Follow existing patterns** -- subagent reads neighboring files before you write anything
@@ -371,6 +375,8 @@ When actual product behavior differs from the Polarion expected result, do NOT s
 
 Write code following the framework guide (`framework/playwright-patterns.md`).
 
+**BEFORE writing ANY code, re-read Core Philosophy #2 (assertions are sacred).** Every rule in the Core Philosophy and the Phase 3.5 anti-pattern checklist applies DURING code generation, not just during review. Writing non-compliant code and catching it in Phase 3.5 wastes cycles. Agents MUST internalize and apply every rule as they write each line -- not treat Phase 3.5 as the only enforcement point. The anti-pattern checklist is a VERIFICATION step, not a first-pass filter.
+
 **Order:** Prerequisites -> Service (if needed) -> Page Object / Component -> Fixture wiring -> Test spec
 
 **Scope rule:** At every step, add ONLY what the current test spec requires. If the test needs 3 methods on a page object, add 3 methods -- not 30 to "cover the full page." If the test uses 2 fixture properties, wire 2 -- not 8 for future tests. Every line of code you write must have a caller in the spec you are writing. No exceptions.
@@ -663,6 +669,11 @@ clusterListPage: async ({ page, oc }, use) => {
 - Destructure only needed fixtures
 - Use `test.step()` for logical grouping
 - Cleanup in `test.afterEach` / `test.afterAll`
+- **Assertion integrity (MANDATORY -- apply to EVERY `test.step()` as you write it):**
+  - A step named "Verify X" MUST `expect()` for X. If you write a step body without an `expect()`, STOP and add one.
+  - NEVER use `.isVisible().catch(() => false)` followed by `if (!visible) return` to skip an assertion. This makes the step pass without testing anything. Use `expect().toBeVisible()` unconditionally, or `if (!condition) { return; }` at the TOP of the step BEFORE any assertions.
+  - NEVER use `.or()` to combine contradictory outcomes (e.g., success OR error). Each assertion must test ONE expected state.
+  - These rules apply during initial code generation, NOT just Phase 3.5 review. Writing compliant code first is cheaper than fixing it later.
 
 ```typescript
 import { test, expect } from '@fixtures/acm-test';
@@ -694,6 +705,19 @@ test('RHACM4K-63953: ...', async ({ clusterListPage }) => {
 
 ---
 
+### Pre-Review Self-Check (MANDATORY before launching Phase 3.5)
+
+Before launching the code quality reviewer, the orchestrating agent MUST perform a quick self-scan on all generated/modified spec files. This catches the most common violations BEFORE delegating to the subagent, reducing fix-and-recheck cycles.
+
+**For each `test.step()` in every spec file, verify:**
+1. If the step name contains "Verify" or "Check" -- does the body contain at least one `expect()`? If not, add one.
+2. Does the body contain `.isVisible().catch(` or `.catch(() => false)`? If yes, replace with `expect().toBeVisible()`.
+3. Does the body contain `.or(` inside an `expect()`? If yes, verify the two locators are NOT contradictory outcomes. If they are, pick the one correct expected state.
+
+This takes under 60 seconds and prevents the two most common reviewer-caught violations from entering the review cycle.
+
+---
+
 ## Phase 3.5: Code Quality Review
 
 Launch the code quality reviewer subagent.
@@ -714,6 +738,7 @@ The reviewer checks:
 - **Comment consistency check (MANDATORY):** Before adding any comment (JSDoc, banner separator, inline), check the same file type on `main` for conventions. If existing classes in the same layer have single-line JSDoc, match that. If existing specs have no `// -------` separators, don't add them. If existing constants files don't have `// =====` section banners between exports, don't add them. Never add Polarion IDs, story references, or explanatory prose to comments unless existing files in the same directory already follow that pattern. The spec file header comment is the ONE place where Polarion/Story metadata belongs (matching the existing spec pattern).
 - **Anti-pattern scan (MANDATORY -- check EVERY item, do NOT skip):**
   - **Defensive assertion bypass** -- `.isVisible().catch(() => false)` or `.isVisible().catch(() => {})` followed by `if (visible)` guards that skip assertions. Grep: `rg "\.catch\(\(\)" src/tests/ src/pages/ src/components/` and review EVERY match. If a `.catch` is used on a locator check and the result gates an assertion, it is a violation. The assertion must either run unconditionally (use `expect().toBeVisible()`) or the entire step must be skipped with `test.skip()`. There is no middle ground -- a step that conditionally asserts is a step that sometimes tests nothing.
+  - **Contradictory `.or()` assertions** -- `expect(successLocator.or(errorLocator)).toBeVisible()` that accept BOTH success AND failure states as valid. This validates neither outcome -- the assertion can never fail regardless of actual application behavior. Each assertion must test ONE expected state. If the UI genuinely varies by environment (e.g., a tab may or may not be present depending on operator version), handle it as an optional step with `if (!condition) { return; }` at the step boundary, not by accepting contradictory outcomes in a single assertion. Example violation: asserting either VNC controls OR an error alert for a view-only RBAC user -- pick the one that matches the expected RBAC grant.
   - `page.waitForTimeout()` in any file
   - `test.only` in any file
   - **ANY `page.*` locator call in spec files** -- `page.getByRole()`, `page.getByText()`, `page.getByLabel()`, `page.getByTestId()`, `page.locator()` (ALL must go through page object methods, zero exceptions). Grep: `rg "page\.(getByRole|getByText|getByLabel|getByTestId|locator)\(" src/tests/`. The ONLY acceptable `page.*` calls in specs are `page.waitForURL()` and `page.keyboard.*`. If a PO exists for the page, every interaction with that page goes through the PO -- even one-off assertions.
@@ -742,7 +767,7 @@ The reviewer checks:
   - **Verification method (NON-NEGOTIABLE):** For EVERY public method in new/modified page objects, run `rg "methodName" src/` and include the grep output in the review. If zero callers outside the defining file, delete the method. Do NOT self-certify -- show the evidence. Same for every exported constant: `rg "CONSTANT_NAME" src/` must show at least one importer.
   - **Per-property verification for `as const` objects (NON-NEGOTIABLE):** An exported object being imported does NOT mean all its properties are consumed. For each property in a new or modified `as const` export, grep the PROPERTY name: `rg "\.propertyName" src/`. If a property has zero references outside its defining file, delete it. Example: `CLUSTER_DESCRIPTION` being imported does not prove `CLUSTER_DESCRIPTION.modalTitle` is used -- grep for `\.modalTitle` specifically. The object import is necessary but not sufficient evidence; every individual property must have a caller.
   - **PO bypass check (NON-NEGOTIABLE):** After writing specs, run `rg "page\.(getByRole|getByText|getByLabel|getByTestId|locator)\(" src/tests/` on ALL spec files in this PR. ANY match means the spec is bypassing a page object. For each match: (1) identify which page the spec is on, (2) check if a PO exists for that page, (3) if yes, move the locator into a PO method and call it from the spec. This is the most common reviewer feedback -- a PO that exists but is only used for `goto()` while the rest of the page interactions are inline. A PO is not just a navigation tool.
-- **Lint gate:** Run `npm run lint:check` (Prettier + ESLint + TypeScript) on the repo. Fix any errors introduced by generated code before proceeding. **Prettier checks ALL file types** (`.ts`, `.json`, `.md`, `.yml`, `.yaml`) -- if you created or modified any non-TypeScript file (JSON configs, YAML templates, scripts), run `npm run lint:fix` to format them. CI will fail on unformatted files of any type.
+- **Lint gate:** Run `npm run lint:check` (Prettier + ESLint + TypeScript) on the repo. Fix any errors introduced by generated code before proceeding. **Prettier only checks non-TypeScript files** (`.md`, `.json`, `.yml`, `.yaml`) -- `.ts` formatting is NOT gated by Prettier (only ESLint and `tsc` cover TypeScript). If you created or modified markdown, JSON, or YAML files, run `npm run lint:fix` to format them. Don't chase `.ts` Prettier failures -- they don't exist in this repo's CI.
 
 **If ANY blocking issue is found:** Fix it, then RE-RUN the Phase 3.5 checklist. Do NOT proceed to Phase 4 until every item passes. **Circuit breaker:** Maximum **2 re-runs** of Phase 3.5. If issues persist after 2 fix-and-recheck cycles, proceed to Phase 4 with remaining issues documented (they are likely false positives or require user judgment). Do not loop indefinitely -- each re-run costs significant tokens.
 
@@ -786,6 +811,12 @@ The debugger will return a diagnosis:
 - **environment_issue:** Report to user with evidence
 - **product_bug:** Report to user, offer to file JIRA
 
+**ASSERTION INTEGRITY DURING DEBUGGING (NON-NEGOTIABLE):** When fixing a failing test, NEVER weaken assertions to make the test pass. Specifically:
+- NEVER replace `expect(X).toBeVisible()` with `.isVisible().catch(() => false); if (!visible) return;` -- this converts a test failure into a silent pass. The step now tests nothing.
+- NEVER replace a specific assertion with `.or()` that accepts contradictory outcomes (e.g., `expect(success.or(error)).toBeVisible()`) -- this makes the assertion unfailable.
+- NEVER remove an assertion because it's "flaky" -- investigate the root cause. If the UI legitimately varies, use `if (!condition) { return; }` at the step boundary with a clear comment, not a defensive catch inside the assertion.
+- If a step fails and you cannot determine the correct expected state, REPORT IT TO THE USER rather than making the assertion pass unconditionally.
+
 **Circuit breaker (MANDATORY):** Maximum **2 failure-debug cycles** (Phase 4 → 4.5 → fix → Phase 4 → 4.5). If the test still fails after 2 debug cycles, STOP and report to the user with all collected evidence. Do NOT enter a third cycle -- the issue likely requires human judgment or environment changes. Each cycle costs significant tokens; runaway loops are the primary source of budget overruns.
 
 ---
@@ -815,6 +846,7 @@ After all tests pass, re-fetch the Polarion test steps and verify 100% coverage:
 6. If any step is NOT fully covered (actions AND expected results), fix it immediately before reporting completion. Do NOT report success with partial steps.
 7. Only report "complete" when every Polarion step has a corresponding `test.step()` that exercises ALL described actions and asserts ALL expected results (N/A for multi-scenario ALC sanity files without Polarion IDs)
 8. **If a step was weakened during debugging** (e.g., an assertion was removed because it failed), flag it and restore the full assertion. Investigate the failure per the Behavior Discrepancy Protocol instead of removing the assertion.
+9. **Post-debug assertion audit (NON-NEGOTIABLE if Phase 4.5 ran):** After any failure-debug cycle, re-scan ALL `test.step()` bodies in the spec for the three prohibited patterns: (a) `.catch(() => false)` + `if` guard, (b) `.or()` combining success and error locators, (c) steps with zero `expect()` calls. Each match is a violation. Fix before reporting.
 
 ### Skip Detection (MANDATORY)
 
@@ -1012,7 +1044,7 @@ await expect(async () => {
 | Rule | Convention |
 |------|-----------|
 | Single test per scenario | One `test()` per Polarion ID |
-| Centralize selectors | Constants files + page object `private readonly` locators |
+| Centralize selectors and text labels | Constants files (`constants/{area}.ts`) hold all CSS selectors, `data-test` attributes, and UI text labels (button names, step names, headings, dropdown options). Page objects reference constants; they must not contain inline UI text strings. |
 | Text-based buttons | `page.getByRole('button', { name: 'Next' })` |
 | Logical grouping | `test.step('Step description', async () => { ... })` |
 | Condition-based waits | `expect(locator).toBeVisible()`, `locator.waitFor()` |
@@ -1041,9 +1073,11 @@ await expect(async () => {
 | Legacy env var fallbacks (`OPTIONS_*`, etc.) | The console-e2e repo uses `HUB_PASSWORD`, `CONSOLE_USERNAME`, `CONSOLE_IDP`. Do NOT add fallbacks for env vars from other repos (e.g. `OPTIONS_HUB_PASSWORD` from clc-ui-e2e). Use only the vars documented in architecture-summary.md. |
 | New abstraction for already-available data | Before creating any new getter, service method, or interface, verify each field or capability isn't already provided by existing code. Creating a new function that returns data already reachable through existing functions produces two sources of truth. When the underlying data changes, both must be updated -- but only one will be. Compose existing code instead. |
 | Domain-specific CLI logic in page objects | Page objects are for UI interaction. Domain CLI operations (label CRUD, resource lifecycle, multi-step backend flows) belong in `OcCliService` as named methods. Page objects may only wrap one-liner OcCliService calls (e.g., `oc.hasResourcesInCluster()`). |
+| Multi-step orchestration / step-routing in page objects | Page objects provide **atomic** UI actions (click button, fill input, read element state, wait for visibility). They must NOT contain step-routing logic that reads DOM state to decide which branch to execute next. If a method checks "which wizard step am I on?" and runs different code paths per answer, that's orchestration — move it to `src/lib/{area}/`. **Allowed in page objects:** simple 1-2 line UI-state guards (e.g., `if (expanded !== 'true') await btn.click()`) that ensure an element is in the correct state before interacting. These are standard across all wizard page objects. **Not allowed:** `if (currentStep === X) { 15 lines } else if (currentStep === Y) { 20 lines }` — this is a state machine and belongs in lib. |
 | `extends BasePage` on lib action classes | Lib action classes (`src/lib/`) must NOT extend `BasePage`. `BasePage` is for page objects with a URL route and `goto()`. Action helpers that operate within a wizard step, panel, or section use composition: accept `page` and `waitForLoad` as constructor parameters. The parent page object passes its `waitForLoad` when creating the action helper. |
 | Direct `page.goto()` in test files | All navigation belongs in page object methods. For retry loops (`toPass()`), add a `navigateTo*()` variant on the PO that skips `waitForLoad()` and includes `.catch(() => {})`. Tests must never construct URLs. |
 | Inline domain constants in spec files | Move API groups, resource names, policy names, cluster names to `constants/{area}.ts`. Only truly ephemeral test data (random values, test-specific label values) may stay in the spec. |
+| Inline text labels in page objects | Page objects must NOT contain inline strings for UI text (step names, button labels, dropdown options, heading text). Extract to the relevant `constants/{area}.ts` object (e.g., `FLEET_VIRT_VM_CREATION.steps.bootSource`). Generic Playwright role matchers (e.g., `getByRole('button')` without a name) are exempt. |
 | Hardcoded column indices (`td.nth(N)`) | Fragile if columns reorder. Use `getCellByColumnHeader(row, 'Labels')` which resolves the column index from header text at runtime. |
 | Selectors in test files | Fragile, duplicated -- use page object |
 | Multiple unrelated tests per describe | Breaks Polarion mapping |

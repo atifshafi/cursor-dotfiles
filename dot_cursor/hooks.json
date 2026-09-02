@@ -29,10 +29,6 @@
       },
       {
         "command": "./hooks/sync-knowledge-db.sh"
-      },
-      {
-        "command": "./hooks/drift-scheduled-check.sh",
-        "loop_limit": 1
       }
     ]
   }

@@ -1,7 +1,12 @@
-<!-- Last verified: 2026-08-10 against acmqe-autotest components/console/ -->
+<!-- Last verified: 2026-08-26 against acmqe-autotest components/console/ -->
 <!-- Verify paths and counts against the live repo before acting on specifics -->
 
 # Console-E2E Playwright Pipelines
+
+> **IMPORTANT:** When Atif says "virt pipeline" or "console virt e2e", he ALWAYS means
+> the NEW Playwright-based pipeline: **`CI-Jobs/console_virt_tests`**.
+> NEVER the old Cypress-based `CI-Jobs/virt_console_e2e_tests` (deprecated).
+> The old one uses CYPRESS_* parameters; the new one uses OCP_API_URL, OCP_PASSWORD, CONSOLE_GIT_BRANCH, etc.
 
 6 Jenkinsfiles under `acmqe-autotest/ci/jenkinsfiles/components/console/` run Playwright E2E tests from `stolostron/console-e2e`.
 
