@@ -14,8 +14,10 @@ When you have finished modifying any Cursor skill, rule, hook script, or MCP con
 
 > **Dotfiles sync needed.** You changed a managed file. Run this to push to your backup repo:
 > ```
-> chezmoi re-add && chezmoi git -- add -A && chezmoi git -- commit -m "sync" && chezmoi git -- push
+> chezmoi add ~/.cursor/skills ~/Documents/work/automation/.cursor/rules ~/.cursor/hooks ~/.cursor/hooks.json ~/.cursorrules && chezmoi git -- add -A && chezmoi git -- commit -m "sync" && chezmoi git -- push
 > ```
+
+**Important:** Use `chezmoi add <paths>`, NOT `chezmoi re-add`. `re-add` only re-syncs files chezmoi already tracks -- it silently skips brand-new skills/rules (this is how files have gone missing from the backup before). `chezmoi add` on a directory catches both new and modified files. If a new symlinked skill was added under `~/.cursor/skills/`, `chezmoi add` will prompt about removing the template attribute -- skip symlinks and add their real targets instead, or ask the user.
 
 ## When to remind
 

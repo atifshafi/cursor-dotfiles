@@ -1,0 +1,58 @@
+---
+alwaysApply: true
+---
+
+# Verify Before Recommending
+
+## Core Rule
+
+NEVER provide a command, workflow, or multi-step instruction to the user based on assumption alone. VERIFY it works first using available tools.
+
+## What "Verify" Means
+
+| Recommendation Type | Required Verification |
+|---|---|
+| Shell command | Run it (with `--list`, `--dry-run`, or equivalent) and confirm output |
+| Multi-command workflow | Verify each command's output feeds correctly into the next |
+| File paths | Confirm they exist with Glob/Read |
+| Test execution commands | Verify: correct test count, results preserved, no side effects |
+| Pipeline triggers | Verify: all parameters resolve, credentials valid |
+| Combined operations | Verify the END STATE, not just individual parts |
+
+## Verification Checklist (before recommending)
+
+1. **Does it run?** — Execute a safe variant (--list, --dry-run, echo) to confirm syntax and resolution
+2. **Does it produce the expected output?** — Check the actual output matches what you're promising the user
+3. **Are results preserved?** — If running multiple steps, verify earlier results aren't overwritten by later steps
+4. **Does it work in the user's context?** — Check cwd, env vars, auth state, not just theoretical correctness
+5. **Are there side effects?** — Identify what gets created, modified, or destroyed
+
+## Anti-Patterns (NEVER do these)
+
+- "This should work" without running it → VIOLATION
+- Confirming test counts without verifying result persistence → VIOLATION
+- Recommending a command based on documentation without testing in the actual environment → VIOLATION
+- Saying "I verified" when you only checked partial aspects → VIOLATION
+- Assuming a workflow works because individual parts work → VIOLATION
+
+## Correct Pattern
+
+```
+1. User asks for a command/workflow
+2. DRAFT the command mentally
+3. RUN a verification variant (--list, --dry-run, safe subset)
+4. CHECK the output covers all user requirements (count, persistence, no overwrites)
+5. If verification passes → provide to user with evidence
+6. If verification fails → investigate, fix, re-verify, THEN provide
+```
+
+## When Verification Is Not Possible
+
+If you genuinely cannot verify (no dry-run available, destructive-only operation):
+- STATE: "I cannot verify this without executing it"
+- EXPLAIN: what could go wrong
+- OFFER: a safe partial verification or ask the user to confirm
+
+## Priority
+
+Verification > Speed. A verified answer delivered after 30 seconds of tool calls is worth more than an unverified answer delivered instantly.

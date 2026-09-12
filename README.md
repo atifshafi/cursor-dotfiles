@@ -5,7 +5,7 @@ Cursor IDE configuration backup managed by [chezmoi](https://chezmoi.io).
 ## What's Included
 
 - **19 custom skills** (`~/.cursor/skills/`)
-- **34 workspace rules** (`~/Documents/work/automation/.cursor/rules/`)
+- **35 workspace rules** (`~/Documents/work/automation/.cursor/rules/`)
 - **Global rules** (`~/.cursorrules`)
 - **Hook scripts** (`~/.cursor/hooks/` + `hooks.json`)
 - **MCP server config** (`~/.cursor/mcp.json` -- secrets templated out)
