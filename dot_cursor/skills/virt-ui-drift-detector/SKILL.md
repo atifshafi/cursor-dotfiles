@@ -5,10 +5,9 @@ description: >-
   source code and the console-e2e virt test automation (42 Playwright + 4
   Cypress Polarion test cases). Compares selectors, translations, routes, and
   test IDs from upstream repos against local constants, page objects, and
-  components. Generates a drift report and auto-fixes code for review. Supports
-  scheduled runs via the loop skill and manual triggers. Use when user says
-  "run drift check", "check for UI drift", "scan for selector changes",
-  "schedule drift check", "virt drift", or "UI changes affecting tests".
+  components. Generates a drift report and auto-fixes code for review. Manual
+  invocation only. Use when user says "run drift check", "check for UI drift",
+  "scan for selector changes", "virt drift", or "UI changes affecting tests".
   Do NOT use for writing new test automation (use write-automation-script-playwright).
 ---
 
@@ -166,7 +165,8 @@ Gate rules:
    c. **If nothing found** -- skip live validation entirely. Log:
       "Live validation skipped — no cluster available (notes.md unreachable,
       no Engram record). Source-only comparison."
-   Never block the run to ask the user for a cluster URL during scheduled runs.
+   Never block the run to ask the user for a cluster URL on manual runs; skip
+   silently and note it in the report instead.
 5. **Set versions** -- call `set_acm_version()` and `set_cnv_version()` to target
    the correct upstream branches. Use the CNV version auto-detected in step 2.
 6. **Version alignment check** -- compare the ACM version from `notes.md` line 1
@@ -501,7 +501,6 @@ After presenting edits, ask: "Should I apply these fixes?"
    - Drift summary (breaking/warning/info counts)
    - Locator health score (avg fragility from `fragility-score.py`)
    - Chronically unstable elements (from history, if any)
-   - Next scheduled check date (if loop is active)
 
 ---
 
@@ -544,51 +543,11 @@ If a Phase 1 subagent runs longer than 120 seconds without output:
 
 ---
 
-## Scheduling
+## Invocation
 
-### Auto-Schedule (Mon/Wed/Fri at 12:30 PM)
-
-Runs the **full skill** (all phases) automatically. Zero maintenance.
-
-**How it works:**
-
-1. macOS `launchd` fires on Mon/Wed/Fri at 12:30 PM → writes `~/.cursor/drift-trigger`
-2. Cursor `stop` hook (`drift-scheduled-check.sh`) checks for the trigger file
-   after every agent session ends
-3. If trigger exists → deletes it → returns a `followup_message` that starts
-   the full skill pipeline (Phase 1 through Phase 4)
-4. The skill runs to completion and reports findings
-
-**Timing behavior:**
-
-- If Cursor is open at 12:30 PM → runs after the current chat ends
-- If Cursor is closed at 12:30 PM → trigger file waits; runs after the first
-  chat ends once Cursor is reopened
-- If Mac is asleep at 12:30 PM → launchd fires on wake; Cursor picks it up
-- If multiple triggers accumulate → only one runs (trigger file is overwritten)
-
-**Installed components:**
-
-- Plist: `~/Library/LaunchAgents/com.ashafi.drift-detector-trigger.plist`
-- Hook: `~/.cursor/hooks/drift-scheduled-check.sh` (in `stop` event, `loop_limit: 1`)
-
-```bash
-# Check if scheduled
-launchctl list | grep drift
-
-# Temporarily disable
-launchctl unload ~/Library/LaunchAgents/com.ashafi.drift-detector-trigger.plist
-
-# Re-enable
-launchctl load ~/Library/LaunchAgents/com.ashafi.drift-detector-trigger.plist
-
-# Force a run now (simulate launchd trigger)
-echo "$(date '+%Y-%m-%dT%H:%M:%S')" > ~/.cursor/drift-trigger
-
-# Change days/time → edit the plist, then unload + load
-```
-
-### Manual Trigger
+This skill is **manual-invocation only**. There is no scheduled/automatic
+trigger -- the launchd agent and Stop-hook that previously fired this skill
+on Mon/Wed/Fri were removed (2026-10-08).
 
 Intent phrases: "run drift check", "check for UI drift", "scan for selector
 changes", "virt drift", "UI changes affecting tests"
@@ -677,7 +636,6 @@ Prompts that SHOULD trigger this skill:
 - "check for UI drift"
 - "scan for selector changes"
 - "any upstream UI changes affecting my tests?"
-- "schedule drift check every 2 days"
 - "virt drift"
 
 Prompts that SHOULD NOT trigger this skill:
